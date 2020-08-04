@@ -1,0 +1,32 @@
+# Configuration for Rasa NLU.
+# https://rasa.com/docs/rasa/nlu/components/
+language: en
+pipeline:
+  - name: HFTransformersNLP
+  - name: LanguageModelTokenizer
+  #- name: ConveRTFeaturizer
+  #- name: SpacyNLP
+  #- name: WhitespaceTokenizer  
+  - name: LanguageModelFeaturizer  
+  - name: RegexFeaturizer
+  - name: LexicalSyntacticFeaturizer
+  - name: CountVectorsFeaturizer
+  - name: CountVectorsFeaturizer
+    analyzer: "char_wb"
+    min_ngram: 1
+    max_ngram: 4
+  - name: DIETClassifier
+    batch_strategy: sequence
+    epochs: 100
+  - name: EntitySynonymMapper
+  #- name: CRFEntityExtractor
+  - name: ResponseSelector
+    epochs: 100
+
+# Configuration for Rasa Core.
+# https://rasa.com/docs/rasa/core/policies/
+policies:
+  - name: MemoizationPolicy
+  - name: TEDPolicy
+  - name: FormPolicy
+  - name: MappingPolicy

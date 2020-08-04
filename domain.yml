@@ -1,0 +1,58 @@
+intents:
+  - greet
+  - goodbye
+  - order_food
+  - inform
+  - bot_challenge
+
+forms:
+  - info_form
+  - order_form
+
+entities:
+  - username
+  - mailid
+  - phone_number
+  - dish_name
+  - proceed
+  
+responses:
+  utter_greet:
+    - text: "Hey! How are you?"
+  utter_ask_username:
+    - text: What is your name?
+  utter_ask_mailid:
+    - text: Please enter your mail id.
+  utter_ask_phone_number:
+    - text: Please enter your phone number.
+  utter_ask_dish_name:
+    - text: What would you like to have?  
+  utter_ask_proceed:
+    - text: Would you like to add more to your cart?
+      buttons:
+        - title: "Yes"
+          payload: '/inform{"proceed":"Yes"}'
+        - title: "No"
+          payload: '/inform{"proceed":"No"}'
+  utter_goodbye:
+    - text: "Bye"
+
+  utter_iamabot:
+    - text: "I am a bot, powered by Rasa."
+  utter_not_serving:
+    - text: "Currently we are not serving this dish. Would you like to have something else?"
+
+slots:
+    username:
+        type: unfeaturized
+    mailid:
+        type: unfeaturized
+    phone_number:
+        type: unfeaturized
+    dish_name:
+        type: unfeaturized
+    proceed:
+        type: unfeaturized
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
