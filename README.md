@@ -1,4 +1,4 @@
-## Restaurant-Bot-Automation
+# Restaurant-Bot-Automation
 
 ![Push Rasa bot container to Heroku](https://github.com/naaniz/Restaurant-Bot-Automation/workflows/Push%20Rasa%20bot%20container%20to%20Heroku/badge.svg)
 
