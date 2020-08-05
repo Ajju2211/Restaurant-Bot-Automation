@@ -1,4 +1,4 @@
-name: Push Container to Heroku
+name: Push Rasa bot container to Heroku
 
 on: 
   push:
