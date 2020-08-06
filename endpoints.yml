@@ -14,7 +14,7 @@
 
 action_endpoint:
 # url: "http://localhost:5055/webhook"
-  url: "https://restaurant-bot-action-server.herokuapp.com/webhook"
+  url: "https://restaurant-rasa-bot.herokuapp.com/webhook"
 
 # Tracker store which is used to store the conversations.
 # By default the conversations are stored in memory.
