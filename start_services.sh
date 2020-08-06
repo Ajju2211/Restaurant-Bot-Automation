@@ -1,7 +1,7 @@
 cd app/
 # Start rasa server with nlu model
 rasa run actions &
-rasa run --model /app/models --enable-api \
+rasa run --model models --enable-api \
         --endpoints endpoints.yml \
         --credentials credentials.yml \
         -p $PORT
