@@ -1,32 +1,57 @@
-# Configuration for Rasa NLU.
-# https://rasa.com/docs/rasa/nlu/components/
-language: en
-pipeline:
-  - name: HFTransformersNLP
-  - name: LanguageModelTokenizer
-  #- name: ConveRTFeaturizer
-  #- name: SpacyNLP
-  #- name: WhitespaceTokenizer  
-  - name: LanguageModelFeaturizer  
-  - name: RegexFeaturizer
-  - name: LexicalSyntacticFeaturizer
-  - name: CountVectorsFeaturizer
-  - name: CountVectorsFeaturizer
-    analyzer: "char_wb"
-    min_ngram: 1
-    max_ngram: 4
-  - name: DIETClassifier
-    batch_strategy: sequence
-    epochs: 100
-  - name: EntitySynonymMapper
-  #- name: CRFEntityExtractor
-  - name: ResponseSelector
-    epochs: 100
+# # Configuration for Rasa NLU.
+# # https://rasa.com/docs/rasa/nlu/components/
+# language: en
+# pipeline:
+#   - name: HFTransformersNLP
+#   - name: LanguageModelTokenizer
+#   #- name: ConveRTFeaturizer
+#   #- name: SpacyNLP
+#   #- name: WhitespaceTokenizer  
+#   - name: LanguageModelFeaturizer  
+#   - name: RegexFeaturizer
+#   - name: LexicalSyntacticFeaturizer
+#   - name: CountVectorsFeaturizer
+#   - name: CountVectorsFeaturizer
+#     analyzer: "char_wb"
+#     min_ngram: 1
+#     max_ngram: 4
+#   - name: DIETClassifier
+#     batch_strategy: sequence
+#     epochs: 100
+#   - name: EntitySynonymMapper
+#   #- name: CRFEntityExtractor
+#   - name: ResponseSelector
+#     epochs: 100
 
-# Configuration for Rasa Core.
-# https://rasa.com/docs/rasa/core/policies/
+# # Configuration for Rasa Core.
+# # https://rasa.com/docs/rasa/core/policies/
+# policies:
+#   - name: MemoizationPolicy
+#   - name: TEDPolicy
+#   - name: FormPolicy
+#   - name: MappingPolicy
+
+#########Modifed###########
+language: en
+
+pipeline:
+- name: "SpacyNLP"
+- name: "SpacyTokenizer"
+- name: "SpacyFeaturizer"
+- name: "CRFEntityExtractor"
+- name: "SklearnIntentClassifier"
+# - name: DucklingHTTPExtractor
+#   url: http://localhost:8000
+#   dimensions:
+#     - number
 policies:
-  - name: MemoizationPolicy
-  - name: TEDPolicy
-  - name: FormPolicy
-  - name: MappingPolicy
+- batch_size: 50
+  epochs: 200
+  max_training_samples: 300
+  name: KerasPolicy
+# - fallback_action_name: action_default_fallback
+#   name: FallbackPolicy
+- max_history: 5
+  name: MemoizationPolicy
+- name: FormPolicy
+- name: MappingPolicy
