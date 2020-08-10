@@ -20,11 +20,12 @@ class InfoForm(FormAction):
             "username",
             "mailid",
             "phone_number",
+            "proceed"
             ]
 
     @staticmethod
     def msg() -> List[Text]:
-        return ["back","previous"]
+        return ["back1","back2","back3"]
 
     def validate_mailid(
         self,
@@ -36,7 +37,6 @@ class InfoForm(FormAction):
         if value.lower() not in self.msg():
             return {"mailid": value}
         else:
-            dispatcher.utter_message(text="Enter your name?")
             return {"mailid": None, "username": None}
 
     def validate_phone_number(
@@ -49,8 +49,18 @@ class InfoForm(FormAction):
         if value.lower() not in self.msg():
             return {"phone_number": value}
         else:
-            dispatcher.utter_message(text="Enter your email?")
             return {"phone_number": None,"mailid": None}
+    def validate_proceed(
+        self,
+        value: Text,
+        dispatcher: "CollectingDispatcher",
+        tracker: "Tracker",
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        if value.lower() not in self.msg():
+            return {"proceed": value}
+        else:
+            return {"phone_number": None,"proceed": None}
     
     def submit(
         self,

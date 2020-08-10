@@ -50,6 +50,8 @@ responses:
       title: Yes
     - payload: /inform{"proceed":"No"}
       title: No
+    - payload: /inform{"proceed":"back3"}
+      title: "Back"
     text: Would you like to add more to your cart?
   utter_goodbye:
   - text: Bye
