@@ -20,7 +20,7 @@ class InfoForm(FormAction):
             "username",
             "mailid",
             "phone_number",
-            "proceed"
+
             ]
 
     @staticmethod
@@ -50,17 +50,7 @@ class InfoForm(FormAction):
             return {"phone_number": value}
         else:
             return {"phone_number": None,"mailid": None}
-    def validate_proceed(
-        self,
-        value: Text,
-        dispatcher: "CollectingDispatcher",
-        tracker: "Tracker",
-        domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        if value.lower() not in self.msg():
-            return {"proceed": value}
-        else:
-            return {"phone_number": None,"proceed": None}
+
     
     def submit(
         self,
@@ -74,7 +64,7 @@ class InfoForm(FormAction):
         
         
        
-        message="ORDER DETAILS:"+"\n\n"+"Name:"+username+"\n"+"Email:"+mailid+"\n"+"Phone Number:"+phone_number+"\n"+"\nThanks for ordering! Your order will be placed soon." 
+        message="DETAILS:"+"\n\n"+"Name:"+username+"\n"+"Email:"+mailid+"\n"+"Phone Number:"+phone_number+"\n"+"\nThanks! for sharing information." 
         saveFile = open("some.txt", 'a')
         saveFile.write(message)
         saveFile.close()
@@ -137,5 +127,4 @@ class OrderForm(FormAction):
         dispatcher.utter_message("Thanks for ordering")
         return []
             
-    
     
