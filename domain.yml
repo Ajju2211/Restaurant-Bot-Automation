@@ -34,8 +34,14 @@ responses:
   - text: What is your name?
   utter_ask_mailid:
   - text: Please enter your mail id.
+    buttons:
+      - title: "Back"
+        payload: '/inform{"mailid":"back1"}'
   utter_ask_phone_number:
   - text: Please enter your phone number.
+    buttons:
+      - title: "Back"
+        payload: '/inform{"mailid":"back2"}'
   utter_ask_dish_name:
   - text: What would you like to have?
   utter_ask_proceed:
