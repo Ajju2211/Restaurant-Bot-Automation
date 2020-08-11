@@ -1,4 +1,5 @@
 ## intent:greet
+
 - hey
 - hello
 - hi
@@ -7,6 +8,7 @@
 - hey there
 
 ## intent:order_food
+
 - I want to place an order.
 - Hey bot help me to place an order.
 - Hey bot can you help me to place order.
@@ -18,8 +20,8 @@
 - Place an order for me.
 - Help me to place order.
 
-
 ## intent: inform
+
 - [Noodles](dish_name)
 - [Burger](dish_name)
 - [Pizza](dish_name)
@@ -76,13 +78,16 @@
 - [NO](continue)
 - [no](continue)
 - [No](continue)
+
 ## intent:goodbye
+
 - bye
 - goodbye
 - see you around
 - see you later
 
 ## intent:affirm
+
 - yes
 - indeed
 - of course
@@ -90,6 +95,7 @@
 - correct
 
 ## intent:deny
+
 - no
 - never
 - I don't think so
@@ -97,9 +103,8 @@
 - no way
 - not really
 
-
-
 ## intent:bot_challenge
+
 - are you a bot?
 - are you a human?
 - am I talking to a bot?
