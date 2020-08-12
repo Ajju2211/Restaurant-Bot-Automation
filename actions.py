@@ -87,7 +87,7 @@ class OrderForm(FormAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        dish_name=tracker.get_slot("dish_name")
+        dish_name = tracker.get_slot("dish_name")
         
         if dish_name in dataset.keys(): 
             
