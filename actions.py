@@ -6,6 +6,7 @@ from rasa_sdk.events import UserUtteranceReverted
 from rasa_sdk.events import AllSlotsReset, SlotSet
 import pandas as pd
 from rasa.core.slots import Slot
+
 dataset= pd.read_csv('dishes.csv')
 dataset=dataset.set_index('dish').T.to_dict('list')
 
@@ -90,8 +91,8 @@ class OrderForm(FormAction):
         dish_name = tracker.get_slot("dish_name")
         
         if dish_name in dataset.keys(): 
-            
-            return {"dish_name":value}
+            dispatcher.utter_message("Price of th")
+            return {"dish_name": value}
         else:
             dispatcher.utter_template("utter_not_serving",tracker)
             return {"dish_name":None}
