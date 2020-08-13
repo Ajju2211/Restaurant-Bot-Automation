@@ -9,6 +9,7 @@ from rasa.core.slots import Slot
 
 dataset= pd.read_csv('dishes.csv')
 dataset=dataset.set_index('dish').T.to_dict('list')
+dish_list=[]
 
 class InfoForm(FormAction):
     """Collects order information"""
@@ -21,7 +22,7 @@ class InfoForm(FormAction):
             "username",
             "mailid",
             "phone_number",
-
+            "confirm"
             ]
 
     @staticmethod
@@ -51,6 +52,18 @@ class InfoForm(FormAction):
             return {"phone_number": value}
         else:
             return {"phone_number": None,"mailid": None}
+
+     def validate_confirm(
+        self,
+        value: Text,
+        dispatcher: "CollectingDispatcher",
+        tracker: "Tracker",
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        if value.lower() not in self.msg():
+            return {"phone_number": value}
+        else:
+            return {"phone_number": None,"confirm": None}
 
     
     def submit(
@@ -91,7 +104,7 @@ class OrderForm(FormAction):
         dish_name = tracker.get_slot("dish_name")
         
         if dish_name in dataset.keys(): 
-            dispatcher.utter_message("Price of th")
+            dispatcher.utter_message("Price of the dish is "+dataset["dish_name"])
             return {"dish_name": value}
         else:
             dispatcher.utter_template("utter_not_serving",tracker)
@@ -104,15 +117,17 @@ class OrderForm(FormAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        dish_list=[]
-        dish_name=[]
         dish_name= tracker.get_slot("dish_name")
         proceed=tracker.get_slot("proceed")
-        if proceed=="No":
+        if proceed =="Add to Cart":
             dish_list.append(dish_name)
-            return {"proceed":value,"dish_name":value}
+            return {"proceed":None,"dish_name":None}
+
+        elif proceed == "Buy Now":
+            dish_list.append(dish_name)
+            return {"proceed":value."dish_name":value}
+
         else:
-            dish_list.append(tracker.get_slot("dish_name"))
             return {"dish_name":None,"proceed":None}
 
     def submit(
@@ -124,7 +139,11 @@ class OrderForm(FormAction):
     
         dish_name=(tracker.get_slot("dish_name"))
         proceed=tracker.get_slot("proceed")
-    
+        amount = 0
+        for x in dish_list:
+            dispatcher.utter_message(x+":"+dataset[x])
+            amount += dataset[x]
+        dispatcher.utter_message("Total Amount : "+amount)    
         dispatcher.utter_message("Thanks for ordering")
         return []
             

@@ -88,11 +88,11 @@
 
 ## intent:affirm
 
-- yes
-- indeed
-- of course
+- [yes](confirm)
+- [indeed](confirm)
+- [of course](confirm)
 - that sounds good
-- correct
+- [correct](confirm)
 
 ## intent:deny
 
