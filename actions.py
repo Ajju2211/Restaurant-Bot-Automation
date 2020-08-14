@@ -188,7 +188,7 @@ class ComplainForm(FormAction):
                 
 
             "complain_text": [
-                self.from_text(intent="complain"),
+                self.from_text(),
             ],
 
 
@@ -205,14 +205,15 @@ class ComplainForm(FormAction):
      
      #Writing complin to external file.
         f = open("complaints.txt", "a")
-        xp=tracker.get_slot("complain_type")      
-        f.write("Complain Area: ")
-        f.write(xp)
+        comp_type=tracker.get_slot("complain_type")      
+        f.write("\n Complain Area: ")
+        f.write(comp_type)
         f.write(",  Complain Text: ")
-        xp=tracker.get_slot("complain_text")   
-        f.write(xp)
+        comp=tracker.get_slot("complain_text")   
+        f.write(comp)
         f.close()   
 
-        dispatcher.utter_message("Thanks Complain Registered")
-        return []
+        dispatcher.utter_message("Your complaint '{comp}' regarding '{comp_type}' \n has been registered!".format(comp = comp,comp_type=comp_type))
+
+        return [SlotSet("complain_type",None), SlotSet("complain_text",None)]
 

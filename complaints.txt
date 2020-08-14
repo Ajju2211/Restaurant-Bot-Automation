@@ -1,0 +1,5 @@
+
+ Complain Area: Food Quality,  Complain Text: very bad taste
+ Complain Area: Food Quality,  Complain Text: very bad taste
+ Complain Area: Food Quality,  Complain Text: very bad taste
+ Complain Area: Delivery,  Complain Text: very slow delivery
