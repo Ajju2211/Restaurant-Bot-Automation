@@ -88,6 +88,7 @@ responses:
         Currently we are not serving this dish. Would you like to have something
         else?
 
+
 actions:
   - utter_greet
   - utter_ask_username
@@ -98,6 +99,7 @@ actions:
   - utter_goodbye
   - utter_iamabot
   - utter_not_serving
+  - action_default_fallback
 
 forms:
   - info_form

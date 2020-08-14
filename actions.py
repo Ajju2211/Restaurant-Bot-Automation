@@ -147,4 +147,19 @@ class OrderForm(FormAction):
         dispatcher.utter_message("Thanks for ordering")
         return []
             
-    
+class DefaultFallback(FormAction):
+    """Default Fallback Action"""
+
+    def name(self):
+        return "action_default_fallback"
+        
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any])-> List[Dict[Text, Any]]:
+        queryText = tracker.latest_message.get('text')
+
+        dispatcher.utter_message("Fallback Triggered bcoz u've typed something! "+queryText)
+        return []
+
+
+

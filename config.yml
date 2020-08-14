@@ -49,8 +49,10 @@ policies:
   epochs: 200
   max_training_samples: 300
   name: KerasPolicy
-# - fallback_action_name: action_default_fallback
-#   name: FallbackPolicy
+- name: FallbackPolicy
+  nlu_threshold: 0.4
+  core_threshold: 0.3
+  fallback_action_name: action_default_fallback
 - max_history: 5
   name: MemoizationPolicy
 - name: FormPolicy
