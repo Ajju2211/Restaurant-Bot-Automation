@@ -60,8 +60,8 @@ class OrderForm(FormAction):
         dish_name=tracker.get_slot("dish_name")
         
         if dish_name in dataset.keys(): 
-            
-            return {"dish_name":value}
+            dispatcher.utter_message("it costs "+ str(dataset[dish_name][0]))
+            return {"dish_name": dish_name}
         else:
             dispatcher.utter_template("utter_not_serving",tracker)
             return {"dish_name":None}
@@ -98,11 +98,6 @@ class OrderForm(FormAction):
         return []
             
     
-    from typing import Any, Text, Dict, List, Union
-
-from rasa_sdk import Action, Tracker
-from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.forms import FormAction
 
 
 
@@ -155,4 +150,27 @@ class ComplainForm(FormAction):
 
         dispatcher.utter_message("Thanks Complain Registered")
         return []
+        amount = 0
+        for x in dish_list:
+            dispatcher.utter_message(x+":"+str(dataset[x][0]))
+            amount += dataset[x][0]
+        dispatcher.utter_message("Total Amount : "+str(amount))    
+        dispatcher.utter_message("Thanks for ordering")
+        return []
+            
+class DefaultFallback(FormAction):
+    """Default Fallback Action"""
+
+    def name(self):
+        return "action_default_fallback"
+        
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any])-> List[Dict[Text, Any]]:
+        queryText = tracker.latest_message.get('text')
+
+        dispatcher.utter_message("Fallback Triggered bcoz u've typed something! "+queryText)
+        return []
+
+
 
