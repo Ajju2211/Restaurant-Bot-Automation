@@ -109,3 +109,38 @@
 - are you a human?
 - am I talking to a bot?
 - am I talking to a human?
+
+
+## intent:complain_init
+
+-I want to complain
+-I have a complain
+-I have an issue
+-I have a problem
+-I want to report an problem
+-I want to report an complain
+-I want to report an isssue
+-complain
+-I am very angry with the service.
+
+## intent:complain
+
+- lots of fruits and vegetables
+- too many snacks
+- too many sweets
+- too much junk food
+- a lot of carbs
+- too much fatty food
+- very bad taste
+- bad taste
+- taste not good
+- very spicy
+- unhygenic packing
+- dirty packing
+- very slow delivery
+- the app does not respond at all
+- my discount coupon did not apply
+- [Food Quality](complain_type)
+- [Delivery](complain_type)
+- [Naaniz App](complain_type)
+- [Other](complain_type)
