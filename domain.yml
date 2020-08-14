@@ -3,23 +3,23 @@ session_config:
   carry_over_slots_to_new_session: true
 
 intents:
-- greet
-- goodbye
-- order_food
-- inform
-- bot_challenge
-- deny
-- affirm
+  - greet
+  - goodbye
+  - order_food
+  - inform
+  - bot_challenge
+  - deny
+  - affirm
 
 entities:
-- username
-- mailid
-- phone_number
-- dish_name
-- proceed
-- continue
-- moveon
-- confirm
+  - username
+  - mailid
+  - phone_number
+  - dish_name
+  - proceed
+  - continue
+  - moveon
+  - confirm
 
 slots:
   username:
@@ -34,71 +34,71 @@ slots:
     type: unfeaturized
   proceed:
     type: unfeaturized
-    
 
 responses:
   utter_greet:
-  - text: Hey! How are you?
+    - text: Hey! How are you?
 
   utter_ask_username:
-  - text: What is your name?
+    - text: What is your name?
 
   utter_ask_mailid:
-  - buttons:
-    - payload: /inform{"mailid":"back1"}
-      title: Back
-    text: Please enter your mail id.
+    - buttons:
+        - payload: /inform{"mailid":"back1"}
+          title: Back
+      text: Please enter your mail id.
 
   utter_ask_phone_number:
-  - buttons:
-    - payload: /inform{"phone_number":"back2"}
-      title: Back
-    text: Please enter your phone number.
+    - buttons:
+        - payload: /inform{"phone_number":"back2"}
+          title: Back
+      text: Please enter your phone number.
 
   utter_ask_confirm:
-  - buttons:
-    - payload: /affirm{"confirm":"back3"}
-      title: Back
-    text: "Please confirm your details:\n
-           name: {username} \n
-           Contact no.: {phone_number} \n
-           email: {mailid}
-          "
+    - buttons:
+        - payload: /affirm{"confirm":"back3"}
+          title: Back
+      text: "Please confirm your details:\n
+        name: {username} \n
+        Contact no.: {phone_number} \n
+        email: {mailid}
+        "
 
-   
   utter_ask_dish_name:
-  - text: What food item would you like to eat?
- 
+    - text: What food item would you like to eat?
+
   utter_ask_proceed:
-  - buttons:
-    - payload: /inform{"proceed":"Add to Cart"}
-      title: "Add to Cart"
-    - payload: /inform{"proceed":"Buy Now"}
-      title: "Buy Now"
-    - payload: /inform{"proceed":"No"}
-      title: Select Other Food item
- 
-    utter_goodbye:
-  - text: Bye
- 
+    - buttons:
+        - payload: /inform{"proceed":"Add to Cart"}
+          title: "Add to Cart"
+        - payload: /inform{"proceed":"Buy Now"}
+          title: "Buy Now"
+        - payload: /inform{"proceed":"No"}
+          title: Select Other Food item
+      text: Please select above options
+
+  utter_goodbye:
+    - text: Bye
+
   utter_iamabot:
-  - text: I am a bot, powered by Rasa.
- 
+    - text: I am a bot, powered by Rasa.
+
   utter_not_serving:
-  - text: Currently we are not serving this dish. Would you like to have something
-      else?
+    - text:
+        Currently we are not serving this dish. Would you like to have something
+        else?
 
 actions:
-- utter_greet
-- utter_ask_username
-- utter_ask_mailid
-- utter_ask_phone_number
-- utter_ask_dish_name
-- utter_ask_proceed
-- utter_goodbye
-- utter_iamabot
-- utter_not_serving
+  - utter_greet
+  - utter_ask_username
+  - utter_ask_mailid
+  - utter_ask_phone_number
+  - utter_ask_dish_name
+  - utter_ask_proceed
+  - utter_goodbye
+  - utter_iamabot
+  - utter_not_serving
 
 forms:
-- info_form
-- order_form
+  - info_form
+  - order_form
