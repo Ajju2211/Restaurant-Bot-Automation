@@ -10,7 +10,8 @@ intents:
   - bot_challenge
   - deny
   - affirm
-
+  - complain
+  - complain_init
 entities:
   - username
   - mailid
@@ -20,6 +21,8 @@ entities:
   - continue
   - moveon
   - confirm
+  - complain_type
+  - complain_text
 
 slots:
   username:
@@ -34,7 +37,10 @@ slots:
     type: unfeaturized
   proceed:
     type: unfeaturized
-
+  complain_type:
+    type: unfeaturized
+  complain_text:
+    type: unfeaturized
 responses:
   utter_greet:
     - text: Hey! How are you?
@@ -87,6 +93,27 @@ responses:
     - text:
         Currently we are not serving this dish. Would you like to have something
         else?
+  
+  utter_confirm_complain:
+  - text: We are really sorry for the inconvinience. Do you want to register a complain?
+  
+  utter_ask_complain_type:
+  - buttons:
+    - payload: '/complain{"complain_type": "Food Quality"}'
+      title: Food Quality
+    - payload: '/complain{"complain_type": "Delivery"}'
+      title: Delivery
+    - payload: '/complain{"complain_type":"Naaniz App"}'
+      title: Naaniz App
+    - payload: '/complain{"complain_type":"Other"}'
+      title: Other
+    text: What is complain regarding ?
+  
+  utter_ask_complain_text:
+  - text: Please Describe your complain.
+  
+  utter_complain_values:
+  - text: "You've submitted the following complain:\n - Complain Area: {complain_type}\n - Customer Complain: {complain_text}\n Do you Want to submit this complain?"
 
 
 actions:
@@ -100,7 +127,11 @@ actions:
   - utter_iamabot
   - utter_not_serving
   - action_default_fallback
-
+  - utter_ask_complain_text
+  - utter_ask_complain_type
+  - utter_confirm_complain
+  - utter_complain_values
 forms:
   - info_form
   - order_form
+  - complain_form
