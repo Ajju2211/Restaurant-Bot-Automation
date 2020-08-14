@@ -104,8 +104,8 @@ class OrderForm(FormAction):
         dish_name = tracker.get_slot("dish_name")
         
         if dish_name in dataset.keys(): 
-            dispatcher.utter_message("Price of the dish is "+dataset["dish_name"])
-            return {"dish_name": value}
+            dispatcher.utter_message("it costs "+ str(dataset[dish_name][0]))
+            return {"dish_name": dish_name}
         else:
             dispatcher.utter_template("utter_not_serving",tracker)
             return {"dish_name":None}
@@ -125,7 +125,7 @@ class OrderForm(FormAction):
 
         elif proceed == "Buy Now":
             dish_list.append(dish_name)
-            return {"proceed":value."dish_name":value}
+            return {"proceed":value,"dish_name":value}
 
         else:
             return {"dish_name":None,"proceed":None}
@@ -141,8 +141,8 @@ class OrderForm(FormAction):
         proceed=tracker.get_slot("proceed")
         amount = 0
         for x in dish_list:
-            dispatcher.utter_message(x+":"+dataset[x])
-            amount += dataset[x]
+            dispatcher.utter_message(x+":"+str(dataset[x][0]))
+            amount += dataset[x][0]
         dispatcher.utter_message("Total Amount : "+amount)    
         dispatcher.utter_message("Thanks for ordering")
         return []
