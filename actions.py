@@ -143,7 +143,7 @@ class OrderForm(FormAction):
         for x in dish_list:
             dispatcher.utter_message(x+":"+str(dataset[x][0]))
             amount += dataset[x][0]
-        dispatcher.utter_message("Total Amount : "+amount)    
+        dispatcher.utter_message("Total Amount : "+str(amount))    
         dispatcher.utter_message("Thanks for ordering")
         return []
             
