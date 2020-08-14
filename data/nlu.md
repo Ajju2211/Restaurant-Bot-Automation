@@ -1,5 +1,4 @@
 ## intent:greet
-
 - hey
 - hello
 - hi
@@ -8,7 +7,6 @@
 - hey there
 
 ## intent:order_food
-
 - I want to place an order.
 - Hey bot help me to place an order.
 - Hey bot can you help me to place order.
@@ -20,8 +18,8 @@
 - Place an order for me.
 - Help me to place order.
 
-## intent: inform
 
+## intent: inform
 - [Noodles](dish_name)
 - [Burger](dish_name)
 - [Pizza](dish_name)
@@ -55,7 +53,6 @@
 - [9864464645](phone_number)
 - [2948613377](phone_number)
 - [5593965741](phone_number)
-- [back2](phone_number)
 - [srffnwvb@aol.com](mailid)
 - [kfquzxgm@zohocorp.com](mailid)
 - [kpmvchemistryt@gmx.com](mailid)
@@ -68,7 +65,6 @@
 - [bkvnoija@gmail.com](mailid)
 - [vrbgftmm@icloud.com](mailid)
 - [brpdmaev@gmx.com](mailid)
-- [back1](mailid)
 - [yes](continue)
 - [yes](continue) sure
 - [Yes](continue) sure
@@ -80,32 +76,89 @@
 - [No](continue)
 
 ## intent:goodbye
-
 - bye
 - goodbye
 - see you around
 - see you later
 
 ## intent:affirm
-
-- [yes](confirm)
-- [indeed](confirm)
-- [of course](confirm)
+- yes
+- indeed
+- of course
 - that sounds good
-- [correct](confirm)
+- correct
+- sure
+- ok
+- why not
+- ok great
+- yes I did
+- yeah, great
+- pretty good
+- fine
+- You bet
+- I sure did
+- more or less
 
 ## intent:deny
-
 - no
 - never
 - I don't think so
-- don't like that
 - no way
 - not really
+- none
+- absolutely not
+- no thanks
+- didn't do any
+- no I didn't
+- could have been better
+- not great
+- nope
+
+
+## intent:complain_init
+
+-I want to complain
+-I have a complain
+-I have an issue
+-I have a problem
+-I want to report an problem
+-I want to report an complain
+-I want to report an isssue
+-complain
+-I am very angry with the service.
+
+## intent:complain
+
+- lots of fruits and vegetables
+- too many snacks
+- too many sweets
+- too much junk food
+- a lot of carbs
+- too much fatty food
+- very bad taste
+- bad taste
+- taste not good
+- very spicy
+- unhygenic packing
+- dirty packing
+- very slow delivery
+- the app does not respond at all
+- my discount coupon did not apply
+- [Food Quality](complain_type)
+- [Delivery](complain_type)
+- [Naaniz App](complain_type)
+- [Other](complain_type)
+
+
 
 ## intent:bot_challenge
-
 - are you a bot?
 - are you a human?
 - am I talking to a bot?
 - am I talking to a human?
+
+## intent:thankyou
+- okay great thanks
+- thank you
+- sure thanks
+- thanks bye

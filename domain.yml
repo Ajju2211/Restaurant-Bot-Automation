@@ -1,104 +1,99 @@
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
-
 intents:
-  - greet
-  - goodbye
-  - order_food
-  - inform
-  - bot_challenge
-  - deny
-  - affirm
-
+- greet
+- goodbye
+- order_food
+- inform
+- bot_challenge
+- deny
+- affirm
+- thankyou
+- complain
+- complain_init
 entities:
-  - username
-  - mailid
-  - phone_number
-  - dish_name
-  - proceed
-  - continue
-  - moveon
-  - confirm
-
+- username
+- mailid
+- phone_number
+- dish_name
+- proceed
+- continue
+- complain_type
+- complain_text
 slots:
-  username:
+  dish_name:
     type: unfeaturized
   mailid:
     type: unfeaturized
   phone_number:
     type: unfeaturized
-  confirm:
-    type: unfeaturized
-  dish_name:
-    type: unfeaturized
   proceed:
     type: unfeaturized
-
+  username:
+    type: unfeaturized
+  complain_type:
+    type: unfeaturized
+  complain_text:
+    type: unfeaturized
 responses:
   utter_greet:
-    - text: Hey! How are you?
-
+  - text: Hey! How are you?
   utter_ask_username:
-    - text: What is your name?
-
+  - text: What is your name?
   utter_ask_mailid:
-    - buttons:
-        - payload: /inform{"mailid":"back1"}
-          title: Back
-      text: Please enter your mail id.
-
+  - text: Please enter your mail id.
   utter_ask_phone_number:
-    - buttons:
-        - payload: /inform{"phone_number":"back2"}
-          title: Back
-      text: Please enter your phone number.
-
-  utter_ask_confirm:
-    - buttons:
-        - payload: /affirm{"confirm":"back3"}
-          title: Back
-      text: "Please confirm your details:\n
-        name: {username} \n
-        Contact no.: {phone_number} \n
-        email: {mailid}
-        "
-
+  - text: Please enter your phone number.
   utter_ask_dish_name:
-    - text: What food item would you like to eat?
-
+  - text: What would you like to have?
   utter_ask_proceed:
-    - buttons:
-        - payload: /inform{"proceed":"Add to Cart"}
-          title: "Add to Cart"
-        - payload: /inform{"proceed":"Buy Now"}
-          title: "Buy Now"
-        - payload: /inform{"proceed":"No"}
-          title: Select Other Food item
-      text: Please select above options
-
+  - buttons:
+    - payload: /inform{"proceed":"Yes"}
+      title: Yes
+    - payload: /inform{"proceed":"No"}
+      title: No
+    text: Would you like to add more to your cart?
   utter_goodbye:
-    - text: Bye
-
+  - text: Bye
   utter_iamabot:
-    - text: I am a bot, powered by Rasa.
-
+  - text: I am a bot, powered by Rasa.
   utter_not_serving:
-    - text:
-        Currently we are not serving this dish. Would you like to have something
-        else?
+  - text: Currently we are not serving this dish. Would you like to have something
+      else?
+  utter_confirm_complain:
+  - text: We are really sorry for the inconvinience. Do you want to register a complain?
+  utter_ask_complain_type:
+  - buttons:
+    - payload: '/complain{"complain_type": "Food Quality"}'
+      title: Food Quality
+    - payload: '/complain{"complain_type": "Delivery"}'
+      title: Delivery
+    - payload: '/complain{"complain_type":"Naaniz App"}'
+      title: Naaniz App
+    - payload: '/complain{"complain_type":"Other"}'
+      title: Other
+    text: What is complain regarding ?
+  utter_ask_complain_text:
+  - text: Please Describe your complain.
+  utter_complain_values:
+  - text: "You've submitted the following complain:\n - Complain Area: {complain_type}\n - Customer Complain: {complain_text}\n "
 
 actions:
-  - utter_greet
-  - utter_ask_username
-  - utter_ask_mailid
-  - utter_ask_phone_number
-  - utter_ask_dish_name
-  - utter_ask_proceed
-  - utter_goodbye
-  - utter_iamabot
-  - utter_not_serving
-
+- utter_greet
+- utter_ask_username
+- utter_ask_mailid
+- utter_ask_phone_number
+- utter_ask_dish_name
+- utter_ask_proceed
+- utter_goodbye
+- utter_iamabot
+- utter_not_serving
+- utter_ask_complain_text
+- utter_ask_complain_type
+- utter_confirm_complain
+- utter_complain_values
 forms:
-  - info_form
-  - order_form
+- info_form
+- order_form
+- complain_form
