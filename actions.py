@@ -53,7 +53,7 @@ class InfoForm(FormAction):
         else:
             return {"phone_number": None,"mailid": None}
 
-     def validate_confirm(
+    def validate_confirm(
         self,
         value: Text,
         dispatcher: "CollectingDispatcher",
