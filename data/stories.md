@@ -32,16 +32,32 @@
     -complain_form
     -form{"name":"complain_form"}
     -form{"name":"null"}
-    <!-- -utter_complain_values
-*affirm  
-    -utter_goodbye -->
+* goodbye
+	- utter_goodbye
+
+## complain path deny
+*complain_init
+    -utter_confirm_complain 
+*deny
+	- utter_goodbye
 
 
+## feedback path
+*feedback_init
+    -utter_confirm_feedback
+*affirm
+    -feedback_form
+    -form{"name":"feedback_form"}
+    -form{"name":"null"}
+* goodbye
+	- utter_goodbye
 
 
-
-
-
+## feedback path deny
+*feedback_init
+    -utter_confirm_feedback
+*deny
+    - utter_goodbye
 
 
 

@@ -12,6 +12,8 @@ intents:
   - affirm
   - complain
   - complain_init
+  - feedback_init
+  - rating
 entities:
   - username
   - mailid
@@ -23,6 +25,8 @@ entities:
   - confirm
   - complain_type
   - complain_text
+  - rating
+  - feedback_text
 
 slots:
   username:
@@ -41,6 +45,11 @@ slots:
     type: unfeaturized
   complain_text:
     type: unfeaturized
+  rating:
+    type: unfeaturized
+  feedback_text:
+    type: unfeaturized
+
 responses:
   utter_greet:
     - text: Hey! How are you?
@@ -112,9 +121,23 @@ responses:
   utter_ask_complain_text:
   - text: Please Describe your complain.
   
-  utter_complain_values:
-  - text: "You've submitted the following complain:\n - Complain Area: {complain_type}\n - Customer Complain: {complain_text}\n Do you Want to submit this complain?"
-
+  utter_confirm_feedback:
+  - text: Do you want to give a feedback?
+  utter_ask_rating:
+    - buttons:
+        - payload: '/rating{"rating":"1"}'
+          title: 1
+        - payload: '/rating{"rating": "2"}'
+          title: 2
+        - payload: '/rating{"rating":"3"}'
+          title: 3
+        - payload: '/rating{"rating":"4"}'
+          title: 4
+        - payload: '/rating{"rating":"5"}'
+          title: 5
+      text: Please rate your experience out of 5 ?
+  utter_ask_feedback_text:
+    - text: Please enter your feedback.
 
 actions:
   - utter_greet
@@ -130,8 +153,12 @@ actions:
   - utter_ask_complain_text
   - utter_ask_complain_type
   - utter_confirm_complain
-  - utter_complain_values
+  - utter_confirm_feedback
+  - utter_ask_rating
+  - utter_ask_feedback_text
+
 forms:
   - info_form
   - order_form
   - complain_form
+  - feedback_form

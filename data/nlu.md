@@ -144,3 +144,24 @@
 - [Delivery](complain_type)
 - [Naaniz App](complain_type)
 - [Other](complain_type)
+
+
+## intent:feedback_init
+
+-i want to give feedback
+-I want to give feedback
+-where to give feedback
+-wat to give feedback
+-I have a feedback
+-I have an issue
+-I have a feedback
+-I want to report an feedback
+-feedback
+
+## intent:rating
+
+-[1](rating)
+-[2](rating)
+-[3](rating)
+-[4](rating)
+-[5](rating)
