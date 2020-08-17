@@ -1,6 +1,6 @@
-<!--## greet
+## greet
 * greet
-	- utter_greet -->
+	- utter_greet
 
 <!-- ## path 1
 * order_food
@@ -15,6 +15,7 @@
 
 ## order food path
 * order_food
+    - utter_restaurant_name
 	- order_form
 	- form{"name":"order_form"}
 	- form{"name":null}
@@ -24,7 +25,7 @@
 
 
 
-<!--
+
 ## complain path
 *complain_init
     -utter_confirm_complain 
@@ -35,8 +36,6 @@
     <!-- -utter_complain_values
 *affirm  
     -utter_goodbye -->
-I wa
--->
 
 
 
@@ -45,11 +44,11 @@ I wa
 
 
 
-<!-- ## say goodbye
+
+## say goodbye
 * goodbye
   - utter_goodbye
 
 ## bot challenge
 * bot_challenge
   - utter_iamabot
--->
