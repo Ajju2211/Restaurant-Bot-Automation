@@ -6,12 +6,16 @@ from rasa_sdk.events import UserUtteranceReverted
 from rasa_sdk.events import AllSlotsReset, SlotSet
 import pandas as pd
 from rasa.core.slots import Slot
+import json
 
-dataset= pd.read_csv('dishes.csv')
-dataset=dataset.set_index('dish').T.to_dict('list')
-dish_list=[]
+dataset = pd.read_csv('dishes.csv')
+dataset = dataset.set_index('dish').T.to_dict('list')
+dish_list = []
+restaurant_dataset = pd.read_csv('restaurant.csv')
+restaurant_dataset = restaurant_dataset.set_index('restaurant').T.to_dict('list')
 
 class InfoForm(FormAction):
+
     """Collects order information"""
 
     def name(self):
@@ -84,7 +88,7 @@ class InfoForm(FormAction):
         saveFile.close()
         dispatcher.utter_message(message)
         return []
-        
+
 class OrderForm(FormAction):
 
     def name(self):
@@ -92,9 +96,28 @@ class OrderForm(FormAction):
     @staticmethod
     def required_slots(tracker):
         return [
+            "restaurant_name",
             "dish_name",
             "proceed",
             ]
+
+    def validate_restaurant_name(self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        restaurant_name = tracker.get_slot("restaurant_name")
+        
+        if restaurant_name in restaurant_dataset.keys(): 
+            url = str(restaurant_dataset[restaurant_name])            
+            dispatcher.utter_message("Menu of that restaurant is ")
+            dispatcher.utter_message(image = url)
+            return {"restaurant_name": restaurant_name}
+        else:
+            dispatcher.utter_message("Restaurant not available")
+            return {"restaurant_name":None}
+
     def validate_dish_name(self,
         value: Text,
         dispatcher: CollectingDispatcher,
@@ -196,17 +219,74 @@ class ComplainForm(FormAction):
     ) -> List[Dict]:
 
      
-     #Writing complin to external file.
-        f = open("complaints.txt", "a")
-        comp_type=tracker.get_slot("complain_type")      
-        f.write("\n Complain Area: ")
-        f.write(comp_type)
-        f.write(",  Complain Text: ")
-        comp=tracker.get_slot("complain_text")   
-        f.write(comp)
+     #Writing complin to external json file.
+        f = open("complaints.json", "a")
+        comp_type=tracker.get_slot("complain_type")
+        comp = tracker.get_slot("complain_text")
+
+        data={
+
+            "Complain Area":"{}".format(comp_type),
+            "Complain":"{}".format(comp)
+        }
+
+        json.dump(data, f)
+
+
         f.close()   
 
-        dispatcher.utter_message("Your complaint '{comp}' regarding '{comp_type}' \n has been registered!".format(comp = comp,comp_type=comp_type))
+        dispatcher.utter_message("Your Complaint :\n Complaint Area:{comp_type}\n Complaint: '{comp}' \n has been registered!".format(comp_type=comp_type,comp = comp))
 
         return [SlotSet("complain_type",None), SlotSet("complain_text",None)]
+
+
+class FeedbackForm(FormAction):
+
+    def name(self):
+        return "feedback_form"
+
+    @staticmethod
+    def required_slots(tracker):
+        return ["rating", "feedback_text"]
+
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+        """A dictionary to map required slots to
+            - an extracted entity
+            - intent: value pairs
+            - a whole message
+            or a list of them, where a first match will be picked"""
+
+        return {
+
+            "feedback_text": [
+                self.from_text(),
+            ],
+
+        }
+
+    def submit(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> List[Dict]:
+
+        # Writing feedback to external json file.
+        f = open("feedbacks.json", "a")
+        rate = tracker.get_slot("rating")
+        feedbk = tracker.get_slot("feedback_text")
+
+        data = {
+            "Rating": "{} Stars".format(rate),
+            "Feedback": "{}".format(feedbk)
+        }
+
+        json.dump(data, f)
+        f.close()
+
+        dispatcher.utter_message(
+            "Your Response :\n Rating :'{rate}' star \n Feedback: '{feedbk}' \n Submitted!Thank You!".format(rate=rate,
+                                                                                             feedbk=feedbk))
+
+        return [SlotSet("rating", None), SlotSet("feedback_text", None)]
 
