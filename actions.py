@@ -184,16 +184,7 @@ class ComplainForm(FormAction):
             - a whole message
             or a list of them, where a first match will be picked"""
 
-        return {
-                
-
-            "complain_text": [
-                self.from_text(),
-            ],
-
-
-
-        }
+        return {"complain_text": self.from_entity("any_text")}
 
     def submit(
         self,

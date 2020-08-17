@@ -78,6 +78,22 @@
 - [NO](continue)
 - [no](continue)
 - [No](continue)
+<!-- this is added -->
+- [AB-123](customer_id)
+- [BB-321](customer_id)
+- [ABC-1234](product_id)
+- [BBB-4321](product_id)
+- [12345](transaction_id)
+- [23232](transaction_id)
+- [aZghg21@1hj](any_text)
+## regex:customer_id
+- \b[A-Z]{2}-\d{3}\b
+## regex:product_id
+- \b[A-Z]{3}-\d{4}\b
+## regex:transaction_id
+- \b\d{5}\b
+## regex:any_thing
+- @sys.any
 
 ## intent:goodbye
 
@@ -144,3 +160,4 @@
 - [Delivery](complain_type)
 - [Naaniz App](complain_type)
 - [Other](complain_type)
+

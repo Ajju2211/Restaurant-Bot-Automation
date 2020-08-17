@@ -39,6 +39,7 @@ pipeline:
 - name: "SpacyTokenizer"
 - name: "SpacyFeaturizer"
 - name: "CRFEntityExtractor"
+- name: "components.RegexEntityExtractor"
 - name: "SklearnIntentClassifier"
 # - name: DucklingHTTPExtractor
 #   url: http://localhost:8000
