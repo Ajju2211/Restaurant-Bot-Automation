@@ -7,7 +7,7 @@ from rasa_sdk.events import AllSlotsReset, SlotSet
 import pandas as pd
 from rasa.core.slots import Slot
 import json
-
+from utils import utilities as util
 dataset = pd.read_csv('dishes.csv')
 dataset = dataset.set_index('dish').T.to_dict('list')
 dish_list = []
@@ -219,21 +219,18 @@ class ComplainForm(FormAction):
     ) -> List[Dict]:
 
      
-     #Writing complin to external json file.
-        f = open("complaints.json", "a")
-        comp_type=tracker.get_slot("complain_type")
-        comp = tracker.get_slot("complain_text")
-
-        data={
-
-            "Complain Area":"{}".format(comp_type),
-            "Complain":"{}".format(comp)
-        }
-
-        json.dump(data, f)
-
-
-        f.close()   
+        # saving 
+        with open("customer_queries.json", "r") as queriesRef:
+            comp_type=tracker.get_slot("complain_type")
+            comp = tracker.get_slot("complain_text")
+            compObj = json.load(queriesRef)
+            compObj["complaints"].append({
+                "createdOn":util.timestamp(),
+                "complaint_area":comp_type,
+                "complaint":comp
+            })
+            with open("customer_queries.json", "w") as queriesRefWrite:
+                json.dump(compObj, queriesRefWrite, indent = 4)
 
         dispatcher.utter_message("Your Complaint :\n Complaint Area:{comp_type}\n Complaint: '{comp}' \n has been registered!".format(comp_type=comp_type,comp = comp))
 

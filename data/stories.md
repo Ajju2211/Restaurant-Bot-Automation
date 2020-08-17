@@ -15,7 +15,7 @@
 
 ## order food path
 * order_food
-    - utter_restaurant_name
+    - utter_ask_restaurant_name
 	- order_form
 	- form{"name":"order_form"}
 	- form{"name":null}
