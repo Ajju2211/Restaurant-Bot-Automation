@@ -25,7 +25,7 @@
 
 
 
-## complain path
+<!-- ## complain path
 *complain_init
     -utter_confirm_complain 
 *affirm
@@ -34,7 +34,13 @@
     -form{"name":"null"}
     <!-- -utter_complain_values
 *affirm  
-    -utter_goodbye -->
+    -utter_goodbye --> 
+## complaint path
+*complaint_init
+	-complain_form
+	-form{"name":"complain_form"}
+	-form{"name":"null"}
+
 
 
 

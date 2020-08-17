@@ -174,8 +174,11 @@ class ComplainForm(FormAction):
     @staticmethod
     def required_slots(tracker):
 
-        
-            return ["complain_type", "complain_text"]
+            if tracker.get_slot("complain_type"):
+                return ["complain_type", "complain_text"]
+            else:
+                return ["complain_type"]
+    
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
@@ -183,8 +186,7 @@ class ComplainForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-
-        return {"complain_text": self.from_entity("any_text")}
+        return {"complain_type": self.from_entity("complain_type"),"complain_text": self.from_entity(entity="any_thing")}
 
     def submit(
         self,

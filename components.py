@@ -76,14 +76,14 @@ class RegexEntityExtractor(EntityExtractor):
             else:
                 match = re.search(pattern=d['pattern'], string=message)
                 if match:
-                entity = {
+                    entity = {
                     "start": match.pos,
                     "end": match.endpos,
                     "value": match.group(),
                     "confidence": 1.0,
                     "entity": d['name'],
-                }
-                extracted.append(entity)
+                        }
+                    extracted.append(entity)
 
         extracted = self.add_extractor_name(extracted)
         return extracted

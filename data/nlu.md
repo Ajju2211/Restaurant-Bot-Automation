@@ -153,8 +153,8 @@
 - very spicy
 - unhygenic packing
 - dirty packing
-- very slow delivery
-- the app does not respond at all
+- [very slow delivery]{"entity": "any_thing", "role": "complaint_input"}
+- [the app does not respond at all]{"entity": "any_thing", "role": "complaint_input"}
 - my discount coupon did not apply
 - [Food Quality](complain_type)
 - [Delivery](complain_type)
