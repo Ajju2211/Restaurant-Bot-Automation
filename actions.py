@@ -7,11 +7,14 @@ from rasa_sdk.events import AllSlotsReset, SlotSet
 import pandas as pd
 from rasa.core.slots import Slot
 
-dataset= pd.read_csv('dishes.csv')
-dataset=dataset.set_index('dish').T.to_dict('list')
-dish_list=[]
+dataset = pd.read_csv('dishes.csv')
+dataset = dataset.set_index('dish').T.to_dict('list')
+dish_list = []
+restaurant_dataset = pd.read_csv('restaurant.csv')
+restaurant_dataset = restaurant_dataset.set_index('restaurant').T.to_dict('list')
 
 class InfoForm(FormAction):
+
     """Collects order information"""
 
     def name(self):
@@ -84,7 +87,7 @@ class InfoForm(FormAction):
         saveFile.close()
         dispatcher.utter_message(message)
         return []
-        
+
 class OrderForm(FormAction):
 
     def name(self):
@@ -92,9 +95,28 @@ class OrderForm(FormAction):
     @staticmethod
     def required_slots(tracker):
         return [
+            "restaurant_name",
             "dish_name",
             "proceed",
             ]
+
+    def validate_restaurant_name(self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        restaurant_name = tracker.get_slot("restaurant_name")
+        
+        if restaurant_name in restaurant_dataset.keys(): 
+            url = str(restaurant_dataset[restaurant_name])            
+            dispatcher.utter_message("Menu of that restaurant is ")
+            dispatcher.utter_message(image = url)
+            return {"restaurant_name": restaurant_name}
+        else:
+            dispatcher.utter_message("Restaurant not available")
+            return {"restaurant_name":None}
+
     def validate_dish_name(self,
         value: Text,
         dispatcher: CollectingDispatcher,

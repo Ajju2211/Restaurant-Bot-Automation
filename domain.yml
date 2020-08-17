@@ -12,10 +12,12 @@ intents:
   - affirm
   - complain
   - complain_init
+  - restaurant
 entities:
   - username
   - mailid
   - phone_number
+  - restaurant_name
   - dish_name
   - proceed
   - continue
@@ -32,6 +34,8 @@ slots:
   phone_number:
     type: unfeaturized
   confirm:
+    type: unfeaturized
+  restaurant_name:
     type: unfeaturized
   dish_name:
     type: unfeaturized
@@ -70,8 +74,13 @@ responses:
         email: {mailid}
         "
 
+  utter_ask_restaurant_name:
+    - text: Which restaurant do you want to place order from?
+ 
+
   utter_ask_dish_name:
     - text: What food item would you like to eat?
+
 
   utter_ask_proceed:
     - buttons:

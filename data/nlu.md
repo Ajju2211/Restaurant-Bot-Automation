@@ -144,3 +144,13 @@
 - [Delivery](complain_type)
 - [Naaniz App](complain_type)
 - [Other](complain_type)
+
+## intent:restaurant
+- I want to place order in [Azhar dhaba](restaurant_name)
+- I want to eat from [Ashirwad restaurant](restaurant_name)
+- [Moti Mahal](restaurant_name)
+- Show me menu of [Om restaurant](restaurant_name)
+- I want to order from [China Hot Pot](restaurant_name)
+- I will eat from [Milan](restaurant_name)
+- I will order from [Raju ka dhabba](restaurant_name)
+
