@@ -244,7 +244,10 @@ class FeedbackForm(FormAction):
 
     @staticmethod
     def required_slots(tracker):
-        return ["rating", "feedback_text"]
+        if tracker.get_slot("rating"):
+            return ["rating", "feedback_text"]
+        else :
+            return ["rating"]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
@@ -252,14 +255,7 @@ class FeedbackForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-
-        return {
-
-            "feedback_text": [
-                self.from_text(),
-            ],
-
-        }
+        return {"rating": self.from_entity("rating"),"feedback_text": self.from_entity(entity="any_thing")}
 
     def submit(
             self,
@@ -268,22 +264,19 @@ class FeedbackForm(FormAction):
             domain: Dict[Text, Any],
     ) -> List[Dict]:
 
-        # Writing feedback to external json file.
-        f = open("feedbacks.json", "a")
-        rate = tracker.get_slot("rating")
-        feedbk = tracker.get_slot("feedback_text")
+        with open("customer_queries.json", "r") as queriesRef:
+            rating=tracker.get_slot("rating")
+            feedback = tracker.get_slot("feedback_text")
+            feedbackObj = json.load(queriesRef)
+            feedbackObj["feedback"].append({
+                "createdOn":util.timestamp(),
+                "complaint_area":rating,
+                "complaint":feedback
+            })
+            with open("customer_queries.json", "w") as queriesRefWrite:
+                json.dump(feedbackObj, queriesRefWrite, indent = 4)
 
-        data = {
-            "Rating": "{} Stars".format(rate),
-            "Feedback": "{}".format(feedbk)
-        }
-
-        json.dump(data, f)
-        f.close()
-
-        dispatcher.utter_message(
-            "Your Response :\n Rating :'{rate}' star \n Feedback: '{feedbk}' \n Submitted!Thank You!".format(rate=rate,
-                                                                                             feedbk=feedbk))
+        dispatcher.utter_message("Your Response :\n Rating :'{rate}' star \n Feedback: '{feedbk}' \n Submitted!Thank You!".format(rate=rating,feedbk=feedback))
 
         return [SlotSet("rating", None), SlotSet("feedback_text", None)]
 

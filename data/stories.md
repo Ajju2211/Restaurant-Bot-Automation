@@ -40,8 +40,13 @@
 *complaint_init
 	-complain_form
 	-form{"name":"complain_form"}
-	-form{"name":"null"}
+	-form{"name":null}
 
+## feedback path
+*feedback_init
+	-feedback_form
+	-form{"name":"feedback_form"}
+	-form{"name":null}
 
 
 
