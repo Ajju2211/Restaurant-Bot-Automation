@@ -8,7 +8,9 @@
 
 ```sh
 $ pip3 install  rasa==1.10.8
-$ pip3 install  rasa[transformers]
+$ pip3 install rasa[spacy]
+$ python -m spacy download en_core_web_md
+$ python -m spacy link en_core_web_md en
 $ pip3 install  pandas==1.1.0
 ```
 
