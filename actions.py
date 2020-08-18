@@ -96,10 +96,11 @@ class OrderForm(FormAction):
     @staticmethod
     def required_slots(tracker):
         return [
-            "restaurant_name",
             "dish_name",
-            "proceed",
+            "proceed"
             ]
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+        return {"dish_name": self.from_entity("any_thing"),"proceed": self.from_intent("inform")}
 
     def validate_restaurant_name(self,
         value: Text,
