@@ -162,7 +162,7 @@
 - [Other](complain_type)
 
 ## intent:restaurant
-- I want to place order in [Azhar dhaba](restaurant_name)
+- I want to place order in [azhar](restaurant_name)
 - I want to eat from [Ashirwad restaurant](restaurant_name)
 - [Moti Mahal](restaurant_name)
 - Show me menu of [Om restaurant](restaurant_name)

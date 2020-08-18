@@ -1,0 +1,12 @@
+{
+    "restauarant":{
+        "name":"Azhar",
+        "id":"1234nkjsdn",
+        "city":"Hyderabad"
+    },
+    "user":{
+        "name":"Abhishek",
+        "id":"juhsudhuhbjb",
+        "gender":"M"
+    }
+}
