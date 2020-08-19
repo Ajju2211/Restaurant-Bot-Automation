@@ -16,7 +16,6 @@
 
 ## order food path
 * order_food
-    - utter_restaurant_name
 	- order_form
 	- form{"name":"order_form"}
 	- form{"name":null}
@@ -27,7 +26,7 @@
 <!--
 
 
-## complain path
+<!-- ## complain path
 *complain_init
     -utter_confirm_complain 
 *affirm
@@ -36,7 +35,18 @@
     -form{"name":"null"}
     <!-- -utter_complain_values
 *affirm  
-    -utter_goodbye -->
+    -utter_goodbye --> 
+## complaint path
+*complaint_init
+	-complain_form
+	-form{"name":"complain_form"}
+	-form{"name":null}
+
+## feedback path
+*feedback_init
+	-feedback_form
+	-form{"name":"feedback_form"}
+	-form{"name":null}
 
 
 

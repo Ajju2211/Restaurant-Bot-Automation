@@ -7,7 +7,7 @@ from rasa_sdk.events import AllSlotsReset, SlotSet
 import pandas as pd
 from rasa.core.slots import Slot
 import json
-
+from utils import utilities as util
 dataset = pd.read_csv('dishes.csv')
 dataset = dataset.set_index('dish').T.to_dict('list')
 dish_list = []
@@ -96,10 +96,11 @@ class OrderForm(FormAction):
     @staticmethod
     def required_slots(tracker):
         return [
-            "restaurant_name",
             "dish_name",
-            "proceed",
+            "proceed"
             ]
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+        return {"dish_name": self.from_entity("any_thing"),"proceed": self.from_intent("inform")}
 
     def validate_restaurant_name(self,
         value: Text,
@@ -197,8 +198,11 @@ class ComplainForm(FormAction):
     @staticmethod
     def required_slots(tracker):
 
-        
-            return ["complain_type", "complain_text"]
+            if tracker.get_slot("complain_type"):
+                return ["complain_type", "complain_text"]
+            else:
+                return ["complain_type"]
+    
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
@@ -206,17 +210,7 @@ class ComplainForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-
-        return {
-                
-
-            "complain_text": [
-                self.from_text(),
-            ],
-
-
-
-        }
+        return {"complain_type": self.from_entity("complain_type"),"complain_text": self.from_entity(entity="any_thing")}
 
     def submit(
         self,
@@ -226,21 +220,18 @@ class ComplainForm(FormAction):
     ) -> List[Dict]:
 
      
-     #Writing complin to external json file.
-        f = open("complaints.json", "a")
-        comp_type=tracker.get_slot("complain_type")
-        comp = tracker.get_slot("complain_text")
-
-        data={
-
-            "Complain Area":"{}".format(comp_type),
-            "Complain":"{}".format(comp)
-        }
-
-        json.dump(data, f)
-
-
-        f.close()   
+        # saving 
+        with open("customer_queries.json", "r") as queriesRef:
+            comp_type=tracker.get_slot("complain_type")
+            comp = tracker.get_slot("complain_text")
+            compObj = json.load(queriesRef)
+            compObj["complaints"].append({
+                "createdOn":util.timestamp(),
+                "complaint_area":comp_type,
+                "complaint":comp
+            })
+            with open("customer_queries.json", "w") as queriesRefWrite:
+                json.dump(compObj, queriesRefWrite, indent = 4)
 
         dispatcher.utter_message("Your Complaint :\n Complaint Area:{comp_type}\n Complaint: '{comp}' \n has been registered!".format(comp_type=comp_type,comp = comp))
 
@@ -254,7 +245,10 @@ class FeedbackForm(FormAction):
 
     @staticmethod
     def required_slots(tracker):
-        return ["rating", "feedback_text"]
+        if tracker.get_slot("rating"):
+            return ["rating", "feedback_text"]
+        else :
+            return ["rating"]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
@@ -262,14 +256,7 @@ class FeedbackForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-
-        return {
-
-            "feedback_text": [
-                self.from_text(),
-            ],
-
-        }
+        return {"rating": self.from_entity("rating"),"feedback_text": self.from_entity(entity="any_thing")}
 
     def submit(
             self,
@@ -278,22 +265,19 @@ class FeedbackForm(FormAction):
             domain: Dict[Text, Any],
     ) -> List[Dict]:
 
-        # Writing feedback to external json file.
-        f = open("feedbacks.json", "a")
-        rate = tracker.get_slot("rating")
-        feedbk = tracker.get_slot("feedback_text")
+        with open("customer_queries.json", "r") as queriesRef:
+            rating=tracker.get_slot("rating")
+            feedback = tracker.get_slot("feedback_text")
+            feedbackObj = json.load(queriesRef)
+            feedbackObj["feedback"].append({
+                "createdOn":util.timestamp(),
+                "complaint_area":rating,
+                "complaint":feedback
+            })
+            with open("customer_queries.json", "w") as queriesRefWrite:
+                json.dump(feedbackObj, queriesRefWrite, indent = 4)
 
-        data = {
-            "Rating": "{} Stars".format(rate),
-            "Feedback": "{}".format(feedbk)
-        }
-
-        json.dump(data, f)
-        f.close()
-
-        dispatcher.utter_message(
-            "Your Response :\n Rating :'{rate}' star \n Feedback: '{feedbk}' \n Submitted!Thank You!".format(rate=rate,
-                                                                                             feedbk=feedbk))
+        dispatcher.utter_message("Your Response :\n Rating :'{rate}' star \n Feedback: '{feedbk}' \n Submitted!Thank You!".format(rate=rating,feedbk=feedback))
 
         return [SlotSet("rating", None), SlotSet("feedback_text", None)]
 

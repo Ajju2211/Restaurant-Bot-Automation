@@ -41,7 +41,7 @@ slots:
   confirm:
     type: unfeaturized
   restaurant_name:
-    type: unfeaturized
+    type: unfeaturized  
   dish_name:
     type: unfeaturized
   proceed:
@@ -85,11 +85,11 @@ responses:
         "
 
   utter_ask_restaurant_name:
-    - text: Which restaurant do you want to place order from?
- 
+     - text: Which restaurant do you want to place order from?
+
 
   utter_ask_dish_name:
-    - text: What food item would you like to eat?
+      - text: What food item would you like to eat?
 
 
   utter_ask_proceed:
@@ -114,25 +114,25 @@ responses:
         else?
   
   utter_confirm_complain:
-  - text: We are really sorry for the inconvinience. Do you want to register a complain?
+    - text: We are really sorry for the inconvinience. Do you want to register a complain?
   
   utter_ask_complain_type:
-  - buttons:
-    - payload: '/complain{"complain_type": "Food Quality"}'
-      title: Food Quality
-    - payload: '/complain{"complain_type": "Delivery"}'
-      title: Delivery
-    - payload: '/complain{"complain_type":"Naaniz App"}'
-      title: Naaniz App
-    - payload: '/complain{"complain_type":"Other"}'
-      title: Other
-    text: What is complain regarding ?
+    - buttons:
+        - payload: '/complain{"complain_type": "Food Quality"}'
+          title: Food Quality
+        - payload: '/complain{"complain_type": "Delivery"}'
+          title: Delivery
+        - payload: '/complain{"complain_type":"Naaniz App"}'
+          title: Naaniz App
+        - payload: '/complain{"complain_type":"Other"}'
+          title: Other
+      text: What is complain regarding ?
   
   utter_ask_complain_text:
-  - text: Please Describe your complain.
+    - text: Please Describe your complain.
   
   utter_confirm_feedback:
-  - text: Do you want to give a feedback?
+    - text: Do you want to give a feedback?
   utter_ask_rating:
     - buttons:
         - payload: '/rating{"rating":"1"}'

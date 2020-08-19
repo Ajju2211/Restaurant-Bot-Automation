@@ -78,6 +78,22 @@
 - [NO](continue)
 - [no](continue)
 - [No](continue)
+<!-- this is added -->
+- [AB-123](customer_id)
+- [BB-321](customer_id)
+- [ABC-1234](product_id)
+- [BBB-4321](product_id)
+- [12345](transaction_id)
+- [23232](transaction_id)
+- [aZghg21@1hj](any_text)
+## regex:customer_id
+- \b[A-Z]{2}-\d{3}\b
+## regex:product_id
+- \b[A-Z]{3}-\d{4}\b
+## regex:transaction_id
+- \b\d{5}\b
+## regex:any_thing
+- @sys.any
 
 ## intent:goodbye
 
@@ -137,8 +153,8 @@
 - very spicy
 - unhygenic packing
 - dirty packing
-- very slow delivery
-- the app does not respond at all
+- [very slow delivery]{"entity": "any_thing", "role": "complaint_input"}
+- [the app does not respond at all]{"entity": "any_thing", "role": "complaint_input"}
 - my discount coupon did not apply
 - [Food Quality](complain_type)
 - [Delivery](complain_type)
@@ -146,7 +162,7 @@
 - [Other](complain_type)
 
 ## intent:restaurant
-- I want to place order in [Azhar dhaba](restaurant_name)
+- I want to place order in [azhar](restaurant_name)
 - I want to eat from [Ashirwad restaurant](restaurant_name)
 - [Moti Mahal](restaurant_name)
 - Show me menu of [Om restaurant](restaurant_name)
