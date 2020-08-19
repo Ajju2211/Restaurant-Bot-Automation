@@ -1,4 +1,5 @@
-## greet
+<!-- ## greet
+
 * greet
 	- utter_greet
 
@@ -23,7 +24,7 @@
 	- utter_goodbye
 
 
-
+<!--
 
 
 ## complain path
@@ -42,7 +43,7 @@
 
 
 
-
+<!--
 
 
 ## say goodbye
@@ -52,3 +53,4 @@
 ## bot challenge
 * bot_challenge
   - utter_iamabot
+-->
