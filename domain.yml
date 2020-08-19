@@ -11,7 +11,7 @@ intents:
   - deny
   - affirm
   - complain
-  - complain_init
+  - complaint_init
   - feedback_init
   - rating
   - quant
@@ -31,6 +31,7 @@ entities:
   - rating
   - feedback_text
   - quantity
+  - any_thing
 
 slots:
   username:
