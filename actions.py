@@ -175,7 +175,7 @@ class OrderForm(FormAction):
             amount += z
         dispatcher.utter_message("Total Amount : {}".format(amount))
         dispatcher.utter_message("Thanks for ordering")
-        return [SlotSet("dish_name",None),SlotSet("quantity",None),SlotSet("proceed",None)]
+        return [AllSlotsReset()]
             
 class DefaultFallback(FormAction):
     """Default Fallback Action"""
