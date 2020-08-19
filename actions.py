@@ -120,7 +120,7 @@ class OrderForm(FormAction):
             "proceed"
             ]
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-        return {"dish_name": self.from_intent("any_thing"),"quantity": self.from_intent("quant"),"proceed": self.from_intent("inform")}
+        return {"dish_name": self.from_intent("any_thing"),"quantity": self.from_text("quant"),"proceed": self.from_intent("inform")}
 
     
     def validate_dish_name(self,
