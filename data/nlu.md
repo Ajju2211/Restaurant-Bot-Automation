@@ -96,8 +96,6 @@
 - \b\d{5}\b
 ## regex:any_thing
 - @sys.any
-- @sys.any
-- @sys.any
 
 ## intent:quant
 - [0](quantity)
@@ -137,7 +135,7 @@
 - am I talking to a human?
 
 
-## intent:complain_init
+## intent:complaint_init
 
 -I want to complain
 -I have a complain
