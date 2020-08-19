@@ -22,6 +22,9 @@ print(inP.indexPages(numOfDishes, limiDishesPerPage))
  
 # save in dishIndexPages.json
 
+from utils import utilities
+print(utilities.saveDictAsJsonFile({"a":1},"./test.json"))
+
 
 
 

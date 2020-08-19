@@ -96,7 +96,7 @@ class ActionShowMenu(Action):
     def run(
         self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
-        x = open('custom_payload.json', )
+        x = open('custom_payload.json',"r")
         data = json.load(x)
         data_restaurant = data['restaurant']
         for i in data['restaurant']['menu_imgs']:
@@ -120,7 +120,7 @@ class OrderForm(FormAction):
             "proceed"
             ]
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-        return {"dish_name": self.from_intent("any_thing"),"quantity": self.from_intent("quant"),"proceed": self.from_intent("inform")}
+        return {"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
 
     
     def validate_dish_name(self,
@@ -147,7 +147,7 @@ class OrderForm(FormAction):
     ) -> Dict[Text, Any]:
         dish_name = tracker.get_slot("dish_name")
         proceed = tracker.get_slot("proceed")
-        quant = tracker.get_slot("quantity")
+        quant = int(tracker.get_slot("quantity"))
         if proceed =="Add to Cart":
             dish_list.append(dish_name)
             quant_list.append(quant)
@@ -157,7 +157,7 @@ class OrderForm(FormAction):
         elif proceed == "Buy Now":
             dish_list.append(dish_name)
             quant_list.append(quant)
-            return {"proceed":value,"dish_name":value,"quantity":value}
+            return {"proceed":proceed}
 
         else:
             return {"dish_name":None,"proceed":None,"quantity":None}
@@ -175,7 +175,7 @@ class OrderForm(FormAction):
             amount += z
         dispatcher.utter_message("Total Amount : {}".format(amount))
         dispatcher.utter_message("Thanks for ordering")
-        return []
+        return [SlotSet("dish_name",None),SlotSet("quantity",None),SlotSet("proceed",None)]
             
 class DefaultFallback(FormAction):
     """Default Fallback Action"""

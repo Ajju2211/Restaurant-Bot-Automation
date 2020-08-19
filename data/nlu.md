@@ -97,12 +97,8 @@
 ## regex:any_thing
 - @sys.any
 
-## intent:quant
-- [0](quantity)
-- [1](quantity)
-- [2](quantity)
-- [3](quantity)
-- I want [4](quantity) noodles
+## regex:quantity
+- \b\d{1,3}\b
 ## intent:goodbye
 
 - bye

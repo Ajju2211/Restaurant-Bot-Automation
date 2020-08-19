@@ -20,8 +20,6 @@
 	- order_form
 	- form{"name":"order_form"}
 	- form{"name":null}
-* goodbye
-	- utter_goodbye
 
 
 <!--
