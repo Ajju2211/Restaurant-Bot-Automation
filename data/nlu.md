@@ -86,6 +86,8 @@
 - [12345](transaction_id)
 - [23232](transaction_id)
 - [aZghg21@1hj](any_text)
+- [azhar@jhj](any_text)
+
 ## regex:customer_id
 - \b[A-Z]{2}-\d{3}\b
 ## regex:product_id
@@ -94,7 +96,15 @@
 - \b\d{5}\b
 ## regex:any_thing
 - @sys.any
+- @sys.any
+- @sys.any
 
+## intent:quant
+- [0](quantity)
+- [1](quantity)
+- [2](quantity)
+- [3](quantity)
+- I want [4](quantity) noodles
 ## intent:goodbye
 
 - bye
@@ -161,16 +171,6 @@
 - [Naaniz App](complain_type)
 - [Other](complain_type)
 
-## intent:restaurant
-- I want to place order in [azhar](restaurant_name)
-- I want to eat from [Ashirwad restaurant](restaurant_name)
-- [Moti Mahal](restaurant_name)
-- Show me menu of [Om restaurant](restaurant_name)
-- I want to order from [China Hot Pot](restaurant_name)
-- I will eat from [Milan](restaurant_name)
-- I will order from [Raju ka dhabba](restaurant_name)
-
-
 ## intent:feedback_init
 
 -i want to give feedback
@@ -184,7 +184,6 @@
 -feedback
 
 ## intent:rating
-
 -[1](rating)
 -[2](rating)
 -[3](rating)

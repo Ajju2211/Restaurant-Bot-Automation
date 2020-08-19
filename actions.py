@@ -11,6 +11,7 @@ from utils import utilities as util
 dataset = pd.read_csv('dishes.csv')
 dataset = dataset.set_index('dish').T.to_dict('list')
 dish_list = []
+quant_list = [] #takes quantity from user
 restaurant_dataset = pd.read_csv('restaurant.csv')
 restaurant_dataset = restaurant_dataset.set_index('restaurant').T.to_dict('list')
 
@@ -89,6 +90,24 @@ class InfoForm(FormAction):
         dispatcher.utter_message(message)
         return []
 
+class ActionShowMenu(Action):
+    def name(self) -> Text:
+        return "action_show_menu"
+    def run(
+        self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+        x = open('custom_payload.json', )
+        data = json.load(x)
+        data_restaurant = data['restaurant']
+        for i in data['restaurant']['menu_imgs']:
+                url = str(i)
+                dispatcher.utter_message("Menu of that restaurant is ")
+                dispatcher.utter_message(image = url)
+        return []
+
+
+
+
 class OrderForm(FormAction):
 
     def name(self):
@@ -97,28 +116,13 @@ class OrderForm(FormAction):
     def required_slots(tracker):
         return [
             "dish_name",
+            "quantity",
             "proceed"
             ]
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-        return {"dish_name": self.from_entity("any_thing"),"proceed": self.from_intent("inform")}
+        return {"dish_name": self.from_intent("any_thing"),"quantity": self.from_intent("quant"),"proceed": self.from_intent("inform")}
 
-    def validate_restaurant_name(self,
-        value: Text,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        restaurant_name = tracker.get_slot("restaurant_name")
-        
-        if restaurant_name in restaurant_dataset.keys(): 
-            url = str(restaurant_dataset[restaurant_name])            
-            dispatcher.utter_message("Menu of that restaurant is ")
-            dispatcher.utter_message(image = url)
-            return {"restaurant_name": restaurant_name}
-        else:
-            dispatcher.utter_message("Restaurant not available")
-            return {"restaurant_name":None}
-
+    
     def validate_dish_name(self,
         value: Text,
         dispatcher: CollectingDispatcher,
@@ -128,7 +132,7 @@ class OrderForm(FormAction):
         dish_name = tracker.get_slot("dish_name")
         
         if dish_name in dataset.keys(): 
-            dispatcher.utter_message("it costs "+ str(dataset[dish_name][0]))
+            dispatcher.utter_message("it costs {}".format(dataset[dish_name][0]))
             return {"dish_name": dish_name}
         else:
             dispatcher.utter_template("utter_not_serving",tracker)
@@ -141,18 +145,22 @@ class OrderForm(FormAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        dish_name= tracker.get_slot("dish_name")
-        proceed=tracker.get_slot("proceed")
+        dish_name = tracker.get_slot("dish_name")
+        proceed = tracker.get_slot("proceed")
+        quant = tracker.get_slot("quantity")
         if proceed =="Add to Cart":
             dish_list.append(dish_name)
-            return {"proceed":None,"dish_name":None}
+            quant_list.append(quant)
+            print("quantity")
+            return {"proceed":None,"dish_name":None,"quantity":None}
 
         elif proceed == "Buy Now":
             dish_list.append(dish_name)
-            return {"proceed":value,"dish_name":value}
+            quant_list.append(quant)
+            return {"proceed":value,"dish_name":value,"quantity":value}
 
         else:
-            return {"dish_name":None,"proceed":None}
+            return {"dish_name":None,"proceed":None,"quantity":None}
 
     def submit(
         self,
@@ -160,14 +168,12 @@ class OrderForm(FormAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict]:
-    
-        dish_name=(tracker.get_slot("dish_name"))
-        proceed=tracker.get_slot("proceed")
         amount = 0
-        for x in dish_list:
-            dispatcher.utter_message(x+":"+str(dataset[x][0]))
-            amount += dataset[x][0]
-        dispatcher.utter_message("Total Amount : "+str(amount))    
+        for x in range(len(dish_list)):
+            dispatcher.utter_message("{} : {} : {}".format(dish_list[x],quant_list[x],dataset[dish_list[x]][0]))
+            z = int(dataset[dish_list[x]][0])
+            amount += z
+        dispatcher.utter_message("Total Amount : {}".format(amount))
         dispatcher.utter_message("Thanks for ordering")
         return []
             
@@ -184,11 +190,6 @@ class DefaultFallback(FormAction):
 
         dispatcher.utter_message("Fallback Triggered bcoz u've typed something! "+queryText)
         return []
-
-
-
-    
-
 
 class ComplainForm(FormAction):
 

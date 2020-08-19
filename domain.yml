@@ -12,15 +12,15 @@ intents:
   - affirm
   - complain
   - complain_init
-  - restaurant
   - feedback_init
   - rating
+  - quant
+
   
 entities:
   - username
   - mailid
   - phone_number
-  - restaurant_name
   - dish_name
   - proceed
   - continue
@@ -30,6 +30,7 @@ entities:
   - complain_text
   - rating
   - feedback_text
+  - quantity
 
 slots:
   username:
@@ -40,8 +41,6 @@ slots:
     type: unfeaturized
   confirm:
     type: unfeaturized
-  restaurant_name:
-    type: unfeaturized  
   dish_name:
     type: unfeaturized
   proceed:
@@ -53,6 +52,8 @@ slots:
   rating:
     type: unfeaturized
   feedback_text:
+    type: unfeaturized
+  quantity:
     type: unfeaturized
 
 responses:
@@ -84,14 +85,11 @@ responses:
         email: {mailid}
         "
 
-  utter_ask_restaurant_name:
-     - text: Which restaurant do you want to place order from?
-
-
   utter_ask_dish_name:
       - text: What food item would you like to eat?
 
-
+  utter_ask_quantity:
+    - text: Please enter the quantity
   utter_ask_proceed:
     - buttons:
         - payload: /inform{"proceed":"Add to Cart"}
@@ -166,6 +164,7 @@ actions:
   - utter_confirm_feedback
   - utter_ask_rating
   - utter_ask_feedback_text
+  - action_show_menu
 
 forms:
   - info_form
