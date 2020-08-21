@@ -22,9 +22,17 @@ print(inP.indexPages(numOfDishes, limiDishesPerPage))
  
 # save in dishIndexPages.json
 
-from utils import utilities
-print(utilities.saveDictAsJsonFile({"a":1},"./test.json"))
+# from utils import utilities
+# print(utilities.saveDictAsJsonFile({"a":1},"./test.json"))
 
+# test FAQs for search query uses NLP is slow
+from controllers.faqs.faq import FAQ
+f = FAQ("controllers/faqs/test_faq.csv")
+print(f.ask_faq("what naaniz"))
 
+# without NLP=False  is fast
+ 
+f = FAQ("controllers/faqs/test_faq.csv")
+print(f.ask_faq("what naaniz"))
 
 
