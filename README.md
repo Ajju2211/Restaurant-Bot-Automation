@@ -34,7 +34,7 @@ cmd:\ conda install -c conda-forge python-levenshtein==0.12.0  *** for windows o
     - [x] Saving feedbacks
     - [x] Able to save anything
 - [ ] Ordering 
-    - [] Back buttons
+    - [ ] Back buttons
         - [x] Back button to change dish after selecting
         - [ ] Back buttons everywhere
     - [x] Able to search any dish
