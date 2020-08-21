@@ -26,7 +26,7 @@ cmd:\ conda install -c conda-forge python-levenshtein==0.12.0  *** for windows o
 
 #### TASK DONE
 - [ ] Complaints 
-    - [ ] Back button in complaints
+    - [ ] Back button in complaints 
     - [x] Saving complaints 
     - [x] Able to save anything
 - [ ] Feedbacks
