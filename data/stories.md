@@ -14,6 +14,8 @@
 ## complaint path
 *greet
     -utter_greet
+*query_init
+    -utter_query_type    
 *complaint_init
 	-complain_form
 	-form{"name":"complain_form"}
@@ -22,7 +24,9 @@
 	
 ## feedback path
 *greet
-	-utter_greet	
+	-utter_greet
+*query_init
+    -utter_query_type	
 *feedback_init
 	-feedback_form
 	-form{"name":"feedback_form"}

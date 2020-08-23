@@ -15,6 +15,7 @@ actions:
   - utter_ask_rating
   - utter_ask_feedback_text
   - action_show_menu
+  - utter_query_type
 entities:
   - username
   - mailid
@@ -46,9 +47,12 @@ intents:
   - complain
   - complaint_init
   - feedback_init
+  - query_init
   - rating
   - quant
 responses:
+
+
   utter_ask_complain_text:
     - text: "Please Describe your complain."
   utter_ask_complain_type:
@@ -146,12 +150,19 @@ responses:
           payload: /order_food
           title: "Order Food"
         -
-          payload: /feedback_init
-          title: Feedback
-        -
-          payload: /complaint_init
-          title: Complain
+          payload: /query_init
+          title: "Query"
+
       text: "How can we help you today?"
+
+  utter_query_type:
+    - buttons:
+        - payload: /feedback_init
+          title: "Feedback"
+        - payload: /complaint_init
+          title: "Complaint"
+
+      text: "What kind of query is it?"
   utter_iamabot:
     -
       text: "I am a bot, powered by Rasa."
