@@ -1,22 +1,20 @@
-session_config:
-  session_expiration_time: 180
-  carry_over_slots_to_new_session: true
-
-intents:
-  - greet
-  - goodbye
-  - order_food
-  - inform
-  - bot_challenge
-  - deny
-  - affirm
-  - complain
-  - complaint_init
-  - feedback_init
-  - rating
-  - quant
-
-  
+---
+actions:
+  - utter_greet
+  - utter_ask_username
+  - utter_ask_mailid
+  - utter_ask_phone_number
+  - utter_ask_dish_name
+  - utter_ask_proceed
+  - utter_goodbye
+  - utter_iamabot
+  - utter_not_serving
+  - action_default_fallback
+  - utter_ask_complain_text
+  - utter_ask_complain_type
+  - utter_ask_rating
+  - utter_ask_feedback_text
+  - action_show_menu
 entities:
   - username
   - mailid
@@ -32,143 +30,158 @@ entities:
   - feedback_text
   - quantity
   - any_thing
-
-slots:
-  username:
-    type: unfeaturized
-  mailid:
-    type: unfeaturized
-  phone_number:
-    type: unfeaturized
-  confirm:
-    type: unfeaturized
-  dish_name:
-    type: unfeaturized
-  proceed:
-    type: unfeaturized
-  complain_type:
-    type: unfeaturized
-  complain_text:
-    type: unfeaturized
-  rating:
-    type: unfeaturized
-  feedback_text:
-    type: unfeaturized
-  quantity:
-    type: unfeaturized
-
-responses:
-  utter_greet:
-    - text: Hey! How are you?
-
-  utter_ask_username:
-    - text: What is your name?
-
-  utter_ask_mailid:
-    - buttons:
-        - payload: /inform{"mailid":"back1"}
-          title: Back
-      text: Please enter your mail id.
-
-  utter_ask_phone_number:
-    - buttons:
-        - payload: /inform{"phone_number":"back2"}
-          title: Back
-      text: Please enter your phone number.
-
-  utter_ask_confirm:
-    - buttons:
-        - payload: /affirm{"confirm":"back3"}
-          title: Back
-      text: "Please confirm your details:\n
-        name: {username} \n
-        Contact no.: {phone_number} \n
-        email: {mailid}
-        "
-
-  utter_ask_dish_name:
-      - text: What food item would you like to eat?
-
-  utter_ask_quantity:
-    - text: Please enter the quantity
-  utter_ask_proceed:
-    - buttons:
-        - payload: /inform{"proceed":"Add to Cart"}
-          title: "Add to Cart"
-        - payload: /inform{"proceed":"Buy Now"}
-          title: "Buy Now"
-        - payload: /inform{"proceed":"No"}
-          title: Select Other Food item
-      text: Please select above options
-
-  utter_goodbye:
-    - text: Bye
-
-  utter_iamabot:
-    - text: I am a bot, powered by Rasa.
-
-  utter_not_serving:
-    - text:
-        Currently we are not serving this dish. Would you like to have something
-        else?
-  
-  utter_confirm_complain:
-    - text: We are really sorry for the inconvinience. Do you want to register a complain?
-  
-  utter_ask_complain_type:
-    - buttons:
-        - payload: '/complain{"complain_type": "Food Quality"}'
-          title: Food Quality
-        - payload: '/complain{"complain_type": "Delivery"}'
-          title: Delivery
-        - payload: '/complain{"complain_type":"Naaniz App"}'
-          title: Naaniz App
-        - payload: '/complain{"complain_type":"Other"}'
-          title: Other
-      text: What is complain regarding ?
-  
-  utter_ask_complain_text:
-    - text: Please Describe your complain.
-  
-  utter_confirm_feedback:
-    - text: Do you want to give a feedback?
-  utter_ask_rating:
-    - buttons:
-        - payload: '/rating{"rating":"1"}'
-          title: 1
-        - payload: '/rating{"rating": "2"}'
-          title: 2
-        - payload: '/rating{"rating":"3"}'
-          title: 3
-        - payload: '/rating{"rating":"4"}'
-          title: 4
-        - payload: '/rating{"rating":"5"}'
-          title: 5
-      text: Please rate your experience out of 5 ?
-  utter_ask_feedback_text:
-    - text: Please enter your feedback.
-
-actions:
-  - utter_greet
-  - utter_ask_username
-  - utter_ask_mailid
-  - utter_ask_phone_number
-  - utter_ask_dish_name
-  - utter_ask_proceed
-  - utter_goodbye
-  - utter_iamabot
-  - utter_not_serving
-  - action_default_fallback
-  - utter_ask_complain_text
-  - utter_ask_complain_type
-  - utter_confirm_complain
-  - utter_confirm_feedback
-  - utter_ask_rating
-  - utter_ask_feedback_text
-  - action_show_menu
-
 forms:
   - info_form
   - order_form
   - complain_form
   - feedback_form
+intents:
+  - greet
+  - goodbye
+  - order_food
+  - inform
+  - bot_challenge
+  - deny
+  - affirm
+  - complain
+  - complaint_init
+  - feedback_init
+  - rating
+  - quant
+responses:
+  utter_ask_complain_text:
+    - text: "Please Describe your complain."
+  utter_ask_complain_type:
+    -
+      buttons:
+        -
+          payload: "/complain{\"complain_type\": \"Food Quality\"}"
+          title: "Food Quality"
+        -
+          payload: "/complain{\"complain_type\": \"Delivery\"}"
+          title: Delivery
+        -
+          payload: "/complain{\"complain_type\":\"Naaniz App\"}"
+          title: "Naaniz App"
+        -
+          payload: "/complain{\"complain_type\":\"Other\"}"
+          title: Other
+      text: "What is complain regarding ?"
+  utter_ask_confirm:
+    -
+      buttons:
+        -
+          payload: "/affirm{\"confirm\":\"back3\"}"
+          title: Back
+      text: "Please confirm your details:\n\
+          \x20name: {username} \n\
+          \x20Contact no.: {phone_number} \n\
+          \x20email: {mailid} "
+  utter_ask_dish_name:
+    -
+      text: "What food item would you like to eat?"
+  utter_ask_feedback_text:
+    -
+      text: "Please enter your feedback."
+  utter_ask_mailid:
+    -
+      buttons:
+        -
+          payload: "/inform{\"mailid\":\"back1\"}"
+          title: Back
+      text: "Please enter your mail id."
+  utter_ask_phone_number:
+    -
+      buttons:
+        -
+          payload: "/inform{\"phone_number\":\"back2\"}"
+          title: Back
+      text: "Please enter your phone number."
+  utter_ask_proceed:
+    -
+      buttons:
+        -
+          payload: "/inform{\"proceed\":\"Add to Cart\"}"
+          title: "Add to Cart"
+        -
+          payload: "/inform{\"proceed\":\"Buy Now\"}"
+          title: "Buy Now"
+        -
+          payload: "/inform{\"proceed\":\"No\"}"
+          title: "Select Other Food item"
+      text: "Please select above options"
+  utter_ask_quantity:
+    -
+      text: "Please enter the quantity"
+  utter_ask_rating:
+    -
+      buttons:
+        -
+          payload: "/rating{\"rating\":\"1\"}"
+          title: 1
+        -
+          payload: "/rating{\"rating\": \"2\"}"
+          title: 2
+        -
+          payload: "/rating{\"rating\":\"3\"}"
+          title: 3
+        -
+          payload: "/rating{\"rating\":\"4\"}"
+          title: 4
+        -
+          payload: "/rating{\"rating\":\"5\"}"
+          title: 5
+      text: "Please rate your experience out of 5 ?"
+  utter_ask_username:
+    -
+      text: "What is your name?"
+
+  utter_goodbye:
+    -
+      text: Bye
+  utter_greet:
+    -
+      buttons:
+        -
+          payload: /order_food
+          title: "Order Food"
+        -
+          payload: /feedback_init
+          title: Feedback
+        -
+          payload: /complaint_init
+          title: Complain
+      text: "How can we help you today?"
+  utter_iamabot:
+    -
+      text: "I am a bot, powered by Rasa."
+  utter_not_serving:
+    -
+      text: "Currently we are not serving this dish. Would you like to have something else?"
+session_config:
+  carry_over_slots_to_new_session: true
+  session_expiration_time: 180
+slots:
+  complain_text:
+    type: unfeaturized
+  complain_type:
+    type: unfeaturized
+  confirm:
+    type: unfeaturized
+  dish_name:
+    type: unfeaturized
+  feedback_text:
+    type: unfeaturized
+  mailid:
+    type: unfeaturized
+  phone_number:
+    type: unfeaturized
+  proceed:
+    type: unfeaturized
+  quantity:
+    type: unfeaturized
+  rating:
+    type: unfeaturized
+  username:
+    initial_value: John
+    type: unfeaturized

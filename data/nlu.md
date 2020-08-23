@@ -99,6 +99,9 @@
 
 ## regex:quantity
 - \b\d{1,3}\b
+
+
+
 ## intent:goodbye
 
 - bye
@@ -183,3 +186,12 @@
 -[3](rating)
 -[4](rating)
 -[5](rating)
+
+## intent:query_init
+
+-I want to query
+-I have a query
+-I have an issue
+-I want to report an query
+-I want to report queries
+-query
