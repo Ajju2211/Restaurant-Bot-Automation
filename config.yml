@@ -57,31 +57,32 @@
 ## name: MemoizationPolicy
 ##- name: FormPolicy
 ##- name: MappingPolicy
-#
-#pipeline:
-#- name: "SpacyNLP"
-#- name: "SpacyTokenizer"
-#- name: "SpacyFeaturizer"
-#- name: "CRFEntityExtractor"
-#- name: "components.RegexEntityExtractor"
-#- name: "SklearnIntentClassifier"
-## - name: DucklingHTTPExtractor
-##   url: http://localhost:8000
-##   dimensions:
-##     - number
-#policies:
-#- batch_size: 50
-#  epochs: 200
-#  max_training_samples: 300
-#  name: KerasPolicy
-#- name: FallbackPolicy
-#  nlu_threshold: 0.4
-#  core_threshold: 0.3
-#  fallback_action_name: action_default_fallback
-#- max_history: 5
-#  name: MemoizationPolicy
-#- name: FormPolicy
-#- name: MappingPolicy
+
+# language: en
+# pipeline:
+# - name: "SpacyNLP"
+# - name: "SpacyTokenizer"
+# - name: "SpacyFeaturizer"
+# - name: "CRFEntityExtractor"
+# - name: "components.RegexEntityExtractor"
+# - name: "SklearnIntentClassifier"
+# # - name: DucklingHTTPExtractor
+# #   url: http://localhost:8000
+# #   dimensions:
+# #     - number
+# policies:
+# - batch_size: 50
+#   epochs: 200
+#   max_training_samples: 300
+#   name: KerasPolicy
+# - name: FallbackPolicy
+#   nlu_threshold: 0.4
+#   core_threshold: 0.3
+#   fallback_action_name: action_default_fallback
+# - max_history: 5
+#   name: MemoizationPolicy
+# - name: FormPolicy
+# - name: MappingPolicy
 #
 # Configuration for Rasa NLU.
 # https://rasa.com/docs/rasa/nlu/components/
