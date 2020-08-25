@@ -53,6 +53,10 @@ cmd:\ conda install -c conda-forge python-levenshtein==0.12.0  *** for windows o
         - [ ] Rating
 - [ ] Faqs
 - [ ] home menu showing options
+    - [ ] Back in home menu
+    - [ ] included Faq's
+    - [x] included Ordering
+    - [x] included queries (complaints/Feedbacks)
     
 
 
