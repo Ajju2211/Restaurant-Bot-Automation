@@ -136,6 +136,14 @@ responses:
           payload: "/rating{\"rating\":\"5\"}"
           title: 5
       text: "Please rate your experience out of 5 ?"
+
+  utter_ask_feedback_back:
+    -
+      buttons:
+        -
+          payload: "/rating{\"rating\":\"back\"}"
+          title: back
+      text: "Do you wanna go back ?"    
   utter_ask_username:
     -
       text: "What is your name?"

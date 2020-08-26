@@ -211,9 +211,6 @@ class ComplainForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-        
-        # return {"complain_type": self.from_entity("complain_type"),"complain_text": [self.from_text()]}
-
         return {"complain_type": self.from_entity("complain_type"),"complain_text": self.from_entity(entity="any_thing")}
 
     def submit(
@@ -260,7 +257,6 @@ class FeedbackForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-        
         return {"rating": self.from_entity("rating"),"feedback_text": self.from_entity(entity="any_thing")}
 
     def submit(
@@ -286,6 +282,18 @@ class FeedbackForm(FormAction):
 
         return [SlotSet("rating", None), SlotSet("feedback_text", None)]
 
+    def validate_feedback_text(
+        self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        feedback= tracker.get_slot("feedback_text")
+        rating = tracker.get_slot("rating")
+        if rating=="back":
+            return {"rating":None, "feedback_text":None}
+        
+              
 
-
-
+        

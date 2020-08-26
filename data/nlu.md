@@ -186,6 +186,7 @@
 -[3](rating)
 -[4](rating)
 -[5](rating)
+-[back](rating)
 
 ## intent:query_init
 
