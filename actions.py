@@ -247,7 +247,7 @@ class FeedbackForm(FormAction):
     @staticmethod
     def required_slots(tracker):
         if tracker.get_slot("rating"):
-            return ["rating", "feedback_text"]
+            return ["rating","feedback_text"]
         else :
             return ["rating"]
 
@@ -258,6 +258,19 @@ class FeedbackForm(FormAction):
             - a whole message
             or a list of them, where a first match will be picked"""
         return {"rating": self.from_entity("rating"),"feedback_text": self.from_entity(entity="any_thing")}
+    
+    def validate_feedback_text(
+    self,
+    value: Text,
+    dispatcher: CollectingDispatcher,
+    tracker: Tracker,
+    domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        if value=="back":
+            return {"rating":None, "feedback_text":None}
+        else:
+            return {"feedback_text":value}
+
 
     def submit(
             self,
@@ -281,18 +294,8 @@ class FeedbackForm(FormAction):
         dispatcher.utter_message("Your Response :\n Rating :'{rate}' star \n Feedback: '{feedbk}' \n Submitted!Thank You!".format(rate=rating,feedbk=feedback))
 
         return [SlotSet("rating", None), SlotSet("feedback_text", None)]
+    
 
-    def validate_feedback_text(
-        self,
-        value: Text,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
-        feedback= tracker.get_slot("feedback_text")
-        rating = tracker.get_slot("rating")
-        if rating=="back":
-            return {"rating":None, "feedback_text":None}
         
               
 
