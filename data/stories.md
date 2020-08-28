@@ -31,6 +31,19 @@
 	-feedback_form
 	-form{"name":"feedback_form"}
 	-form{"name":null}	
+
+## faq path
+*greet
+	-utter_greet
+*faq_init
+    -faq_form
+	-form{"name":"faq_form"}
+	-form{"name":null}	
+
+
+
+
+
 	
 <!--
 ## feedback path

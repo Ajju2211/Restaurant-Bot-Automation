@@ -180,12 +180,39 @@
 -I want to report an feedback
 -feedback
 
+
+## intent:question
+-[what is naaniz?](question)
+-[how to complain?](question)
+-[how to pay?](question)
+-[where is naaniz located?](question)
+
+
+## intent:faq_init
+
+-i want to ask faq
+-I want to ask faq
+-where to ask faq
+-wat to ask faq
+-I have a faq
+-I have an question
+-I have a faq
+-I want to report an faq
+-faq
+
 ## intent:rating
 -[1](rating)
 -[2](rating)
 -[3](rating)
 -[4](rating)
 -[5](rating)
+
+## intent:faq_choice
+-[1](faq_choice)
+-[2](faq_choice)
+-[3](faq_choice)
+-[4](faq_choice)
+-[5](faq_choice)
 
 ## intent:query_init
 

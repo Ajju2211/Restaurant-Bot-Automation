@@ -23,7 +23,7 @@ cmd:\ conda install -c conda-forge python-levenshtein==0.12.0  *** for windows o
 - Create conda environment and create project in this environment
 - After installing requirements above
 - Add current working directory of this project in your python environment variable eg: PATH = D:\Projects\...\Restaurant-Bot-Automation
-
+- Go to Anaconda3\envs\rasa\Lib\site-packages\rasa\core\channels\console.py and set DEFAULT_STREAM_READING_TIMEOUT_IN_SECONDS=100 
 #### TASK DONE
 - [ ] Complaints 
     - [ ] Back button in complaints 
