@@ -1,5 +1,5 @@
 import pandas as pd
-from controllers.faqs.similarity import Match
+
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 from controllers.faqs.filter import Filter
@@ -9,7 +9,7 @@ class FAQ:
     def __init__(self, csv_file):
         self.df = pd.read_csv(csv_file)
         self.fuzz = fuzz
-        self.match = Match()
+        # self.match = Match()
 
     def ask_faq(self, text, threshold=0.7, NLP=True):
         """Returns FAQ answer if similarity score exceeds threshold"""
@@ -21,10 +21,12 @@ class FAQ:
             # s = self.fuzz.token_set_ratio(text, q)
             filteredFaq  = Filter(q).filterWords().lower()
             if NLP:
-                if self.match.compare(filteredText, filteredFaq)==0:
+                from controllers.faqs.similarity import Match
+                match = Match()
+                if match.compare(filteredText, filteredFaq)==0:
                     s = 100 + self.fuzz.partial_ratio(filteredText , filteredFaq)
                 else:
-                    s = self.match.compare(filteredText, filteredFaq)*100 + self.fuzz.partial_ratio(filteredText , filteredFaq)
+                    s = match.compare(filteredText, filteredFaq)*100 + self.fuzz.partial_ratio(filteredText , filteredFaq)
 
 
             else:

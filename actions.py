@@ -8,7 +8,7 @@ import pandas as pd
 from rasa.core.slots import Slot
 import json
 from utils import utilities as util
-from test_utils import find_ans
+from controllers.faqs.faq import FAQ
 dataset = pd.read_csv('dishes.csv')
 dataset = dataset.set_index('dish').T.to_dict('list')
 dish_list = []
@@ -324,16 +324,21 @@ class FaqForm(FormAction):
             domain: Dict[Text, Any],
     ) -> List[Dict]:
 
-            # fetching answer
-
+            # fetching answer 1-select que 2-search que
+            useNlp = False
             if (tracker.get_slot("faq_choice")=="1"):
                 ques= tracker.get_slot("faq_question")
             elif (tracker.get_slot("faq_choice")=="2"):
                 ques= tracker.get_slot("faq_text")
-            #ques = "what is naaniz"
-            ans = find_ans(ques)
-
-            dispatcher.utter_message("Your Question :{}\n Answer:{}".format(ques, ans))
+                useNlp = True
+            
+            f = FAQ("controllers/faqs/test_faq.csv")
+            # NLP disabled coz morethan 100 sec 
+            ans = f.ask_faq(ques, NLP = False)
+            if ans:
+                dispatcher.utter_message("Your Question :{}\n Answer:{}".format(ques, ans))
+            else:
+                dispatcher.utter_message("Query not found !")
 
             return [SlotSet("faq_choice", None),SlotSet("faq_question", None),SlotSet("faq_text", None) ]
 

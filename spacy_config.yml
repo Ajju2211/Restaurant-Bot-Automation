@@ -17,7 +17,6 @@ policies:
     epochs: 100
   - name: MappingPolicy
   - name: FormPolicy
-  - name: KerasPolicy
   - name: FallbackPolicy
     nlu_threshold: 0.4
     core_threshold: 0.3

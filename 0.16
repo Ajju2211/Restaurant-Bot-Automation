@@ -1,0 +1,5 @@
+Collecting ruamel-yaml
+  Using cached ruamel.yaml-0.16.10-py2.py3-none-any.whl (111 kB)
+Requirement already satisfied: ruamel.yaml.clib>=0.1.2; platform_python_implementation == "CPython" and python_version < "3.9" in c:\users\azhar\anaconda3\envs\naaniz-rasa\lib\site-packages (from ruamel-yaml) (0.2.0)
+Installing collected packages: ruamel-yaml
+Successfully installed ruamel-yaml

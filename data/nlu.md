@@ -182,10 +182,10 @@
 
 
 ## intent:question
--[what is naaniz?](question)
--[how to complain?](question)
--[how to pay?](question)
--[where is naaniz located?](question)
+-[what is naaniz?](faq_question)
+-[how to complain?](faq_question)
+-[how to pay?](faq_question)
+-[where is naaniz located?](faq_question)
 
 
 ## intent:faq_init
