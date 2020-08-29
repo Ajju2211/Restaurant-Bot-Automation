@@ -1,0 +1,52 @@
+{
+    "restaurant": {
+        "name": "Azhar",
+        "id": "1234nkjsdn",
+        "city": "Hyderabad",
+        "menu_imgs": [
+            "https://image.freepik.com/free-vector/taco-food-restaurant-menu-template_23-2148595758.jpg",
+            "https://image.freepik.com/free-vector/restaurant-menu-template-design_23-2148404703.jpg"
+        ],
+        "menu": {
+            "starters": [
+                {
+                    "dish": "Dosa",
+                    "price": 30,
+                    "image": "url_image"
+                },
+                {
+                    "dish": "Noodles",
+                    "price": 30,
+                    "image": "url_image"
+                },
+                {
+                    "dish": "wada",
+                    "price": 20,
+                    "image": "url_image"
+                },
+                {
+                    "dish": "Poori",
+                    "price": 45,
+                    "image": "url_image"
+                }
+            ],
+            "meals": [
+                {
+                    "dish": "Dal Rice",
+                    "price": 50,
+                    "image": "url_image"
+                },
+                {
+                    "dish": "Chicken Dum Biryani",
+                    "price": 150,
+                    "image": "url_image"
+                }
+            ]
+        }
+    },
+    "user": {
+        "name": "Abhishek",
+        "id": "juhsudhuhbjb",
+        "gender": "M"
+    }
+}
