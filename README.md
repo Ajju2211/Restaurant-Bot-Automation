@@ -19,10 +19,40 @@ $ pip3 install python-levenshtein==0.12.0  *** for linux and other docker, os **
 cmd:\ conda install -c conda-forge python-levenshtein==0.12.0  *** for windows only ***
 ```
 
-#### SETUP
+#### Extra SETUP
 - Create conda environment and create project in this environment
-- After installing requirements above
-- Add current working directory of this project in your python environment variable eg: PATH = D:\Projects\...\Restaurant-Bot-Automation
+- After installing requirements in above Modules LIST
+- To add custom component to rasa
+    -   Add current working directory of this project in your python environment variable      -   eg: PATH = D:\Projects\...\Restaurant-Bot-Automation
+- To set the console channel Timeout in seconds
+    -  Go to Anaconda3\envs\{your_rasa_env}\Lib\site-packages\rasa\core\channels\console.py
+    -  And set DEFAULT_STREAM_READING_TIMEOUT_IN_SECONDS=200 
+
+#### How to Train ?
+- ##### To use default Rasa configs
+```sh
+$ rasa train
+```
+- ##### To use spacy config pipeline (Fast to train)
+```sh
+$ rasa train -c spacy_config.yml
+```
+
+#### How to run 
+- ##### To run action server
+```sh
+$ rasa run actions --actions actionserver.actions
+```
+- ##### To run rasa in debug mode to inspect slot filling and entities ..,
+```sh
+$ rasa shell --debug
+```
+- ##### To run rasa in normal shell
+```sh
+$ rasa shell
+```
+
+
 
 #### TASK DONE
 - [ ] Complaints 
@@ -52,13 +82,15 @@ cmd:\ conda install -c conda-forge python-levenshtein==0.12.0  *** for windows o
         - [ ] location
         - [ ] Rating
 - [ ] Faqs
+        - [ ] By Selecting question
+        - [x] By searching question
+        - [ ] Back button
 - [ ] home menu showing options
     - [ ] Back in home menu
-    - [ ] included Faq's
+    - [x] included Faq's
     - [x] included Ordering
     - [x] included queries (complaints/Feedbacks)
     
-
 
 License
 ----

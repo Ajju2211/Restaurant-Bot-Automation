@@ -71,7 +71,7 @@ class InfoForm(FormAction):
         else:
             return {"phone_number": None,"confirm": None}
 
-    
+
     def submit(
         self,
         dispatcher: CollectingDispatcher,
@@ -81,10 +81,10 @@ class InfoForm(FormAction):
         username = tracker.get_slot("username")
         mailid = tracker.get_slot("mailid")
         phone_number=tracker.get_slot("phone_number")
-        
-        
-       
-        message="DETAILS:"+"\n\n"+"Name:"+username+"\n"+"Email:"+mailid+"\n"+"Phone Number:"+phone_number+"\n"+"\nThanks! for sharing information." 
+
+
+
+        message="DETAILS:"+"\n\n"+"Name:"+username+"\n"+"Email:"+mailid+"\n"+"Phone Number:"+phone_number+"\n"+"\nThanks! for sharing information."
         saveFile = open("some.txt", 'a')
         saveFile.write(message)
         saveFile.close()
@@ -123,7 +123,7 @@ class OrderForm(FormAction):
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         return {"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
 
-    
+
     def validate_dish_name(self,
         value: Text,
         dispatcher: CollectingDispatcher,
@@ -131,14 +131,14 @@ class OrderForm(FormAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         dish_name = tracker.get_slot("dish_name")
-        
-        if dish_name in dataset.keys(): 
+
+        if dish_name in dataset.keys():
             dispatcher.utter_message("it costs {}".format(dataset[dish_name][0]))
             return {"dish_name": dish_name}
         else:
             dispatcher.utter_template("utter_not_serving",tracker)
             return {"dish_name":None}
-    
+
     def validate_proceed(
         self,
         value: Text,
@@ -177,13 +177,13 @@ class OrderForm(FormAction):
         dispatcher.utter_message("Total Amount : {}".format(amount))
         dispatcher.utter_message("Thanks for ordering")
         return [AllSlotsReset()]
-            
+
 class DefaultFallback(FormAction):
     """Default Fallback Action"""
 
     def name(self):
         return "action_default_fallback"
-        
+
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any])-> List[Dict[Text, Any]]:
@@ -204,7 +204,7 @@ class ComplainForm(FormAction):
                 return ["complain_type", "complain_text"]
             else:
                 return ["complain_type"]
-    
+
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
@@ -212,10 +212,11 @@ class ComplainForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-        
-        # return {"complain_type": self.from_entity("complain_type"),"complain_text": [self.from_text()]}
 
-        return {"complain_type": self.from_entity("complain_type"),"complain_text": self.from_entity(entity="any_thing")}
+
+        return {"complain_type": self.from_entity("complain_type"),"complain_text": [self.from_text()]}
+
+        #return {"complain_type": self.from_entity("complain_type"),"complain_text": self.from_entity(entity="any_thing")}
 
     def submit(
         self,
@@ -240,6 +241,7 @@ class ComplainForm(FormAction):
 
         dispatcher.utter_message("Your Complaint :\n Complaint Area:{comp_type}\n Complaint: '{comp}' \n has been registered!".format(comp_type=comp_type,comp = comp))
 
+
         return [SlotSet("complain_type",None), SlotSet("complain_text",None)]
 
 
@@ -261,7 +263,7 @@ class FeedbackForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-        
+
         return {"rating": self.from_entity("rating"),"feedback_text": self.from_entity(entity="any_thing")}
 
     def submit(
@@ -287,6 +289,58 @@ class FeedbackForm(FormAction):
 
         return [SlotSet("rating", None), SlotSet("feedback_text", None)]
 
+
+class FaqForm(FormAction):
+
+    def name(self):
+        return "faq_form"
+
+    @staticmethod
+    def required_slots(tracker):
+
+        if (tracker.get_slot("faq_choice")=="1"):
+           return["faq_choice", "faq_question"]
+        elif (tracker.get_slot("faq_choice")=="2"):
+            return ["faq_choice", "faq_text"]
+        else:
+            return ["faq_choice"]
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+        """A dictionary to map required slots to
+            - an extracted entity
+            - intent: value pairs
+            - a whole message
+            or a list of them, where a first match will be picked"""
+
+        #return { "faq_choice": self.from_entity("faq_choice"),"faq_question": self.from_entity("faq_question"), "faq_text": [self.from_text()]}
+
+        return {"faq_choice": self.from_entity("faq_choice"), "faq_question": self.from_entity("faq_question"),"faq_text": self.from_entity(entity="any_thing") }
+
+        # return {"faq_choice": self.from_entity("choice"),"faq_question": self.from_entity("choice"), "faq_text": self.from_entity(entity="any_thing")}
+
+    def submit(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> List[Dict]:
+
+            # fetching answer 1-select que 2-search que
+            useNlp = False
+            if (tracker.get_slot("faq_choice")=="1"):
+                ques= tracker.get_slot("faq_question")
+            elif (tracker.get_slot("faq_choice")=="2"):
+                ques= tracker.get_slot("faq_text")
+                useNlp = True
+            
+            f = FAQ("./actionserver/controllers/faqs/test_faq.csv")
+            # NLP disabled coz morethan 100 sec 
+            ans = f.ask_faq(ques, NLP = False)
+            if ans:
+                dispatcher.utter_message("Your Question :{}\n Answer:{}".format(ques, ans))
+            else:
+                dispatcher.utter_message("Query not found !")
+
+            return [SlotSet("faq_choice", None),SlotSet("faq_question", None),SlotSet("faq_text", None) ]
 
 
 
