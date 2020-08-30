@@ -299,7 +299,7 @@ class FaqForm(FormAction):
     def required_slots(tracker):
 
         if (tracker.get_slot("faq_choice")=="1"):
-           return["faq_choice", "faq_question"]
+           return["faq_choice"]
         elif (tracker.get_slot("faq_choice")=="2"):
             return ["faq_choice", "faq_text"]
         else:
@@ -327,18 +327,24 @@ class FaqForm(FormAction):
             # fetching answer 1-select que 2-search que
             useNlp = False
             if (tracker.get_slot("faq_choice")=="1"):
-                ques= tracker.get_slot("faq_question")
+
+                faq_data = pd.read_csv("./actionserver/controllers/faqs/test_faq.csv")
+
+                dispatcher.utter_message("FAQs:\n")
+                for i in range(len(faq_data)):
+                    dispatcher.utter_message("Question :{}\n Answer:{}".format(faq_data[i][0], faq_data[i][1]))
+
             elif (tracker.get_slot("faq_choice")=="2"):
                 ques= tracker.get_slot("faq_text")
                 useNlp = True
-            
-            f = FAQ("./actionserver/controllers/faqs/test_faq.csv")
-            # NLP disabled coz morethan 100 sec 
-            ans = f.ask_faq(ques, NLP = False)
-            if ans:
-                dispatcher.utter_message("Your Question :{}\n Answer:{}".format(ques, ans))
-            else:
-                dispatcher.utter_message("Query not found !")
+
+                f = FAQ("./actionserver/controllers/faqs/test_faq.csv")
+                # NLP disabled coz morethan 100 sec
+                ans = f.ask_faq(ques, NLP = False)
+                if ans:
+                    dispatcher.utter_message("Your Question :{}\n Answer:{}".format(ques, ans))
+                else:
+                    dispatcher.utter_message("Query not found !")
 
             return [SlotSet("faq_choice", None),SlotSet("faq_question", None),SlotSet("faq_text", None) ]
 

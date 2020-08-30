@@ -18,7 +18,7 @@ actions:
   - utter_query_type
   - utter_ask_faq_choice
   - utter_ask_faq_text
-  - utter_ask_faq_question
+
 entities:
   - username
   - mailid
@@ -36,7 +36,7 @@ entities:
   - any_thing
   - faq_choice
   - faq_text
-  - faq_question
+
 forms:
   - info_form
   - order_form
@@ -103,22 +103,7 @@ responses:
           payload: "/faq_choice{\"faq_choice\": \"2\" }"
           title: "Type your own question."
       text: "How should we get your FAQ?"
-  utter_ask_faq_question:
-    -
-      buttons:
-        -
-          payload: "/question{\"faq_question\": \"What is naaniz\" }"
-          title: "What is naaniz"
-        -
-          payload: "/question{\"faq_question\": \"how to complain\" }"
-          title: "how to complain"
-        -
-          payload: "/question{\"faq_question\": \"how to pay\" }"
-          title: "how to pay"
-        -
-          payload: "/question{\"faq_question\": \"where is naaniz located\" }"
-          title: "where is naaniz located"
-      text: "Choose one of the  FAQs"
+
   utter_ask_faq_text:
     -
       text: "Please enter your question."
@@ -223,8 +208,7 @@ slots:
     type: unfeaturized
   faq_choice:
     type: unfeaturized
-  faq_question:
-    type: unfeaturized
+
   faq_text:
     type: unfeaturized
   feedback_text:
