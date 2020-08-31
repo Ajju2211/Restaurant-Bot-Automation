@@ -26,13 +26,13 @@ from utils import indexPages as inP
 # print(utilities.saveDictAsJsonFile({"a":1},"./test.json"))
 
 # test FAQs for search query uses NLP is slow
-from controllers.faqs.faq import FAQ
+# from controllers.faqs.faq import FAQ
 
 
-def find_ans(ques):
-    f = FAQ("controllers/faqs/test_faq.csv")
+# def find_ans(ques):
+#     f = FAQ("controllers/faqs/test_faq.csv")
 
-    return (f.ask_faq(ques))
+#     return (f.ask_faq(ques))
 
     # without NLP=False  is fast
 
