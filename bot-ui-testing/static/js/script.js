@@ -24,15 +24,15 @@ $(document).ready(function() {
 
 
     //enable this if u have configured the bot to start the conversation. 
-    // showBotTyping();
-    // $("#userInput").prop('disabled', true);
+    showBotTyping();
+    $("#userInput").prop('disabled', true);
 
     //global variables
-    action_name = "action_greet_user";
-    user_id = "jitesh97";
+    action_name = "utter_greet";
+    user_id = "azhar123";
 
     //if you want the bot to start the conversation
-    // action_trigger();
+    action_trigger();
 
 })
 
