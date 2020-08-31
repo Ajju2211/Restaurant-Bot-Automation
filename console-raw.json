@@ -1,0 +1,43 @@
+[BotUttered('Menu of that restaurant is ',
+    {
+        "elements": null,
+        "quick_replies": null,
+        "buttons": null,
+        "attachment": null,
+        "image": null,
+        "custom": null
+    },
+    {},
+    1597862642.5726447),
+     BotUttered('None',
+    {
+        "elements": null,
+        "quick_replies": null,
+        "buttons": null,
+        "attachment": "https://image.freepik.com/free-vector/taco-food-restaurant-menu-template_23-2148595758.jpg",
+        "image": "https://image.freepik.com/free-vector/taco-food-restaurant-menu-template_23-2148595758.jpg",
+        "custom": null
+    },
+    {},
+    1597862642.5726447), BotUttered('Menu of that restaurant is ',
+    {
+        "elements": null,
+        "quick_replies": null,
+        "buttons": null,
+        "attachment": null,
+        "image": null,
+        "custom": null
+    },
+    {},
+    1597862642.5726447), BotUttered('None',
+    {
+        "elements": null,
+        "quick_replies": null,
+        "buttons": null,
+        "attachment": "https://image.freepik.com/free-vector/restaurant-menu-template-design_23-2148404703.jpg",
+        "image": "https://image.freepik.com/free-vector/restaurant-menu-template-design_23-2148404703.jpg",
+        "custom": null
+    },
+    {},
+    1597862642.5726447)
+]'

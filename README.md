@@ -12,6 +12,7 @@ $ pip3 install rasa[spacy]
 $ python -m spacy download en_core_web_md
 $ python -m spacy link en_core_web_md en
 $ pip3 install  pandas==1.1.0
+$ pip3 install  nltk==3.5
 $ pip3 install fuzzywuzzy==0.18.0
 $ pip3 install python-levenshtein==0.12.0  *** for linux and other docker, os ***
 ```
@@ -19,10 +20,40 @@ $ pip3 install python-levenshtein==0.12.0  *** for linux and other docker, os **
 cmd:\ conda install -c conda-forge python-levenshtein==0.12.0  *** for windows only ***
 ```
 
-#### SETUP
+#### Extra SETUP
 - Create conda environment and create project in this environment
-- After installing requirements above
-- Add current working directory of this project in your python environment variable eg: PATH = D:\Projects\...\Restaurant-Bot-Automation
+- After installing requirements in above Modules LIST
+- To add custom component to rasa
+    -   Add current working directory of this project in your python environment variable      -   eg: PATH = D:\Projects\...\Restaurant-Bot-Automation
+- To set the console channel Timeout in seconds
+    -  Go to Anaconda3\envs\{your_rasa_env}\Lib\site-packages\rasa\core\channels\console.py
+    -  And set DEFAULT_STREAM_READING_TIMEOUT_IN_SECONDS=200 
+
+#### How to Train ?
+- ##### To use default Rasa configs
+```sh
+$ rasa train
+```
+- ##### To use spacy config pipeline (Fast to train)
+```sh
+$ rasa train -c spacy_config.yml
+```
+
+#### How to run 
+- ##### To run action server
+```sh
+$ rasa run actions --actions actionserver.actions
+```
+- ##### To run rasa in debug mode to inspect slot filling and entities ..,
+```sh
+$ rasa shell --debug
+```
+- ##### To run rasa in normal shell
+```sh
+$ rasa shell
+```
+
+
 
 #### TASK DONE
 - [ ] Complaints 
@@ -52,9 +83,15 @@ cmd:\ conda install -c conda-forge python-levenshtein==0.12.0  *** for windows o
         - [ ] location
         - [ ] Rating
 - [ ] Faqs
+    - [ ] Back in Faqs
+    - [x] Search question
+    - [ ] Select Queston (collapsible button)
 - [ ] home menu showing options
+    - [ ] Back in home menu
+    - [x] included Faq's
+    - [x] included Ordering
+    - [x] included queries (complaints/Feedbacks)
     
-
 
 License
 ----

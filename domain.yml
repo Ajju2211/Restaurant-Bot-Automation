@@ -16,6 +16,9 @@ actions:
   - utter_ask_feedback_text
   - action_show_menu
   - utter_query_type
+  - utter_ask_faq_choice
+  - utter_ask_faq_text
+
 entities:
   - username
   - mailid
@@ -31,11 +34,15 @@ entities:
   - feedback_text
   - quantity
   - any_thing
+  - faq_choice
+  - faq_text
+
 forms:
   - info_form
   - order_form
   - complain_form
   - feedback_form
+  - faq_form
 intents:
   - greet
   - goodbye
@@ -47,14 +54,16 @@ intents:
   - complain
   - complaint_init
   - feedback_init
+  - faq_init
   - query_init
   - rating
   - quant
+  - faq_choice
+  - question
 responses:
-
-
   utter_ask_complain_text:
-    - text: "Please Describe your complain."
+    -
+      text: "Please Describe your complain."
   utter_ask_complain_type:
     -
       buttons:
@@ -84,6 +93,20 @@ responses:
   utter_ask_dish_name:
     -
       text: "What food item would you like to eat?"
+  utter_ask_faq_choice:
+    -
+      buttons:
+        -
+          payload: "/faq_choice{\"faq_choice\": \"1\"}"
+          title: "Choose from our set of FAQs"
+        -
+          payload: "/faq_choice{\"faq_choice\": \"2\" }"
+          title: "Type your own question."
+      text: "How should we get your FAQ?"
+
+  utter_ask_faq_text:
+    -
+      text: "Please enter your question."
   utter_ask_feedback_text:
     -
       text: "Please enter your feedback."
@@ -147,7 +170,6 @@ responses:
   utter_ask_username:
     -
       text: "What is your name?"
-
   utter_goodbye:
     -
       text: Bye
@@ -159,24 +181,27 @@ responses:
           title: "Order Food"
         -
           payload: /query_init
-          title: "Query"
-
+          title: Query
+        -
+          payload: /faq_init
+          title: FAQ
       text: "How can we help you today?"
-
-  utter_query_type:
-    - buttons:
-        - payload: /feedback_init
-          title: "Feedback"
-        - payload: /complaint_init
-          title: "Complaint"
-
-      text: "What kind of query is it?"
   utter_iamabot:
     -
       text: "I am a bot, powered by Rasa."
   utter_not_serving:
     -
       text: "Currently we are not serving this dish. Would you like to have something else?"
+  utter_query_type:
+    -
+      buttons:
+        -
+          payload: /feedback_init
+          title: Feedback
+        -
+          payload: /complaint_init
+          title: Complaint
+      text: "What kind of query is it?"
 session_config:
   carry_over_slots_to_new_session: true
   session_expiration_time: 180
@@ -188,6 +213,11 @@ slots:
   confirm:
     type: unfeaturized
   dish_name:
+    type: unfeaturized
+  faq_choice:
+    type: unfeaturized
+
+  faq_text:
     type: unfeaturized
   feedback_text:
     type: unfeaturized
