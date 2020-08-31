@@ -330,9 +330,18 @@ class FaqForm(FormAction):
 
                 faq_data = pd.read_csv("./actionserver/controllers/faqs/test_faq.csv")
 
-                dispatcher.utter_message("FAQs:\n")
+                
+                # for i in range(len(faq_data)):
+                #     dispatcher.utter_message("Question :{}\n Answer:{}".format(faq_data[i][0], faq_data[i][1]))
+                qa = []
                 for i in range(len(faq_data)):
-                    dispatcher.utter_message("Question :{}\n Answer:{}".format(faq_data[i][0], faq_data[i][1]))
+                    obj = {
+                    "title":faq_data["Question"][i],
+                    "description":faq_data["Answer"][i]
+                        }
+                    qa.append(obj)
+                message={ "payload": "collapsible", "data": qa }
+                dispatcher.utter_message(text="Faq's",json_message=message)
 
             elif (tracker.get_slot("faq_choice")=="2"):
                 ques= tracker.get_slot("faq_text")
