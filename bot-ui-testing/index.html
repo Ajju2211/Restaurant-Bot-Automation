@@ -1,0 +1,373 @@
+<html>
+
+<head>
+    <title>Naaniz testing Bot</title>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:500&display=swap" rel="stylesheet">
+
+    <!--Import Font Awesome Icon Font-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+
+    <!--Import materialize.css-->
+    <link rel="stylesheet" type="text/css" href="static/css/materialize.min.css">
+
+    <!--Main css-->
+    <link rel="stylesheet" type="text/css" href="static/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+	<h3 class="deep-orange lighten-3 center-align">Naaniz Testing Bot</h3>
+	<div class="container">
+	<h5>How to run?</h5>
+	<div class="row">
+		<p>
+			<ol>
+				<li>Since this Chat UI communicates with the Rasa server using rest channel, make sure you have added rest channel in the credentials.yml file</li>
+				<li>Once you have developed your bot and you are ready to integrate the bot with the UI, you can start the Rasa server using the below command
+
+				<b>rasa run -m models --enable-api --cors "*" --debug</b>
+				</li>
+				<li>Run actions server as well<b>rasa run actions --actions actionserver.actions</b></li>
+			</ol>
+			<i>Once you have you Rasa server up and running, you can test the bot by running the 
+				<b>index.html</b> file in the browser.</i>
+		</p>
+	</div>
+	<h5>Respones</h5>
+	<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">Text</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>utter_greet:
+    		- text: "Hello 😀"</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>dispatcher.utter_message(text="Hello 😀")</code></pre></b>
+				</li>
+			</ul>
+	</div>
+		<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">Images</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>utter_cheer_up:
+  - text: "Here is something to cheer you up 😉 "
+    image: "https://i.imgur.com/nGF1K8f.jpg"</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>dispatcher.utter_message(text="Here is something to
+				 cheer you up 😉", 
+				image="https://i.imgur.com/nGF1K8f.jpg")</code></pre></b>
+				</li>
+			</ul>
+	</div>
+			<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">Buttons</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>utter_greet:
+  - text: "Hey! How are you?"
+    buttons:
+    - title: "great"
+      payload: "great"
+    - title: "super sad"
+      payload: "super sad"</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>button_resp=[
+                  {
+                      "title": "great",
+                      "payload": "great"
+                  },
+                  {
+                      "title": "super sad",
+                      "payload": "super sad"
+                  }
+              ]
+
+   dispatcher.utter_message(text="Hey! How are you?", buttons=button_resp)</code></pre></b>
+				</li>
+			</ul>
+	</div>
+			<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">Videos</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>utter_greet:
+  - text: "Check this video"
+    attachment: {
+     "type":"video", 
+ 	 "payload":{
+ 	 	 "src": "https://youtube.com/embed/9C1Km6xfdMA" } 
+ 	 	}</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>msg = { 
+			"type": "video", 
+			"payload": { 
+				"title": "Link name", 
+				"src": "https://youtube.com/9C1Km6xfdMA" 
+					} 
+				}
+
+dispatcher.utter_message(text="Check this video",attachment=msg)</code></pre></b>
+				</li>
+			</ul>
+	</div>
+		<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">Dropdown</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>utter_menu:
+  - text: "Please select a option"
+    custom:
+      payload: dropDown
+      data:
+      - label: option1
+        value: "/inform{'slot_name':'option1'}"
+      - label: option2
+        value: "/inform{'slot_name':'option2'}"
+      - label: option3
+        value: "/inform{'slot_name':'option3'}"</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>
+			data=[
+			{"label":"option1","value":"/inform{'slot_name':'option1'}"},
+			{"label":"option2","value":"/inform{'slot_name':'option2'}"},
+			{"label":"option3","value":"/inform{'slot_name':'option3'}"}
+					]
+
+  message={"payload":"dropDown","data":data}
+  
+  dispatcher.utter_message(text="Please select a option",json_message=message)
+				</code></pre></b>
+				</li>
+			</ul>
+	</div>
+		<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">QuickReplies</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>utter_cuisine:
+  - text: "Please choose a cuisine"
+    custom:
+      payload: quickReplies
+      data:
+      - title: chip1
+        payload: chip1_payload
+      - title: chip2
+        payload: chip2_payload
+      - title: chip3
+        payload: chip3_payload</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>
+			data= [
+			{ "title":"chip1", "payload":"chip1_payload" },
+		  { "title":"chip2", "payload":"chip2_payload" },
+		   { "title":"chip3", "payload":"chip3_payload" } ]
+
+  message={"payload":"quickReplies","data":data}
+
+  dispatcher.utter_message(text="Please choose a cuisine",json_message=message)
+				</code></pre></b>
+				</li>
+			</ul>
+	</div>
+		<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">Collapsible</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>utter_askLeaveTypes:
+  - text: "You can apply for below leaves"
+    custom: 
+   payload: "collapsible"
+   data: 
+   - title: Sick Leave
+   		description: Sick leave is time off from work that workers
+   		can use to stay home to address their health and safety
+   		needs without losing pay.
+   - title: Earned Leave
+        description: 'Earned Leaves are the leaves which are 
+        earned in the previous year
+   		and enjoyed in the preceding years. '
+   - title: Casual Leave
+        description: Casual Leave are granted for certain unforeseen 
+        situation or were you are require to go for one or two days 
+        leaves to attend to personal matters and
+        not for vacation.
+   - title: Flexi Leave
+        description: Flexi leave is an optional leave which one can
+        apply directly in system
+        at lease a week before.</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>
+	data= [ 
+	{ "title": "Sick Leave", 
+	"description": "Sick leave is time off from work that workers can
+	 use to stay home to address their health and safety needs without 
+	 losing pay." }, 
+	 { "title": "Earned Leave", 
+	 "description": "Earned Leaves are the leaves which are earned in
+	  the previous year and enjoyed in the preceding years. " },
+	   { "title": "Casual Leave", 
+	   "description": "Casual Leave are granted for certain unforeseen
+	    situation or were you are require to go for one or two days 
+	    leaves to attend to personal matters and not for vacation." },
+	     { "title": "Flexi Leave",
+	      "description": "Flexi leave is an optional leave which one
+	       can apply directly in system at lease a week before." }
+	        ]
+
+  message={ "payload": "collapsible", "data": data }
+
+  dispatcher.utter_message(text="You can apply for below leaves",json_message=message)
+				</code></pre></b>
+				</li>
+			</ul>
+	</div>
+		<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">Charts</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>utter_askLeaveBalance:
+  - text: "Here are your leave balance details"
+    custom:
+      payload: chart
+      data:
+        title: Leaves
+        labels:
+        - Sick Leave
+        - Casual Leave
+        - Earned Leave
+        - Flexi Leave
+        backgroundColor:
+        - "#36a2eb"
+        - "#ffcd56"
+        - "#ff6384"
+        - "#009688"
+        - "#c45850"
+        chartsData:
+        - 5
+        - 10
+        - 22
+        - 3
+        chartType: pie
+        displayLegend: 'true'</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>
+data={ "title": "Leaves", 
+"labels": [ "Sick Leave", "Casual Leave", "Earned Leave", "Flexi Leave" ],
+"backgroundColor": [ "#36a2eb", "#ffcd56", "#ff6384", "#009688", "#c45850" ],
+"chartsData": [ 5, 10, 22, 3 ],
+"chartType": "pie", "displayLegend": "true" }
+
+ message={ "payload": "chart", "data": data }
+
+ dispatcher.utter_message(text="Here are your leave balance
+ 						 details",json_message=message)
+				</code></pre></b>
+				</li>
+			</ul>
+	</div>
+		<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">Location access</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>
+utter_ask_location::
+    - text: "Sure, please allow me to access your location 🧐"
+      custom: 
+        payload: location
+				</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>
+message={"payload":"location"}
+
+dispatcher.utter_message("Sure, please allow me to access your 
+		location 🧐",json_message=message)
+				</code></pre></b>
+				</li>
+			</ul>
+	</div>
+	</div>
+    <div class="container">
+
+        <!-- Modal for rendering the charts, declare this if you want to render charts, 
+         else you remove the modal -->
+        <div id="modal1" class="modal">
+            <canvas id="modal-chart"></canvas>
+        </div>
+
+        <!--chatbot widget -->
+        <div class="widget">
+            <div class="chat_header">
+
+                <!--Add the name of the bot here -->
+                <span class="chat_header_title">Naaniz Test Bot</span>
+                <span class="dropdown-trigger" href='#' data-target='dropdown1'>
+                  <i class="material-icons">
+                  more_vert
+                  </i>
+               </span>
+
+                <!-- Dropdown menu-->
+                <ul id='dropdown1' class='dropdown-content'>
+                    <li><a href="#" id="clear">Clear</a></li>
+                    <li><a href="#" id="restart">Restart</a></li>
+                    <li><a href="#" id="close">Close</a></li>
+                </ul>
+            </div>
+
+            <!--Chatbot contents goes here -->
+            <div class="chats" id="chats">
+                <div class="clearfix"></div>
+
+            </div>
+
+            <!--keypad for user to type the message -->
+            <div class="keypad">
+                <textarea id="userInput" placeholder="Type a message..." class="usrInput"></textarea>
+                <div id="sendButton"><i class="fa fa-paper-plane" aria-hidden="true"></i></div>
+            </div>
+        </div>
+
+        <!--bot profile-->
+        <div class="profile_div" id="profile_div">
+            <img class="imgProfile" src="static/img/botAvatar.png" />
+        </div>
+
+        <!-- Bot pop-up intro -->
+        <div class="tap-target" data-target="profile_div">
+            <div class="tap-target-content">
+                <h5 class="white-text">Hey there 👋</h5>
+                <p class="white-text">I can help you place an order.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/materialize.min.js"></script>
+
+    <!--Main Script -->
+    <script type="text/javascript" src="static/js/script.js"></script>
+
+    <!--Chart.js Script -->
+    <script type="text/javascript" src="static/js/chart.min.js"></script>
+
+</body>
+
+</html>
