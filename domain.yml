@@ -102,10 +102,17 @@ responses:
         -
           payload: "/faq_choice{\"faq_choice\": \"2\" }"
           title: "Type your own question."
+        -
+          payload: "/faq_choice{\"faq_choice\": \"back2\"}"
+          title: Back
       text: "How should we get your FAQ?"
 
   utter_ask_faq_text:
     -
+      buttons:
+        -
+          payload: "/faq_text{\"faq_text\": \"back3\"}"
+          title: Back
       text: "Please enter your question."
   utter_ask_feedback_text:
     -

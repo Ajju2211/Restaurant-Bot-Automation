@@ -317,6 +317,35 @@ class FaqForm(FormAction):
 
         # return {"faq_choice": self.from_entity("choice"),"faq_question": self.from_entity("choice"), "faq_text": self.from_entity(entity="any_thing")}
 
+    def validate_faq_choice(self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        faq_choice = tracker.get_slot("faq_choice")
+
+        if faq_choice == "back2":
+            return {"faq_choice": None}
+        else:
+            dispatcher.utter_template("utter_not_serving",tracker)
+            return {"faq_choice":value}
+
+    def validate_faq_text(self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        faq_text = tracker.get_slot("faq_text")
+        faq_choice = tracker.get_slot("faq_choice")
+
+        if faq_text == "back3":
+            return {"faq_Text": None,"faq_choice": None}
+        else:
+            dispatcher.utter_template("utter_not_serving",tracker)
+            return {"faq_choice":value}
+
     def submit(
             self,
             dispatcher: CollectingDispatcher,
