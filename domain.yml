@@ -111,7 +111,7 @@ responses:
     -
       buttons:
         -
-          payload: "/faq_text{\"faq_text\": \"back3\"}"
+          payload: "/any_thing{\"any_thing\": \"back3\"}"
           title: Back
       text: "Please enter your question."
   utter_ask_feedback_text:
