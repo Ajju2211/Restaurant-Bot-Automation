@@ -339,21 +339,17 @@ class FaqForm(FormAction):
     ) -> Dict[Text, Any]:
         faq_choice = tracker.get_slot("faq_choice")
         try:
-            faq_text = tracker.get_slot("faq_text")
-        except:
-            faq_text ="NOFAQ"
-        try:
             navigation = tracker.get_slot("navigation")
         except:
             navigation = "NOBACK"
-        print(faq_text)
+        print(value)
 
 
         if navigation == "back3":
             return {"faq_text": None,"faq_choice": None,"navigation":None}
         else:
             # dispatcher.utter_template("utter_not_serving",tracker)
-            return {"faq_choice":faq_choice,"faq_text":faq_text}
+            return {"faq_choice":faq_choice,"faq_text":value}
 
     def submit(
             self,
