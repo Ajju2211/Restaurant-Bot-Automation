@@ -313,7 +313,7 @@ class FaqForm(FormAction):
 
         #return { "faq_choice": self.from_entity("faq_choice"),"faq_question": self.from_entity("faq_question"), "faq_text": [self.from_text()]}
 
-        return {"faq_choice": self.from_entity("faq_choice"), "faq_question": self.from_entity("faq_question"),"faq_text": self.from_entity(entity="any_thing") }
+        return {"faq_choice": self.from_entity("faq_choice"), "faq_text": [self.from_entity(entity="any_thing"),self.from_entity(entity="navigation")] }
 
         # return {"faq_choice": self.from_entity("choice"),"faq_question": self.from_entity("choice"), "faq_text": self.from_entity(entity="any_thing")}
 
@@ -337,14 +337,23 @@ class FaqForm(FormAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        faq_text = tracker.get_slot("faq_text")
         faq_choice = tracker.get_slot("faq_choice")
+        try:
+            faq_text = tracker.get_slot("faq_text")
+        except:
+            faq_text ="NOFAQ"
+        try:
+            navigation = tracker.get_slot("navigation")
+        except:
+            navigation = "NOBACK"
+        print(faq_text)
 
-        if faq_text == "back3":
-            return {"faq_Text": None,"faq_choice": None}
+
+        if navigation == "back3":
+            return {"faq_text": None,"faq_choice": None,"navigation":None}
         else:
-            dispatcher.utter_template("utter_not_serving",tracker)
-            return {"faq_choice":value}
+            # dispatcher.utter_template("utter_not_serving",tracker)
+            return {"faq_choice":faq_choice,"faq_text":faq_text}
 
     def submit(
             self,
@@ -384,7 +393,7 @@ class FaqForm(FormAction):
                 else:
                     dispatcher.utter_message("Query not found !")
 
-            return [SlotSet("faq_choice", None),SlotSet("faq_question", None),SlotSet("faq_text", None) ]
+            return [SlotSet("faq_choice", None),SlotSet("faq_text", None) ]
 
 
 

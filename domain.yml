@@ -36,6 +36,7 @@ entities:
   - any_thing
   - faq_choice
   - faq_text
+  - navigator
 
 forms:
   - info_form
@@ -60,6 +61,7 @@ intents:
   - quant
   - faq_choice
   - question
+  - navigations
 responses:
   utter_ask_complain_text:
     -
@@ -111,7 +113,7 @@ responses:
     -
       buttons:
         -
-          payload: "/any_thing{\"any_thing\": \"back3\"}"
+          payload: "/navigations{\"navigation\": \"back3\"}"
           title: Back
       text: "Please enter your question."
   utter_ask_feedback_text:
@@ -214,6 +216,9 @@ slots:
   dish_name:
     type: unfeaturized
   faq_choice:
+    type: unfeaturized
+
+  navigation:
     type: unfeaturized
 
   faq_text:
