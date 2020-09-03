@@ -301,6 +301,75 @@ dispatcher.utter_message("Sure, please allow me to access your
 				</li>
 			</ul>
 	</div>
+	<!-- responses I added -->
+	<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">Show Restauarant Carousels</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>utter_menu:
+  - text: "Showing Restauarants (just display no slotfilling)"
+    custom:
+      payload: cardsCarousel
+      data:
+      - name: Aditya's Restauarant
+        ratings: 4.3
+        image:"url_image1"
+      - name: Azhar's Restauarant
+        ratings: 5
+        image:"url_image2"
+      - name: Naaniz's Kitchen
+        ratings: 4.5
+        image:"url_imag3"
+	</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>
+			data=[
+		{"name":"Aditya's Restauarant","ratings":4.3,"image":"url_image1"},
+		{"name":"Azhar's Restauarant","ratings":5,"image":"url_image2"},
+		{"name":"Naaniz's Kitchen","ratings":4.5,"image":"url_image3"}
+			]
+  message={"payload":"cardsCarousel","data":data}
+  
+  dispatcher.utter_message(text="Showing Restauarants
+   (just display no slotfilling)",json_message=message)
+
+				</code></pre></b>
+				</li>
+			</ul>
+	</div>
+
+	<div class="row card-panel purple lighten-5">
+				<h5 style="color: blue">Pdf attachment</h5>
+			<ul>
+				<li>sending response from domain.yml <b>responses:
+				<pre><code>utter_ask_pdf:
+   	- text: "Here's the PDF 😀"
+   	  custom:
+   	  	payload: pdf_attachment
+   	  	data:
+   	  		custom:
+   	  			url:"url_pdf"
+   	  			title:"pdf_title"
+      	
+    	</code></pre></b></li>
+				<li>sending response from custom actions actions.py
+
+				<b><pre><code>
+data={
+	"custom":{
+	"url":"url_pdf",
+	"title":"pdf_title"
+}
+}
+message={"payload":"pdf_attachment","data":data}
+		dispatcher.utter_message(text="Here's the PDF 😀",
+				json_message=message)</code></pre></b>
+				</li>
+			</ul>
+	</div>
+	
+
 	</div>
     <div class="container">
 
