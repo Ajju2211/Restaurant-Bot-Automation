@@ -369,6 +369,101 @@ message={"payload":"pdf_attachment","data":data}
 			</ul>
 	</div>
 	
+  <div class="row card-panel purple lighten-5">
+        <h5 style="color: blue">cartCarousels</h5>
+      <ul>
+        <li>sending response from domain.yml <b>responses:
+        <pre><code>utter_show_cart:
+        - text: "Showing Cart"
+          custom:
+          payload: cartCarousels
+          data:
+          - title: Dosa
+            price: 30
+            quantity:3
+            restauarant:Naaniz
+            item_id:gjhgsajgsjb
+            image: url
+            location: Hyderabad
+            category: tiffins
+          - title: Dosa
+            price: 30
+            quantity:3
+            restauarant:Naaniz
+            item_id:gjhgsajgsjb
+            image: url
+            location: Hyderabad
+            category: tiffins
+
+          </code></pre></b></li>
+        <li>sending response from custom actions actions.py
+
+        <b><pre><code>
+dispatcher.utter_message(text="Showing Cart")
+        data = [
+            {
+           "title":"Dosa",
+           "price":30,
+           "quantity":2,
+           "restauarant":"Naaniz",
+           "item_id":"dhsh212hjkhiyhffhgs",
+           "location":"Hyderabad",
+           "image":"https://thumbs.dreamstime.com/
+           b/indian-dosa-special-
+           food-made-rice-lentils-south-india-
+           84751483.jpg",
+           "category":"tiffins"
+            },
+         {
+        "title":"Dosa",
+        "price":30,
+        "quantity":2,
+        "restauarant":"Naaniz",
+        "item_id":"sh212ffhgsdhhjkhiyh",
+        "image":"https://thumbs.dreamstime.com/
+        b/indian-dosa-special-
+         food-made-rice-lentils-south-india-
+        84751483.jpg",
+        "location":"Hyderabad",
+        "category":"tiffins"
+            },
+        {
+        "title":"Dosa",
+        "price":30,
+        "quantity":2,
+        "restauarant":"Naaniz",
+        "item_id":"ffhjkhihgsdhsh212yh",
+        "image":"https://thumbs.dreamstime.com/
+        b/indian-dosa-special-
+        food-made-rice-lentils-south-india-
+        84751483.jpg",
+        "location":"Hyderabad",
+        "category":"tiffins"
+            },
+        {
+        "title":"Dosa",
+        "price":30,
+        "quantity":2,
+        "restauarant":"Naaniz",
+        "item_id":"fhjkhifgsdhsh212hyh",
+        "image":"https://thumbs.dreamstime.com/
+        b/indian-dosa-special-
+        food-made-rice-lentils-south-india-
+        84751483.jpg",
+        "location":"Hyderabad",
+        "category":"tiffins"
+            }
+        ]
+        
+        message={ "payload": "cartCarousels", "data": data }
+        dispatcher.utter_message(text="Showing your cart",
+        json_message=message)
+        </code></pre></b>
+        </li>
+      </ul>
+  </div>
+
+
 
 	</div>
     <div class="container">
