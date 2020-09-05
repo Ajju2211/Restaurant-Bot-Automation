@@ -305,6 +305,15 @@ function setBotResponse(response) {
                         //pass the data variable to createCollapsible function
                         createCollapsible(data);
                     }
+
+                    //check of the custom payload type is "cartCarousels"
+                    if (response[i].custom.payload == "cartCarousels") {
+                        data = (response[i].custom.data);
+                        //pass the data variable to createCartCollapsible function
+                        showCartCardsCarousel(data);
+                    }
+
+
                 }
             }
             scrollToBottomOfResults();
@@ -465,6 +474,94 @@ function createCardsCarousel(cardsData) {
         ratings = Math.round((cardsData[i].ratings / 5) * 100) + "%";
         data = cardsData[i];
         item = '<div class="carousel_cards in-left">' + '<img class="cardBackgroundImage" src="' + cardsData[i].image + '"><div class="cardFooter">' + '<span class="cardTitle" title="' + title + '">' + title + "</span> " + '<div class="cardDescription">' + '<div class="stars-outer">' + '<div class="stars-inner" style="width:' + ratings + '" ></div>' + "</div>" + "</div>" + "</div>" + "</div>";
+
+        cards += item;
+    }
+
+    var cardContents = '<div id="paginated_cards" class="cards"> <div class="cards_scroller">' + cards + '  <span class="arrow prev fa fa-chevron-circle-left "></span> <span class="arrow next fa fa-chevron-circle-right" ></span> </div> </div>';
+
+    return cardContents;
+}
+
+
+
+//====================================== cartCarousels ==================================================
+
+function showCartCardsCarousel(cardsToAdd) {
+    var cards = createCartCardsCarousel(cardsToAdd);
+
+    $(cards).appendTo(".chats").show();
+
+    // changing height of scroller
+    $(".cards_scroller").css("height","300px");
+
+
+    if (cardsToAdd.length <= 2) {
+        $(".cards_scroller>div.carousel_cards:nth-of-type(" + i + ")").fadeIn(3000);
+    } else {
+        for (var i = 0; i < cardsToAdd.length; i++) {
+            $(".cards_scroller>div.carousel_cards:nth-of-type(" + i + ")").fadeIn(3000);
+        }
+        $(".cards .arrow.prev").fadeIn("3000");
+        $(".cards .arrow.next").fadeIn("3000");
+    }
+
+
+    scrollToBottomOfResults();
+
+    const card = document.querySelector("#paginated_cards");
+    const card_scroller = card.querySelector(".cards_scroller");
+    var card_item_size = 255;
+
+    card.querySelector(".arrow.next").addEventListener("click", scrollToNextPage);
+    card.querySelector(".arrow.prev").addEventListener("click", scrollToPrevPage);
+
+
+    // For paginated scrolling, simply scroll the card one item in the given
+    // direction and let css scroll snaping handle the specific alignment.
+    function scrollToNextPage() {
+        card_scroller.scrollBy(card_item_size, 0);
+    }
+
+    function scrollToPrevPage() {
+        card_scroller.scrollBy(-card_item_size, 0);
+    }
+
+}
+
+function createCartCardsCarousel(cardsData) {
+
+    var cards = "";
+
+    for (i = 0; i < cardsData.length; i++) {
+        title = cardsData[i].title;
+        data = cardsData[i];
+        item = `<div class="card" style="flex: auto;flex-shrink: 0;max-width: 250px;height:300px;margin-right:3px">
+    <div class="card-image waves-effect waves-block waves-light" style="width:250px;height:110px">
+      <img class="activator" src="${cardsData[i].image}">
+    </div>
+    <div class="card-content" style="background-color:#582c2c40;">
+      <span class="card-title activator grey-text text-darken-4">${cardsData[i].title}<i class="material-icons right">more_vert</i></span>
+      <table>
+      <thead>
+      <tr>
+      <td>Qty</td>
+      <td>Price</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr style="font-size: 1.5em;font-style: normal;">
+      <td>${cardsData[i].quantity}</td>
+      <td>${cardsData[i].price} ₹</td>
+      </tr>
+      </tbody>
+      </table>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">${cardsData[i].title}<i class="material-icons right">close</i></span>
+      <p>Here is some more information about this product that is only revealed once clicked on.</p>
+    </div>
+  </div>`;
 
         cards += item;
     }
