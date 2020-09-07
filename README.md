@@ -85,7 +85,7 @@ $ rasa shell
 - [ ] Faqs
     - [ ] Back in Faqs
     - [x] Search question
-    - [ ] Select Queston (collapsible button)
+    - [x] Select Queston (collapsible button)
 - [ ] home menu showing options
     - [ ] Back in home menu
     - [x] included Faq's
