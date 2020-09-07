@@ -297,13 +297,7 @@ class FaqForm(FormAction):
 
     @staticmethod
     def required_slots(tracker):
-
-        if (tracker.get_slot("faq_choice")=="1"):
-           return["faq_choice"]
-        elif (tracker.get_slot("faq_choice")=="2"):
-            return ["faq_choice", "faq_text"]
-        else:
-            return ["faq_choice"]
+        return ["faq_choice","faq_text"]
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         """A dictionary to map required slots to
             - an extracted entity
@@ -324,11 +318,40 @@ class FaqForm(FormAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         faq_choice = tracker.get_slot("faq_choice")
+        print(faq_choice)
 
         if faq_choice == "back2":
-            return {"faq_choice": None}
+            return {"faq_choice": "-1","faq_text":"-1"}
+        elif faq_choice == "1":
+            useNlp = False
+            faq_data = pd.read_csv("./actionserver/controllers/faqs/test_faq.csv")
+
+            button_resp = [
+                {
+                    "title":"Choose from our set of FAQs",
+                    "payload": "/faq_choice{\"faq_choice\": \"1\"}"
+                },
+                {
+                    "payload": "/faq_choice{\"faq_choice\": \"2\" }",
+                    "title": "Type your own question."
+                },{
+                        "payload": "/faq_choice{\"faq_choice\": \"back2\"}",
+                        "title": "Back"
+                }
+            ]
+            dispatcher.utter_message(text="How should we get your FAQ?", buttons=button_resp)
+            qa = []
+            for i in range(len(faq_data)):
+                obj = {
+                "title":faq_data["Question"][i],
+                "description":faq_data["Answer"][i]
+                    }
+                qa.append(obj)
+            message={ "payload": "collapsible", "data": qa }
+            dispatcher.utter_message(text="Faq's",json_message=message)
+
+            return {"faq_choice":None}
         else:
-            dispatcher.utter_template("utter_not_serving",tracker)
             return {"faq_choice":value}
 
     def validate_faq_text(self,
@@ -349,36 +372,9 @@ class FaqForm(FormAction):
             return {"faq_text": None,"faq_choice": None,"navigation":None}
         else:
             # dispatcher.utter_template("utter_not_serving",tracker)
-            return {"faq_choice":faq_choice,"faq_text":value}
-
-    def submit(
-            self,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any],
-    ) -> List[Dict]:
-
-            # fetching answer 1-select que 2-search que
-            useNlp = False
-            if (tracker.get_slot("faq_choice")=="1"):
-
-                faq_data = pd.read_csv("./actionserver/controllers/faqs/test_faq.csv")
-
-                
-                # for i in range(len(faq_data)):
-                #     dispatcher.utter_message("Question :{}\n Answer:{}".format(faq_data[i][0], faq_data[i][1]))
-                qa = []
-                for i in range(len(faq_data)):
-                    obj = {
-                    "title":faq_data["Question"][i],
-                    "description":faq_data["Answer"][i]
-                        }
-                    qa.append(obj)
-                message={ "payload": "collapsible", "data": qa }
-                dispatcher.utter_message(text="Faq's",json_message=message)
-
-            elif (tracker.get_slot("faq_choice")=="2"):
-                ques= tracker.get_slot("faq_text")
+            print(faq_choice)
+            if faq_choice!="-1":
+                ques= value
                 useNlp = True
 
                 f = FAQ("./actionserver/controllers/faqs/test_faq.csv")
@@ -387,8 +383,19 @@ class FaqForm(FormAction):
                 if ans:
                     dispatcher.utter_message("Your Question :{}\n Answer:{}".format(ques, ans))
                 else:
-                    dispatcher.utter_message("Query not found !")
+                    dispatcher.utter_message("Query not found !")               
+                return {"faq_choice":faq_choice,"faq_text":None}
+            else:
+                {"faq_choice":faq_choice,"faq_text":"filled"}
 
+    def submit(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any],
+    ) -> List[Dict]:
+            # handle back2 logic here
+            dispatcher.utter_message("Faq is closed")
             return [SlotSet("faq_choice", None),SlotSet("faq_text", None) ]
 
 
