@@ -13,6 +13,8 @@ $ pip install ujson
 $ pip install rasa==1.10.12
 $ pip uninstall tensorboard-plugin-wit tensorflow tensorflow-addons tensorflow-estimator tensorflow-hub tensorflow-probability
 $ conda install tensorflow==2.1.0
+$ pip uninstall h5py
+$ pip install h5py
 ```
 - After above installation steps follow these
 - Install requirements from [Modules_list](https://github.com/naaniz/Restaurant-Bot-Automation#modules-list-append-here) here use pip install not pip3 install
