@@ -13,6 +13,9 @@ $ pip install ujson
 $ pip install rasa==1.10.12
 $ pip uninstall tensorboard-plugin-wit tensorflow tensorflow-addons tensorflow-estimator tensorflow-hub tensorflow-probability
 $ conda install tensorflow==2.1.0
+$ pip install rasa[spacy]
+$ python -m spacy download en_core_web_md
+$ python -m spacy link en_core_web_md en
 $ pip uninstall h5py
 $ pip install h5py
 ```
