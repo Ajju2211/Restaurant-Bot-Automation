@@ -264,7 +264,19 @@ class FeedbackForm(FormAction):
             - a whole message
             or a list of them, where a first match will be picked"""
         return {"rating": self.from_entity("rating"),"feedback_text": [self.from_entity(entity="any_thing"),self.from_entity(entity="navigation")]}
-    
+
+    def validate_rating(
+    self,
+    value: Text,
+    dispatcher: CollectingDispatcher,
+    tracker: Tracker,
+    domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        if value=="back1":
+            return {"rating":"-1", "feedback_text":"-1"}
+        else:
+            return {"rating":value}
+
     def validate_feedback_text(
     self,
     value: Text,
@@ -272,7 +284,7 @@ class FeedbackForm(FormAction):
     tracker: Tracker,
     domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        if value=="back":
+        if value=="back2":
             return {"rating":None, "feedback_text":None}
         else:
             return {"feedback_text":value}
@@ -284,20 +296,22 @@ class FeedbackForm(FormAction):
             tracker: Tracker,
             domain: Dict[Text, Any],
     ) -> List[Dict]:
-
-        with open("./actionserver/customer_queries.json", "r") as queriesRef:
-            rating=tracker.get_slot("rating")
-            feedback = tracker.get_slot("feedback_text")
-            feedbackObj = json.load(queriesRef)
-            feedbackObj["feedback"].append({
-                "createdOn":util.timestamp(),
-                "complaint_area":rating,
-                "complaint":feedback
-            })
+        if tracker.get_slot("rating")!="-1":
+            with open("./actionserver/customer_queries.json", "r") as queriesRef:
+                rating=tracker.get_slot("rating")
+                feedback = tracker.get_slot("feedback_text")
+                feedbackObj = json.load(queriesRef)
+                feedbackObj["feedback"].append({
+                    "createdOn":util.timestamp(),
+                    "complaint_area":rating,
+                    "complaint":feedback
+                })
             with open("./actionserver/customer_queries.json", "w") as queriesRefWrite:
                 json.dump(feedbackObj, queriesRefWrite, indent = 4)
 
-        dispatcher.utter_message("Your Response :\n Rating :'{rate}' star \n Feedback: '{feedbk}' \n Submitted!Thank You!".format(rate=rating,feedbk=feedback))
+            dispatcher.utter_message("Your Response :\n Rating :'{rate}' star \n Feedback: '{feedbk}' \n Submitted!Thank You!".format(rate=rating,feedbk=feedback))
+        else:
+            dispatcher.utter_message("Feedback form closed")
 
         return [SlotSet("rating", None), SlotSet("feedback_text", None)]
     
