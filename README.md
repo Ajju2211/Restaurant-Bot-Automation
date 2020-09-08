@@ -57,11 +57,11 @@ $ rasa shell
 
 #### TASK DONE
 - [ ] Complaints 
-    - [ ] Back button in complaints 
+    - [x] Back button in complaints 
     - [x] Saving complaints 
     - [x] Able to save anything
 - [ ] Feedbacks
-    - [ ] Back button
+    - [x] Back button
     - [x] Saving feedbacks
     - [x] Able to save anything
 - [ ] Ordering 
@@ -83,7 +83,7 @@ $ rasa shell
         - [ ] location
         - [ ] Rating
 - [ ] Faqs
-    - [ ] Back in Faqs
+    - [x] Back in Faqs
     - [x] Search question
     - [x] Select Queston (collapsible button)
 - [ ] home menu showing options
