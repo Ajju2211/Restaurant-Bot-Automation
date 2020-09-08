@@ -66,6 +66,10 @@ responses:
   utter_ask_complain_text:
     -
       text: "Please Describe your complain."
+      buttons:
+        -
+          payload: "/navigations{\"navigation\": \"back2\"}"
+          title: Back
   utter_ask_complain_type:
     -
       buttons:
@@ -81,6 +85,9 @@ responses:
         -
           payload: "/complain{\"complain_type\":\"Other\"}"
           title: Other
+        -
+          payload: "/complain{\"complain_type\":\"back1\"}"
+          title: Back
       text: "What is complain regarding ?"
   utter_ask_confirm:
     -

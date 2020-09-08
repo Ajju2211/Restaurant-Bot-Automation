@@ -214,9 +214,33 @@ class ComplainForm(FormAction):
             or a list of them, where a first match will be picked"""
 
 
-        return {"complain_type": self.from_entity("complain_type"),"complain_text": [self.from_text()]}
+        return {"complain_type": self.from_entity("complain_type"),"complain_text": [self.from_entity(entity="navigation"),self.from_text()]}
 
         #return {"complain_type": self.from_entity("complain_type"),"complain_text": self.from_entity(entity="any_thing")}
+
+    def validate_complain_type(
+        self,
+        value:Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        if value=="back1":
+            return {"complain_type":"-1","complain_text":"-1"}
+        else:
+            return {"complain_type":value}
+    def validate_complain_text(
+        self,
+        value:Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> List[Dict]:
+        if value=="back2":
+            return {"complain_type":None,"complain_text":None}
+        else:
+            return {"complain_text":value}
+        
 
     def submit(
         self,
@@ -225,21 +249,23 @@ class ComplainForm(FormAction):
         domain: Dict[Text, Any],
     ) -> List[Dict]:
 
-     
+        if tracker.get_slot("complain_type")!="-1":
         # saving 
-        with open("./actionserver/customer_queries.json", "r") as queriesRef:
-            comp_type=tracker.get_slot("complain_type")
-            comp = tracker.get_slot("complain_text")
-            compObj = json.load(queriesRef)
-            compObj["complaints"].append({
-                "createdOn":util.timestamp(),
-                "complaint_area":comp_type,
-                "complaint":comp
-            })
-            with open("./actionserver/customer_queries.json", "w") as queriesRefWrite:
-                json.dump(compObj, queriesRefWrite, indent = 4)
+            with open("./actionserver/customer_queries.json", "r") as queriesRef:
+                comp_type=tracker.get_slot("complain_type")
+                comp = tracker.get_slot("complain_text")
+                compObj = json.load(queriesRef)
+                compObj["complaints"].append({
+                    "createdOn":util.timestamp(),
+                    "complaint_area":comp_type,
+                    "complaint":comp
+                })
+                with open("./actionserver/customer_queries.json", "w") as queriesRefWrite:
+                    json.dump(compObj, queriesRefWrite, indent = 4)
 
-        dispatcher.utter_message("Your Complaint :\n Complaint Area:{comp_type}\n Complaint: '{comp}' \n has been registered!".format(comp_type=comp_type,comp = comp))
+            dispatcher.utter_message("Your Complaint :\n Complaint Area:{comp_type}\n Complaint: '{comp}' \n has been registered!".format(comp_type=comp_type,comp = comp))
+        else:
+            dispatcher.utter_message("Complaints Form is closed")
 
 
         return [SlotSet("complain_type",None), SlotSet("complain_text",None)]
