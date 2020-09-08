@@ -103,6 +103,7 @@
             "complaint": "nice app"
         },
         {
+<<<<<<< HEAD
             "createdOn": "27-Aug-2020 (14:52:27.886603)",
             "complaint_area": "1",
             "complaint": "need to add button in place of back text in feedback side!"
@@ -121,6 +122,16 @@
             "createdOn": "01-Sep-2020 (00:07:33.945611)",
             "complaint_area": "5",
             "complaint": "awsome UI"
+=======
+            "createdOn": "29-Aug-2020 (21:47:25.922967)",
+            "complaint_area": "2",
+            "complaint": "awsome app !:)"
+        },
+        {
+            "createdOn": "07-Sep-2020 (17:11:26.811763)",
+            "complaint_area": "2",
+            "complaint": "jdkjsdkjsdkjs"
+>>>>>>> 019109526f29d8f4e91044cecbeeba35f411a39c
         }
     ]
 }

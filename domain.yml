@@ -36,6 +36,7 @@ entities:
   - any_thing
   - faq_choice
   - faq_text
+  - navigator
 
 forms:
   - info_form
@@ -60,6 +61,7 @@ intents:
   - quant
   - faq_choice
   - question
+  - navigations
 responses:
   utter_ask_complain_text:
     -
@@ -102,10 +104,17 @@ responses:
         -
           payload: "/faq_choice{\"faq_choice\": \"2\" }"
           title: "Type your own question."
+        -
+          payload: "/faq_choice{\"faq_choice\": \"back2\"}"
+          title: Back
       text: "How should we get your FAQ?"
 
   utter_ask_faq_text:
     -
+      buttons:
+        -
+          payload: "/navigations{\"navigation\": \"back3\"}"
+          title: Back
       text: "Please enter your question."
   utter_ask_feedback_text:
     -
@@ -215,6 +224,9 @@ slots:
   dish_name:
     type: unfeaturized
   faq_choice:
+    type: unfeaturized
+
+  navigation:
     type: unfeaturized
 
   faq_text:

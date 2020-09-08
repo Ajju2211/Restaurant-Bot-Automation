@@ -205,6 +205,8 @@ function setBotResponse(response) {
             $(BotResponse).appendTo(".chats").hide().fadeIn(1000);
             scrollToBottomOfResults();
         } else {
+        	console.log("Response from rasa!");
+        	console.log(response);
 
             //if we get response from Rasa
             for (i = 0; i < response.length; i++) {
