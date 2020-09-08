@@ -263,7 +263,7 @@ class FeedbackForm(FormAction):
             - intent: value pairs
             - a whole message
             or a list of them, where a first match will be picked"""
-        return {"rating": self.from_entity("rating"),"feedback_text": self.from_entity(entity="any_thing")}
+        return {"rating": self.from_entity("rating"),"feedback_text": [self.from_entity(entity="any_thing"),self.from_entity(entity="navigation")]}
     
     def validate_feedback_text(
     self,
