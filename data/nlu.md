@@ -206,6 +206,7 @@
 -[3](rating)
 -[4](rating)
 -[5](rating)
+-[back](rating)
 
 ## intent:faq_choice
 -[1](faq_choice)
@@ -213,6 +214,14 @@
 -[3](faq_choice)
 -[4](faq_choice)
 -[5](faq_choice)
+-[back2](faq_choice)
+
+## intent:navigations
+-[back](navigation)
+-[back1](navigation)
+-[back2](navigation)
+-[back3](navigation)
+
 
 ## intent:query_init
 
