@@ -7,7 +7,7 @@
  ```
 $ git clone https://github.com/naaniz/Restaurant-Bot-Automation.git
 $ cd Restaurant-Bot-Automation
-$ create conda -n naaniz-rasa python=3.7.6
+$ conda create -n naaniz-rasa python=3.7.6
 $ conda activate naaniz-rasa
 $ pip install ujson
 $ pip install rasa==1.10.12
