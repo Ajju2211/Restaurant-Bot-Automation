@@ -18,12 +18,14 @@ actions:
   - utter_query_type
   - utter_ask_faq_choice
   - utter_ask_faq_text
+  - utter_ask_dish_category
 
 entities:
   - username
   - mailid
   - phone_number
   - dish_name
+  - dish_category
   - proceed
   - continue
   - moveon
@@ -218,6 +220,16 @@ responses:
           payload: /complaint_init
           title: Complaint
       text: "What kind of query is it?"
+  utter_ask_dish_category:
+    - text: "Please select a category"
+      custom:
+          payload: dropDown 
+          data:
+          - label: starters
+            value: "/inform{\"dish_category\":\"starters\"}"
+          - label: meals
+            value: "/inform{\"dish_category\":\"meals\"}"
+
 session_config:
   carry_over_slots_to_new_session: true
   session_expiration_time: 180
@@ -230,6 +242,8 @@ slots:
     type: unfeaturized
   dish_name:
     type: unfeaturized
+  dish_category:
+    type: unfeaturized  
   faq_choice:
     type: unfeaturized
 

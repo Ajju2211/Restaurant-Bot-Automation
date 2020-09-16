@@ -87,6 +87,8 @@
 - [23232](transaction_id)
 - [aZghg21@1hj](any_text)
 - [azhar@jhj](any_text)
+- [starters](dish_category)
+- [meals](dish_category)
 
 ## regex:customer_id
 - \b[A-Z]{2}-\d{3}\b

@@ -16,6 +16,10 @@ quant_list = [] #takes quantity from user
 restaurant_dataset = pd.read_csv('./actionserver/restaurant.csv')
 restaurant_dataset = restaurant_dataset.set_index('restaurant').T.to_dict('list')
 
+with open(r'D:\RASA\Intern_BOT\Restaurant-Bot-Automation\actionserver\custom_payload.json') as f:
+    restaurant_menu = json.load(f)
+
+
 class InfoForm(FormAction):
 
     """Collects order information"""
@@ -116,13 +120,43 @@ class OrderForm(FormAction):
     @staticmethod
     def required_slots(tracker):
         return [
+            "dish_category",
             "dish_name",
             "quantity",
             "proceed"
             ]
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-        return {"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
+        return {"dish_category": [self.from_entity("dish_category"),self.from_intent("inform")],"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
 
+    def validate_dish_category(self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+
+        data = []
+
+        for keys in restaurant_menu['restaurant']['menu'].keys():
+            if value in keys:
+                temp = restaurant_menu['restaurant']['menu'][value]
+                for j in temp:
+
+
+                    dic = {
+                        "title":j['dish'],
+                           "price":j['price'],
+                           "image" : j['image']
+                       }
+                    
+                    data.append(dic)
+
+        			
+        message={"payload":"dropDown","data":data}
+  
+        dispatcher.utter_message(text="Please type the dish name",json_message=message)
+
+        return {"dish_category": value}
 
     def validate_dish_name(self,
         value: Text,
@@ -130,14 +164,35 @@ class OrderForm(FormAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        dish_name = tracker.get_slot("dish_name")
 
-        if dish_name in dataset.keys():
-            dispatcher.utter_message("it costs {}".format(dataset[dish_name][0]))
-            return {"dish_name": dish_name}
-        else:
-            dispatcher.utter_template("utter_not_serving",tracker)
-            return {"dish_name":None}
+        category = tracker.get_slot("dish_category")
+
+        # to debug whether the slot is present
+        print(category)
+
+        dish_name = value
+        
+        for keys in restaurant_menu['restaurant']['menu'].keys():
+            if category in keys:
+                temp = restaurant_menu['restaurant']['menu'][category]
+                for j in temp:
+                    if dish_name.lower() == j['dish'].lower():
+                        dispatcher.utter_message("it costs {}".format(j['price']))
+                        return {"dish_name": dish_name}
+                        break
+                    else:
+                        continue
+                        # dispatcher.utter_template("utter_not_serving",tracker)
+                        # return {"dish_name":None}
+    
+
+
+        # if dish_name in dataset.keys():
+        #     dispatcher.utter_message("it costs {}".format(dataset[dish_name][0]))
+        #     return {"dish_name": dish_name}
+        # else:
+        #     dispatcher.utter_template("utter_not_serving",tracker)
+        #     return {"dish_name":None}
 
     def validate_proceed(
         self,
