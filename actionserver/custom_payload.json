@@ -32,6 +32,21 @@
             ],
             "meals": [
                 {
+                    "dish": "Noodles",
+                    "price": 30,
+                    "image": "url_image"
+                },
+                {
+                    "dish": "wada",
+                    "price": 20,
+                    "image": "url_image"
+                },
+                {
+                    "dish": "Poori",
+                    "price": 45,
+                    "image": "url_image"
+                },
+                {
                     "dish": "Dal Rice",
                     "price": 50,
                     "image": "url_image"

@@ -16,9 +16,16 @@ quant_list = [] #takes quantity from user
 restaurant_dataset = pd.read_csv('./actionserver/restaurant.csv')
 restaurant_dataset = restaurant_dataset.set_index('restaurant').T.to_dict('list')
 
+
+
 with open(r'.\actionserver\custom_payload.json') as f:
     restaurant_menu = json.load(f)
 
+# Code snippet for global back
+# return [Restarted(), UserUttered(text="/get_started", parse_data={
+                    #   "intent": {"confidence": 1.0, "name": "get_started"}, 
+                    #   "entities": []
+                    #  }), FollowupAction(name="utter_greet")]
 
 class InfoForm(FormAction):
 
@@ -110,6 +117,21 @@ class ActionShowMenu(Action):
                 dispatcher.utter_message(image = url)
         return []
 
+class ActionAskDishCategory(Action):
+    def name(self) -> Text:
+        return "action_ask_dish_category"
+    def run(
+        self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+        data=[
+			{"label":"starters1","value":"/inform{'dish_category':'starters'}"},
+			{"label":"meals1","value":"/inform{'dish_category':'meals'}"}
+			]
+
+        message={"payload":"dropDown","data":data}
+  
+        dispatcher.utter_message(text="Please select a option",json_message=message)
+        return []
 
 
 
@@ -119,14 +141,36 @@ class OrderForm(FormAction):
         return "order_form"
     @staticmethod
     def required_slots(tracker):
-        return [
-            "dish_category",
-            "dish_name",
-            "quantity",
-            "proceed"
+        if tracker.get_slot("quantity"):
+            return [
+                "proceed"
+                ]
+        else:
+            return [
+                "dish_category",
+                "dish_name",
+                "quantity",
+                "proceed"
             ]
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-        return {"dish_category": [self.from_entity("dish_category"),self.from_intent("inform")],"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
+        return {"dish_category": self.from_intent("inform"),"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
+    
+    # def request_next_slot(
+    #     self,
+    #     dispatcher: "CollectingDispatcher",
+    #     tracker: "Tracker",
+    #     domain: Dict[Text, Any],
+    #     ):
+
+    #     for slot in self.required_slots(tracker):
+    #         if self._should_request_slot(tracker, slot):
+    #             kwargs = {}
+    #             if slot == 'dish_category':
+    #                 kwargs.update({"action_ask_dish_category": "some_value"})
+
+    #                 dispatcher.utter_template("utter_ask_{}".format(slot), tracker, **kwargs)
+
+    #                 return [SlotSet("requested_slot", slot)]
 
     def validate_dish_category(self,
         value: Text,
@@ -136,27 +180,52 @@ class OrderForm(FormAction):
     ) -> Dict[Text, Any]:
 
         data = []
+        category = tracker.get_slot("dish_category")
 
-        for keys in restaurant_menu['restaurant']['menu'].keys():
-            if value in keys:
-                temp = restaurant_menu['restaurant']['menu'][value]
+        # for keys in restaurant_menu['restaurant']['menu'].keys():
+
+        #     if category in keys:
+        #         temp = restaurant_menu['restaurant']['menu'][category]
+        #         for j in temp:
+
+
+        #             dic = {
+        #                 "title":j['dish'],
+        #                    "price":j['price'],
+        #                    "image" : j['image']
+        #                }
+                    
+        #             data.append(dic)
+        try:
+            if restaurant_menu['restaurant']['menu'][category]:
+                temp = restaurant_menu['restaurant']['menu'][category]
                 for j in temp:
 
 
                     dic = {
-                        "title":j['dish'],
-                           "price":j['price'],
-                           "image" : j['image']
-                       }
+                        "title" : j['dish'],
+                        "price" : j['price'],
+                        "image" : j['image']
+                    }
                     
                     data.append(dic)
+            
+            message={"payload":"cartCarousels","data":data}
+  
+            dispatcher.utter_message(text="Please type the dish name",json_message=message)
+
+            return {"dish_category": category}
+        
+        except :
+            dispatcher.utter_message(text="No such Category Found")
+            return {"dish_category":None}        
 
         			
-        message={"payload":"cartCarousels","data":data}
+        # message={"payload":"cartCarousels","data":data}
   
-        dispatcher.utter_message(text="Please type the dish name",json_message=message)
+        # dispatcher.utter_message(text="Please type the dish name",json_message=message)
 
-        return {"dish_category": value}
+        # return {"dish_category": category}
 
     def validate_dish_name(self,
         value: Text,
@@ -171,21 +240,22 @@ class OrderForm(FormAction):
         print(category)
 
         dish_name = value
-        
-        for keys in restaurant_menu['restaurant']['menu'].keys():
-            if category in keys:
-                temp = restaurant_menu['restaurant']['menu'][category]
-                for j in temp:
-                    if dish_name.lower() == j['dish'].lower():
-                        dispatcher.utter_message("it costs {}".format(j['price']))
-                        return {"dish_name": dish_name}
-                        break
-                    else:
-                        continue
-                        # dispatcher.utter_template("utter_not_serving",tracker)
-                        # return {"dish_name":None}
-                dispatcher.utter_template("utter_not_serving",tracker)
-                return {"dish_name":None}
+        menu = restaurant_menu['restaurant']['menu']
+        if menu[category]:
+            temp = menu[category]
+            for j in temp:
+                if dish_name.lower() == j['dish'].lower():
+                    dispatcher.utter_message("it costs {}".format(j['price']))
+                    return {"dish_name": dish_name}
+                else:
+                    continue
+                    # dispatcher.utter_template("utter_not_serving",tracker)
+                    # return {"dish_name":None}
+            dispatcher.utter_template("utter_not_serving",tracker)
+            return {"dish_name":None}
+        else:
+            dispatcher.utter_message(text="No such category found")
+
     
 
 
@@ -195,6 +265,22 @@ class OrderForm(FormAction):
         # else:
         #     dispatcher.utter_template("utter_not_serving",tracker)
         #     return {"dish_name":None}
+    def validate_quantity(
+        self,
+        value: Text,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
+    ) -> Dict[Text, Any]:
+        dish_name = tracker.get_slot("dish_name")
+        quantity=0
+        try:
+            quantity = int(value)
+            return {"dish_name":dish_name,"quantity":quantity}
+        except:
+            dispatcher.utter_message(text="Please Enter Valid Number")
+            return {"dish_name":dish_name,"quantity":None}
+
 
     def validate_proceed(
         self,
