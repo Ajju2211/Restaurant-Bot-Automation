@@ -229,6 +229,8 @@ responses:
             value: "/inform{\"dish_category\":\"starters\"}"
           - label: meals
             value: "/inform{\"dish_category\":\"meals\"}"
+          - label: Tiffins
+            value: "/inform{\"dish_category\":\"tiffins\"}"
 
 session_config:
   carry_over_slots_to_new_session: true

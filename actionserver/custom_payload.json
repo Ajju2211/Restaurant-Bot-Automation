@@ -41,6 +41,18 @@
                     "price": 150,
                     "image": "url_image"
                 }
+            ],
+            "tiffins": [
+                {
+                    "dish": "Dosa",
+                    "price": 50,
+                    "image": "url_image"
+                },
+                {
+                    "dish": "Wada",
+                    "price": 150,
+                    "image": "url_image"
+                }
             ]
         }
     },
