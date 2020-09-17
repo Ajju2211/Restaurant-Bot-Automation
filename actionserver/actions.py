@@ -9,6 +9,8 @@ from rasa.core.slots import Slot
 import json
 from actionserver.utils import utilities as util
 from actionserver.controllers.faqs.faq import FAQ
+import logging
+
 dataset = pd.read_csv('./actionserver/dishes.csv')
 dataset = dataset.set_index('dish').T.to_dict('list')
 dish_list = []
@@ -16,6 +18,10 @@ quant_list = [] #takes quantity from user
 restaurant_dataset = pd.read_csv('./actionserver/restaurant.csv')
 restaurant_dataset = restaurant_dataset.set_index('restaurant').T.to_dict('list')
 
+logger = logging.getLogger(__name__)
+
+
+REQUESTED_SLOT = "requested_slot"
 
 
 with open(r'.\actionserver\custom_payload.json') as f:
@@ -131,6 +137,7 @@ class ActionAskDishCategory(Action):
         message={"payload":"dropDown","data":data}
   
         dispatcher.utter_message(text="Please select a option",json_message=message)
+        print("inside dish_category")
         return []
 
 
@@ -155,22 +162,89 @@ class OrderForm(FormAction):
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         return {"dish_category": self.from_intent("inform"),"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
     
-    # def request_next_slot(
-    #     self,
-    #     dispatcher: "CollectingDispatcher",
-    #     tracker: "Tracker",
-    #     domain: Dict[Text, Any],
-    #     ):
+    def request_next_slot(
+        self,
+        dispatcher: "CollectingDispatcher",
+        tracker: "Tracker",
+        domain: Dict[Text, Any],
+     ):
+        """Request the next slot and utter template if needed,
+            else return None"""
 
-    #     for slot in self.required_slots(tracker):
-    #         if self._should_request_slot(tracker, slot):
-    #             kwargs = {}
-    #             if slot == 'dish_category':
-    #                 kwargs.update({"action_ask_dish_category": "some_value"})
+        for slot in self.required_slots(tracker):
+            if self._should_request_slot(tracker, slot):
+                logger.debug(f"Request next slot '{slot}'")
+                if slot == "dish_category":
+                    dispatcher.utter_message(text="Please select the category")
+                dispatcher.utter_message(template=f"utter_ask_{slot}", **tracker.slots)
+                return [SlotSet(REQUESTED_SLOT, slot)]
 
-    #                 dispatcher.utter_template("utter_ask_{}".format(slot), tracker, **kwargs)
+        # no more required slots to fill
+        return None
 
-    #                 return [SlotSet("requested_slot", slot)]
+    def askCategories(self,dispatcher):
+        li = []
+        for keys in restaurant_menu['restaurant']['menu'].keys():
+            val = "'{}'".format(keys)
+            cat = {"label":f"{keys}","value":"/inform{'dish_category':"+val+"}"}
+            li.append(cat)
+
+                
+        data = li
+
+        message={"payload":"dropDown","data":data}
+  
+        dispatcher.utter_message(text="Please select a option",json_message=message)
+    # To display dishes of category
+    def showDishes(self,category,dispatcher,tracker):
+        dic = {}
+        data = []
+        print(f"cat:{category}")
+        try:
+            if restaurant_menu['restaurant']['menu'][category]:
+                temp = restaurant_menu['restaurant']['menu'][category]
+                for j in temp:
+
+
+                    dic = {
+                        "title" : j['dish'],
+                        "price" : j['price'],
+                        "image" : j['image']
+                    }
+                    
+                    data.append(dic)
+            
+            message={"payload":"cartCarousels","data":data}
+  
+            dispatcher.utter_message(text="Please type the dish name",json_message=message)
+
+            # return {"dish_category": category}
+        
+        except :
+            dispatcher.utter_message(text="No such Category Found")
+            raise Exception("No such Category")
+            # return {"dish_category":None}
+
+    def showCart(self,dispatcher,tracker):
+        data = []
+        for x in dish_list:
+            image = util.dish_info(x['dish'],x['category'])['image']
+            price = util.dish_info(x['dish'],x['category'])['price']
+            cart = {
+                "title" : x['dish'],
+                "image" : image,
+                "quantity" : x['quantity'],
+                "price" : price
+                }
+
+            data.append(cart)
+
+        message={"payload":"cartCarousels","data":data}
+
+        dispatcher.utter_message(text="Your Order",json_message=message)  
+
+            
+        
 
     def validate_dish_category(self,
         value: Text,
@@ -197,29 +271,12 @@ class OrderForm(FormAction):
                     
         #             data.append(dic)
         try:
-            if restaurant_menu['restaurant']['menu'][category]:
-                temp = restaurant_menu['restaurant']['menu'][category]
-                for j in temp:
-
-
-                    dic = {
-                        "title" : j['dish'],
-                        "price" : j['price'],
-                        "image" : j['image']
-                    }
-                    
-                    data.append(dic)
-            
-            message={"payload":"cartCarousels","data":data}
-  
-            dispatcher.utter_message(text="Please type the dish name",json_message=message)
-
+            self.showDishes(category,dispatcher,tracker)
             return {"dish_category": category}
-        
-        except :
-            dispatcher.utter_message(text="No such Category Found")
-            return {"dish_category":None}        
+        except:
+            return {"dish_category": None}
 
+        
         			
         # message={"payload":"cartCarousels","data":data}
   
@@ -292,18 +349,22 @@ class OrderForm(FormAction):
         dish_name = tracker.get_slot("dish_name")
         proceed = tracker.get_slot("proceed")
         quant = int(tracker.get_slot("quantity"))
+        cat = tracker.get_slot("dish_category")
         if proceed =="Add to Cart":
-            dish_list.append(dish_name)
-            quant_list.append(quant)
+            dish_obj = {"dish":dish_name,"quantity":quant,"category":cat}
+            dish_list.append(dish_obj)
+            self.showDishes(cat,dispatcher,tracker)
             print("quantity")
             return {"proceed":None,"dish_name":None,"quantity":None}
 
         elif proceed == "Buy Now":
-            dish_list.append(dish_name)
-            quant_list.append(quant)
+            dish_obj = {"dish":dish_name,"quantity":quant,"category":cat}
+            dish_list.append(dish_obj)
             return {"proceed":proceed}
 
         else:
+            # Select other food
+            self.showDishes(cat,dispatcher,tracker)
             return {"dish_name":None,"proceed":None,"quantity":None}
 
     def submit(
@@ -313,10 +374,17 @@ class OrderForm(FormAction):
         domain: Dict[Text, Any],
     ) -> List[Dict]:
         amount = 0
-        for x in range(len(dish_list)):
-            dispatcher.utter_message("{} : {} : {}".format(dish_list[x],quant_list[x],dataset[dish_list[x]][0]))
-            z = int(dataset[dish_list[x]][0])
-            amount += z
+        dish_cat = tracker.get_slot("dish_category")
+        total = 0
+        price=0
+        
+        for x in dish_list:
+            prize = util.dish_info(x['dish'],x['category'])['price']
+            total = float(prize)*int(x['quantity'])
+            amount += total
+            # dispatcher.utter_message("{} : {} : {}".format(x['dish'],x["quantity"],total))
+            # amount += total
+        self.showCart(dispatcher,tracker)
         dispatcher.utter_message("Total Amount : {}".format(amount))
         dispatcher.utter_message("Thanks for ordering")
         return [AllSlotsReset()]
