@@ -367,9 +367,9 @@ function renderDropDwon(data) {
         var label = ""
         $("select option:selected").each(function() {
             label += $(this).text();
-            value += $(this).val();
+            value += $(this).val().replace(/'/g,'"');
         });
-
+        console.log(value);
         setUserResponse(label);
         send(value);
         $(".dropDownMsg").remove();

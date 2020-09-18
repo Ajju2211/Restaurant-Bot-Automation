@@ -185,8 +185,8 @@ class OrderForm(FormAction):
     def askCategories(self,dispatcher):
         li = []
         for keys in restaurant_menu['restaurant']['menu'].keys():
-            val = "'{}'".format(keys)
-            cat = {"label":f"{keys}","value":"/inform{'dish_category':"+val+"}"}
+            val = '\"{}\"'.format(keys)
+            cat = {"label":f"{keys}","value":'/inform{\"dish_category\":'+val+'}'}
             li.append(cat)
 
                 
