@@ -181,21 +181,6 @@ class OrderForm(FormAction):
 
         data = []
         category = tracker.get_slot("dish_category")
-
-        # for keys in restaurant_menu['restaurant']['menu'].keys():
-
-        #     if category in keys:
-        #         temp = restaurant_menu['restaurant']['menu'][category]
-        #         for j in temp:
-
-
-        #             dic = {
-        #                 "title":j['dish'],
-        #                    "price":j['price'],
-        #                    "image" : j['image']
-        #                }
-                    
-        #             data.append(dic)
         try:
             if restaurant_menu['restaurant']['menu'][category]:
                 temp = restaurant_menu['restaurant']['menu'][category]
