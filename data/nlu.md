@@ -7,6 +7,7 @@
 - good evening
 - hey there
 
+
 ## intent:order_food
 
 - I want to place an order.
@@ -233,3 +234,14 @@
 -I want to report an query
 -I want to report queries
 -query
+
+## intent:greetback
+- back
+- Back
+- Go back
+- previous
+- I want to go to home menu
+- go to home
+- go to home menu
+- back to home
+- home menu
