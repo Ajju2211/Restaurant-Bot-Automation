@@ -34,4 +34,4 @@ $ git pull
 ```
 
 >[!WARNING]
->Always check for the current branch your working is right or not and also Never merger pull requests on your own.
+>Always check for the current branch your working is right or not on vscode editor and also Never merge pull requests on your own.
