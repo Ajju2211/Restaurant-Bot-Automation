@@ -32,6 +32,6 @@ $ git push
 ```sh
 $ git pull
 ```
-<br>
-__**CAUTION**_ 
-Always check for the current branch your working is right or not and also Never merger pull requests on your own.
+
+>[!WARNING]
+>Always check for the current branch your working is right or not and also Never merger pull requests on your own.
