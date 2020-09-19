@@ -19,6 +19,7 @@ actions:
   - utter_ask_faq_choice
   - utter_ask_faq_text
   - utter_ask_dish_category
+  - action_greet_back
 
 entities:
   - username
@@ -64,6 +65,7 @@ intents:
   - faq_choice
   - question
   - navigations
+  - greetback
 responses:
   utter_ask_complain_text:
     -
@@ -219,6 +221,10 @@ responses:
         -
           payload: /complaint_init
           title: Complaint
+
+        - 
+          payload: /greetback
+          title: Back
       text: "What kind of query is it?"
   utter_ask_dish_category:
     - text: "Please select a category"

@@ -1,13 +1,13 @@
 
 
-## order food path
+<!-- ## order food path
 *greet
     -utter_greet
 *order_food
     -action_show_menu
 	-order_form
 	-form{"name":"order_form"}
-	-form{"name":null}
+	-form{"name":null} -->
 
 
     
@@ -39,6 +39,18 @@
     -faq_form
 	-form{"name":"faq_form"}
 	-form{"name":null}	
+
+
+
+
+## feedback path with back in queries
+*greet
+	-utter_greet
+*query_init
+    -utter_query_type
+*greetback
+	- action_greet_back
+	
 
 
 
