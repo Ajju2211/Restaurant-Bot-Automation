@@ -424,7 +424,7 @@ class ComplainForm(FormAction):
             or a list of them, where a first match will be picked"""
 
 
-        return {"complain_type": self.from_entity("complain_type"),"complain_text": [self.from_entity(entity="navigation"),self.from_text()]}
+        return {"complain_type": [self.from_entity("complain_type"),self.from_text()],"complain_text": [self.from_entity(entity="navigation"),self.from_text()]}
 
         #return {"complain_type": self.from_entity("complain_type"),"complain_text": self.from_entity(entity="any_thing")}
 
@@ -435,10 +435,15 @@ class ComplainForm(FormAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict]:
-        if value=="back1":
+        complaints = ["food quality","delivery","naaniz app","other"]
+        value=value.trim().lower()
+        if value=="back1" or value=="back":
             return {"complain_type":"-1","complain_text":"-1"}
-        else:
+        elif value in complaints:
             return {"complain_type":value}
+        else:
+            dispatcher.utter_message("please type valid option.")
+            return {"complain_type":None}    
     def validate_complain_text(
         self,
         value:Text,
@@ -446,7 +451,7 @@ class ComplainForm(FormAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> List[Dict]:
-        if value=="back2":
+        if value=="back2" or value.lower()=="back":
             return {"complain_type":None,"complain_text":None}
         else:
             return {"complain_text":value}
