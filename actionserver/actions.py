@@ -174,7 +174,8 @@ class OrderForm(FormAction):
                 "proceed"
             ]
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-        return {"dish_category": self.from_intent("inform"),"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
+        # return {"dish_category": self.from_intent("inform"),"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
+        return {"dish_category": self.from_intent("inform"),"dish_name": self.from_text(),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
     
     def request_next_slot(
         self,
