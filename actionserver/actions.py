@@ -191,22 +191,21 @@ class OrderForm(FormAction):
                 logger.debug(f"Request next slot '{slot}'")
                 if slot == "dish_category":
                     dispatcher.utter_message(text="Please select the category")
-                dispatcher.utter_message(template=f"utter_ask_{slot}", **tracker.slots)
+                    self.askCategories(dispatcher)
+                else:
+                    dispatcher.utter_message(template=f"utter_ask_{slot}", **tracker.slots)
                 return [SlotSet(REQUESTED_SLOT, slot)]
 
         # no more required slots to fill
         return None
 
     def askCategories(self,dispatcher):
-        li = []
+        data = []
         for keys in restaurant_menu['restaurant']['menu'].keys():
             val = '\"{}\"'.format(keys)
             cat = {"label":f"{keys}","value":'/inform{\"dish_category\":'+val+'}'}
-            li.append(cat)
-
-                
-        data = li
-
+            data.append(cat)
+            
         message={"payload":"dropDown","data":data}
   
         dispatcher.utter_message(text="Please select a option",json_message=message)
@@ -590,11 +589,10 @@ class FaqForm(FormAction):
             - a whole message
             or a list of them, where a first match will be picked"""
 
-        #return { "faq_choice": self.from_entity("faq_choice"),"faq_question": self.from_entity("faq_question"), "faq_text": [self.from_text()]}
 
-        return {"faq_choice": self.from_entity("faq_choice"), "faq_text": [self.from_entity(entity="any_thing"),self.from_entity(entity="navigation")] }
+        # return {"faq_choice": self.from_entity("faq_choice"), "faq_text": [self.from_entity(entity="any_thing"),self.from_entity(entity="navigation")] }
+        return {"faq_choice": self.from_entity("faq_choice"), "faq_text": [self.from_text(),self.from_entity(entity="navigation")] }
 
-        # return {"faq_choice": self.from_entity("choice"),"faq_question": self.from_entity("choice"), "faq_text": self.from_entity(entity="any_thing")}
 
     def validate_faq_choice(self,
         value: Text,

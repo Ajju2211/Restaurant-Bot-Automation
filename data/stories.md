@@ -1,13 +1,13 @@
 
 
-<!-- ## order food path
+## order food path
 *greet
     -utter_greet
 *order_food
     -action_show_menu
 	-order_form
 	-form{"name":"order_form"}
-	-form{"name":null} -->
+	-form{"name":null}
 
 
     
