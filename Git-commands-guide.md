@@ -32,6 +32,10 @@ $ git push
 ```sh
 $ git pull
 ```
+### Delete Previous local branch 
+```sh
+$ git branch -d branch_name
+```
 
 >[!WARNING]
 >Always check for the current branch your working is right or not on vscode editor and also Never merge pull requests on your own.
