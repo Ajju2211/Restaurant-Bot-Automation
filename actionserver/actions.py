@@ -619,7 +619,7 @@ class FaqForm(FormAction):
         if value == "back2" or value.lower()=="back" :
             return {"faq_choice": "-1","faq_text":"-1"}
         elif faq_choice == "1":
-            useNlp = True
+            useNlp = False
             faq_data = pd.read_csv("./actionserver/controllers/faqs/test_faq.csv")
 
             button_resp = [
