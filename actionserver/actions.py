@@ -230,13 +230,20 @@ class OrderForm(FormAction):
                 logger.debug(f"Request next slot '{slot}'")
                 if slot == "dish_category":
                     dispatcher.utter_message(text="Please select the category")
+<<<<<<< HEAD
                 dispatcher.utter_message(
                     template=f"utter_ask_{slot}", **tracker.slots)
+=======
+                    self.askCategories(dispatcher)
+                else:
+                    dispatcher.utter_message(template=f"utter_ask_{slot}", **tracker.slots)
+>>>>>>> 982af97b771a633ed2acb51ef10788c0692cc6f0
                 return [SlotSet(REQUESTED_SLOT, slot)]
 
         # no more required slots to fill
         return None
 
+<<<<<<< HEAD
     def askCategories(self, dispatcher):
         li = []
         for keys in restaurant_menu['restaurant']['menu'].keys():
@@ -251,6 +258,18 @@ class OrderForm(FormAction):
 
         dispatcher.utter_message(
             text="Please select a option", json_message=message)
+=======
+    def askCategories(self,dispatcher):
+        data = []
+        for keys in restaurant_menu['restaurant']['menu'].keys():
+            val = '\"{}\"'.format(keys)
+            cat = {"label":f"{keys}","value":'/inform{\"dish_category\":'+val+'}'}
+            data.append(cat)
+            
+        message={"payload":"dropDown","data":data}
+  
+        dispatcher.utter_message(text="Please select a option",json_message=message)
+>>>>>>> 982af97b771a633ed2acb51ef10788c0692cc6f0
     # To display dishes of category
 
     def showDishes(self, category, dispatcher, tracker):
@@ -631,11 +650,16 @@ class FaqForm(FormAction):
             - a whole message
             or a list of them, where a first match will be picked"""
 
+<<<<<<< HEAD
         # return { "faq_choice": self.from_entity("faq_choice"),"faq_question": self.from_entity("faq_question"), "faq_text": [self.from_text()]}
 
         return {"faq_choice": [self.from_entity("faq_choice"), self.from_text()], "faq_text": [self.from_text(), self.from_entity(entity="navigation")]}
+=======
 
-        # return {"faq_choice": self.from_entity("choice"),"faq_question": self.from_entity("choice"), "faq_text": self.from_entity(entity="any_thing")}
+        # return {"faq_choice": self.from_entity("faq_choice"), "faq_text": [self.from_entity(entity="any_thing"),self.from_entity(entity="navigation")] }
+        return {"faq_choice": self.from_entity("faq_choice"), "faq_text": [self.from_text(),self.from_entity(entity="navigation")] }
+>>>>>>> 982af97b771a633ed2acb51ef10788c0692cc6f0
+
 
     def validate_faq_choice(self,
                             value: Text,
