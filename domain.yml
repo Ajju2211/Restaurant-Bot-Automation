@@ -106,6 +106,10 @@ responses:
   utter_ask_dish_name:
     -
       text: "What food item would you like to eat?"
+      buttons:
+        -
+          payload: "/inform{\"dish_name\": \"back1\"}"
+          title: "Back"
   utter_ask_faq_choice:
     -
       buttons:
@@ -226,15 +230,7 @@ responses:
           payload: /greetback
           title: Back
       text: "What kind of query is it?"
-  utter_ask_dish_category:
-    - text: "Please select a category"
-      custom:
-          payload: dropDown 
-          data:
-          - label: starters
-            value: "/inform{'dish_category':'starters'}"
-          - label: meals
-            value: "/inform{'dish_category':'meals'}"
+
           
 session_config:
   carry_over_slots_to_new_session: true
