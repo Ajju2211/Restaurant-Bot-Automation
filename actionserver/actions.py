@@ -11,6 +11,7 @@ from rasa.core.slots import Slot
 import json
 from actionserver.utils import utilities as util
 from actionserver.controllers.faqs.faq import FAQ
+from actionserver.controllers.constants.orderForm import * 
 import logging
 import secrets
 
@@ -201,12 +202,20 @@ class OrderForm(FormAction):
             return [
                 "proceed"
             ]
+        elif  tracker.get_slot("dish_name"):
+            return [
+                "quantity"
+            ]
+        elif  tracker.get_slot("dish_category"):
+            return [
+                "dish_name"
+            ]
         else:
             return [
                 "dish_category",
-                "dish_name",
-                "quantity",
-                "proceed"
+                # "dish_name",
+                # "quantity",
+                # "proceed"
             ]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
@@ -221,8 +230,8 @@ class OrderForm(FormAction):
                 self.from_entity("dish_name"),
                 self.from_text()
             ],
-            "quantity": self.from_entity("quantity"),
-            "proceed": self.from_intent("inform")
+            "quantity": [self.from_entity("quantity"),self.from_text()],
+            "proceed": [self.from_intent("inform")]
         }
 
     def request_next_slot(
@@ -249,7 +258,8 @@ class OrderForm(FormAction):
                         text="type back otherwise!", 
                         buttons=button_resp)
                     self.askCategories(dispatcher)
-
+                elif slot == 'dish_name':
+                    self.showDishes(tracker.get_slot("dish_category"),dispatcher,tracker)
                 else:
                     dispatcher.utter_message(
                         template=f"utter_ask_{slot}", **tracker.slots)
@@ -290,9 +300,15 @@ class OrderForm(FormAction):
                     data.append(dic)
 
             message = {"payload": "cartCarousels", "data": data}
+            button_resp = [
+                {
+                    "title": "back",
+                    "payload": '/inform{"dish_name":"back1"}'
+                }
+            ]
 
             dispatcher.utter_message(
-                text="Please type the dish name", json_message=message)
+                text="Please type the dish name", json_message=message,buttons=button_resp)
 
             # return {"dish_category": category}
 
@@ -337,16 +353,7 @@ class OrderForm(FormAction):
                     "proceed": INVALID_VALUE
                 }
             else:
-                try:
-                    button_resp = [
-                        {
-                            "title": "back",
-                            "payload": '/inform{"dish_name":"back1"}'
-                        }
-                    ]
-
-                    dispatcher.utter_message(text="type back otherwise!", buttons=button_resp)
-                    
+                try:                    
                     self.showDishes(category, dispatcher, tracker)
                     return {"dish_category": category}
                 except:
@@ -417,6 +424,12 @@ class OrderForm(FormAction):
     ) -> Dict[Text, Any]:
         dish_name = tracker.get_slot("dish_name")
         quantity = 0
+        if value.lower() == 'back':
+            return {
+                "dish_name":None,
+                "quantity":None, 
+                REQUESTED_SLOT:"dish_name"
+            }
         try:
             quantity = int(value)
             return {"dish_name": dish_name, "quantity": quantity}
@@ -431,26 +444,42 @@ class OrderForm(FormAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
+
         dish_name = tracker.get_slot("dish_name")
         proceed = tracker.get_slot("proceed")
         quant = int(tracker.get_slot("quantity"))
         cat = tracker.get_slot("dish_category")
-        if proceed == "Add to Cart":
+
+        proceed = proceed.lower().strip()
+
+        # check if the value exist in individual list 
+        if proceed in ADD_TO_CART:
             dish_obj = {"dish": dish_name, "quantity": quant, "category": cat}
             dish_list.append(dish_obj)
             self.showDishes(cat, dispatcher, tracker)
             print("quantity")
-            return {"proceed": None, "dish_name": None, "quantity": None}
+            return {"proceed": None, "dish_name": None, "quantity": None, REQUESTED_SLOT:"dish_name"}
 
-        elif proceed == "Buy Now":
+        elif proceed in BUY_NOW:
             dish_obj = {"dish": dish_name, "quantity": quant, "category": cat}
             dish_list.append(dish_obj)
             return {"proceed": proceed}
+        
+        elif proceed in CHANGE_DISH:
+            self.showDishes(cat, dispatcher, tracker)
+            return {"dish_name": None, "proceed": None, "quantity": None, REQUESTED_SLOT:"dish_name"}
+
+        elif proceed in CHANGE_QUANTITY:
+            return {"quantity":None,"proceed":None,REQUESTED_SLOT:"quantity"}
+
+        elif proceed in SWITCH_CATEGORY:
+            return {"dish_category":None,"dish_name": None, "proceed": None, "quantity": None, REQUESTED_SLOT:"dish_category"}
 
         else:
             # Select other food
-            self.showDishes(cat, dispatcher, tracker)
-            return {"dish_name": None, "proceed": None, "quantity": None}
+            dispatcher.utter_message(text="Please select a valid option")
+            # self.showDishes(cat, dispatcher, tracker)
+            return {"proceed": None,REQUESTED_SLOT:"proceed"}
 
     def submit(
         self,

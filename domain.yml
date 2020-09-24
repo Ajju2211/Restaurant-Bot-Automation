@@ -4,7 +4,6 @@ actions:
   - utter_ask_username
   - utter_ask_mailid
   - utter_ask_phone_number
-  - utter_ask_dish_name
   - utter_ask_proceed
   - utter_goodbye
   - utter_iamabot
@@ -18,7 +17,6 @@ actions:
   - utter_query_type
   - utter_ask_faq_choice
   - utter_ask_faq_text
-  - utter_ask_dish_category
   - action_greet_back
 
 entities:
@@ -103,13 +101,6 @@ responses:
           \x20name: {username} \n\
           \x20Contact no.: {phone_number} \n\
           \x20email: {mailid} "
-  utter_ask_dish_name:
-    -
-      text: "What food item would you like to eat?"
-      buttons:
-        -
-          payload: "/inform{\"dish_name\": \"back1\"}"
-          title: "Back"
   utter_ask_faq_choice:
     -
       buttons:
@@ -156,14 +147,20 @@ responses:
     -
       buttons:
         -
-          payload: "/inform{\"proceed\":\"Add to Cart\"}"
+          payload: "/inform{\"proceed\":\"add to cart\"}"
           title: "Add to Cart"
         -
-          payload: "/inform{\"proceed\":\"Buy Now\"}"
+          payload: "/inform{\"proceed\":\"buy now\"}"
           title: "Buy Now"
         -
-          payload: "/inform{\"proceed\":\"No\"}"
+          payload: "/inform{\"proceed\":\"change dish\"}"
           title: "Select Other Food item"
+        -
+          payload: "/inform{\"proceed\":\"switch category\"}"
+          title: "Switch category"
+        -
+          payload: "/inform{\"proceed\":\"change quantity\"}"
+          title: "Change quantity"
       text: "Please select above options"
   utter_ask_quantity:
     -
