@@ -7,6 +7,7 @@
 - good evening
 - hey there
 
+
 ## intent:order_food
 
 - I want to place an order.
@@ -87,6 +88,8 @@
 - [23232](transaction_id)
 - [aZghg21@1hj](any_text)
 - [azhar@jhj](any_text)
+<!-- - [starters](dish_category)
+- [meals](dish_category) -->
 
 ## regex:customer_id
 - \b[A-Z]{2}-\d{3}\b
@@ -231,3 +234,14 @@
 -I want to report an query
 -I want to report queries
 -query
+
+## intent:greetback
+- back
+- Back
+- Go back
+- previous
+- I want to go to home menu
+- go to home
+- go to home menu
+- back to home
+- home menu

@@ -43,6 +43,18 @@
 
 
 
+## feedback path with back in queries
+*greet
+	-utter_greet
+*query_init
+    -utter_query_type
+*greetback
+	- action_greet_back
+	
+
+
+
+
 
 	
 <!--

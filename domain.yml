@@ -4,7 +4,6 @@ actions:
   - utter_ask_username
   - utter_ask_mailid
   - utter_ask_phone_number
-  - utter_ask_dish_name
   - utter_ask_proceed
   - utter_goodbye
   - utter_iamabot
@@ -18,12 +17,14 @@ actions:
   - utter_query_type
   - utter_ask_faq_choice
   - utter_ask_faq_text
+  - action_greet_back
 
 entities:
   - username
   - mailid
   - phone_number
   - dish_name
+  - dish_category
   - proceed
   - continue
   - moveon
@@ -62,6 +63,7 @@ intents:
   - faq_choice
   - question
   - navigations
+  - greetback
 responses:
   utter_ask_complain_text:
     -
@@ -99,9 +101,6 @@ responses:
           \x20name: {username} \n\
           \x20Contact no.: {phone_number} \n\
           \x20email: {mailid} "
-  utter_ask_dish_name:
-    -
-      text: "What food item would you like to eat?"
   utter_ask_faq_choice:
     -
       buttons:
@@ -148,14 +147,20 @@ responses:
     -
       buttons:
         -
-          payload: "/inform{\"proceed\":\"Add to Cart\"}"
+          payload: "/inform{\"proceed\":\"add to cart\"}"
           title: "Add to Cart"
         -
-          payload: "/inform{\"proceed\":\"Buy Now\"}"
+          payload: "/inform{\"proceed\":\"buy now\"}"
           title: "Buy Now"
         -
-          payload: "/inform{\"proceed\":\"No\"}"
+          payload: "/inform{\"proceed\":\"change dish\"}"
           title: "Select Other Food item"
+        -
+          payload: "/inform{\"proceed\":\"switch category\"}"
+          title: "Switch category"
+        -
+          payload: "/inform{\"proceed\":\"change quantity\"}"
+          title: "Change quantity"
       text: "Please select above options"
   utter_ask_quantity:
     -
@@ -217,7 +222,13 @@ responses:
         -
           payload: /complaint_init
           title: Complaint
+
+        - 
+          payload: /greetback
+          title: Back
       text: "What kind of query is it?"
+
+          
 session_config:
   carry_over_slots_to_new_session: true
   session_expiration_time: 180
@@ -230,6 +241,8 @@ slots:
     type: unfeaturized
   dish_name:
     type: unfeaturized
+  dish_category:
+    type: unfeaturized  
   faq_choice:
     type: unfeaturized
 
