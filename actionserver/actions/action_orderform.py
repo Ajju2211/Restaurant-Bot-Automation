@@ -75,7 +75,8 @@ class ActionShowMenu(Action):
             dispatcher.utter_message("Menu of that restaurant is ")
             dispatcher.utter_message(image=url)
         return []
-        
+
+
 class OrderForm(FormAction):
 
     def name(self):
@@ -116,7 +117,7 @@ class OrderForm(FormAction):
                 self.from_text()
             ],
             "quantity": [self.from_entity("quantity"), self.from_text()],
-            "proceed": [self.from_intent("inform")]
+            "proceed": [self.from_entity("proceed"), self.from_text()]
         }
 
     def request_next_slot(
@@ -332,39 +333,44 @@ class OrderForm(FormAction):
     ) -> Dict[Text, Any]:
 
         dish_name = tracker.get_slot("dish_name")
-        proceed = tracker.get_slot("proceed")
+        proceed = value
         quant = int(tracker.get_slot("quantity"))
         cat = tracker.get_slot("dish_category")
+        if proceed:
+            proceed = proceed.lower().strip()
 
-        proceed = proceed.lower().strip()
+            # check if the value exist in individual list
+            if proceed in ADD_TO_CART:
+                dish_obj = {"dish": dish_name,
+                            "quantity": quant, "category": cat}
+                dish_list.append(dish_obj)
+                self.showDishes(cat, dispatcher, tracker)
+                print("quantity")
+                return {"proceed": None, "dish_name": None, "quantity": None, REQUESTED_SLOT: "dish_name"}
 
-        # check if the value exist in individual list
-        if proceed in ADD_TO_CART:
-            dish_obj = {"dish": dish_name, "quantity": quant, "category": cat}
-            dish_list.append(dish_obj)
-            self.showDishes(cat, dispatcher, tracker)
-            print("quantity")
-            return {"proceed": None, "dish_name": None, "quantity": None, REQUESTED_SLOT: "dish_name"}
+            elif proceed in BUY_NOW:
+                dish_obj = {"dish": dish_name,
+                            "quantity": quant, "category": cat}
+                dish_list.append(dish_obj)
+                return {"proceed": proceed}
 
-        elif proceed in BUY_NOW:
-            dish_obj = {"dish": dish_name, "quantity": quant, "category": cat}
-            dish_list.append(dish_obj)
-            return {"proceed": proceed}
+            elif proceed in CHANGE_DISH:
+                self.showDishes(cat, dispatcher, tracker)
+                return {"dish_name": None, "proceed": None, "quantity": None, REQUESTED_SLOT: "dish_name"}
 
-        elif proceed in CHANGE_DISH:
-            self.showDishes(cat, dispatcher, tracker)
-            return {"dish_name": None, "proceed": None, "quantity": None, REQUESTED_SLOT: "dish_name"}
+            elif proceed in CHANGE_QUANTITY:
+                return {"quantity": None, "proceed": None, REQUESTED_SLOT: "quantity"}
 
-        elif proceed in CHANGE_QUANTITY:
-            return {"quantity": None, "proceed": None, REQUESTED_SLOT: "quantity"}
+            elif proceed in SWITCH_CATEGORY:
+                return {"dish_category": None, "dish_name": None, "proceed": None, "quantity": None, REQUESTED_SLOT: "dish_category"}
 
-        elif proceed in SWITCH_CATEGORY:
-            return {"dish_category": None, "dish_name": None, "proceed": None, "quantity": None, REQUESTED_SLOT: "dish_category"}
-
+            else:
+                # Select other food
+                dispatcher.utter_message(text="Please select a valid option")
+                # self.showDishes(cat, dispatcher, tracker)
+                return {"proceed": None, REQUESTED_SLOT: "proceed"}
         else:
-            # Select other food
-            dispatcher.utter_message(text="Please select a valid option")
-            # self.showDishes(cat, dispatcher, tracker)
+            dispatcher.utter_message(text="Please select valid option")
             return {"proceed": None, REQUESTED_SLOT: "proceed"}
 
     def submit(
