@@ -40,16 +40,7 @@ from rasa.utils.endpoints import EndpointConfig
 import sqlalchemy as sa
 
 from actionserver.db.dbConfig import db
-# Loading Firebase credentials
 
-# import firebase_admin
-# from firebase_admin import credentials
-# from  db.db_cred import *
-
-
-# cred = credentials.Certificate(SA)
-# firebase_admin.initialize_app(cred)
-# db = firebase_admin.firestore()
 COLLECTION = "restaurant-bot-tracker"
 
 
