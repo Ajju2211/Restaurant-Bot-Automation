@@ -54,7 +54,7 @@ class FirebaseTrackerStore(TrackerStore):
     def __init__(
         self,
         domain: Domain,
-        host: Optional[Text] = "timepass",
+        host: Optional[Text] = "localhost",
         event_broker: Optional[EventBroker] = None
     ):
         self.store = {}
@@ -62,20 +62,20 @@ class FirebaseTrackerStore(TrackerStore):
 
     def save(self, tracker: DialogueStateTracker) -> None:
         """Updates and saves the current conversation state"""
-        if self.event_broker:
-            self.stream_events(tracker)
-        serialised = self.serialiseTracker(tracker)
 
-        # added print
-        print(f"{self.event_broker} EventBroker ")
+        try:
+            if self.event_broker:
+                self.stream_events(tracker)
+            serialised = self.serialiseTracker(tracker)
 
-        # self.store[tracker.sender_id] = serialised
-        # store to Firestore
-        ref = db.collection(COLLECTION).document(tracker.sender_id)
-        ref.set(serialised)
 
-        # added print bellow
-        print(f"Store: {self.store}, Serialize {serialised}")
+            # self.store[tracker.sender_id] = serialised
+            # store to Firestore
+            ref = db.collection(COLLECTION).document(tracker.sender_id)
+            ref.set(serialised)
+
+        except Exception as e:
+            traceback.print_exc()
 
     def checkSenderId(self, sender_id):
         """Checks if sender Id exists in database (firebase)"""
@@ -83,6 +83,7 @@ class FirebaseTrackerStore(TrackerStore):
         check =  db.collection(COLLECTION).document(sender_id).get().exists
         return check
 
+    
     def retrieve(self, sender_id: Text) -> Optional[DialogueStateTracker]:
         """
         Args:
@@ -95,30 +96,31 @@ class FirebaseTrackerStore(TrackerStore):
         if self.checkSenderId(sender_id):
             logger.debug(f"Recreating tracker for id '{sender_id}'")
 
-            # added code bellow
-            val = self.deserialiseTracker(sender_id)
-
-            # added print
-            print(val)
-
-            return val
+            deserialised_tracker = self.deserialiseTracker(sender_id)
+            return deserialised_tracker
         else:
             logger.debug(f"Creating a new tracker for id '{sender_id}'.")
             return None
 
     def keys(self) -> Iterable[Text]:
-        """Returns sender_ids of the Tracker Store in memory"""
+        """Returns sender_ids of the Tracker Store in Firebase"""
         
-        # added print
-        print(f"Store Keys {self.store.keys()}")
-        return self.store.keys()
-    def serialiseTracker(self, tracker:DialogueStateTracker):
+        docs = db.collection(COLLECTION).stream()
+        keys = []
+        for doc in docs:
+            keys.append(doc.id)
+        return keys
+    def serialiseTracker(self, tracker):
         """User defined serialisation"""
-        dialogue = tracker.as_dialogue().as_dict()
-        print(f'dialoggue: {dialogue}')
-        dialogue = json.dumps(dialogue)
-        dialogue = json.loads(dialogue)
-        return dialogue
+        try:
+            dialogue = tracker.as_dialogue().as_dict()
+            print(f'dialoggue: {dialogue}')
+            dialogue = json.dumps(dialogue)
+            dialogue = json.loads(dialogue)
+            return dialogue
+        except Exception as e:
+            traceback.print_exc()
+            return None
 
     def deserialiseTracker(self, sender_id):
         """User defined deserialisation"""
@@ -135,13 +137,14 @@ class FirebaseTrackerStore(TrackerStore):
         # tracker = self.init_tracker(sender_id)
         # if not tracker:
         #     return None
-
+        tracker = self.init_tracker(sender_id)
         try:
+            if not tracker:
+                return None
             ref = db.collection(COLLECTION).document(sender_id)
             dialogue = ref.get().to_dict()
-            # serialiseTracker(dialogue)
+            # serialiseTracker(dialogue) no need to pass
             dialogue = Dialogue.from_parameters(json.loads(json.dumps(dialogue)))
-            
         except Exception as e:
             traceback.print_exc()
         tracker.recreate_from_dialogue(dialogue)
