@@ -163,8 +163,10 @@ class OrderRatingForm(FormAction):
 
             dispatcher.utter_message(
                 text='Thank you your review has been submitted')
-            return {"give_rating": None, "order_rating": None}
+            # return {"give_rating": None, "order_rating": None}
+            return [SlotSet("give_rating", None), SlotSet("order_rating", None)]
         else:
             dispatcher.utter_message(
                 text='Thankyou for ordering from us Your order will be ready shortly')
-            return {"give_rating": None, "order_rating": None}
+            # return {"give_rating": None, "order_rating": None}
+            return [SlotSet("give_rating", None), SlotSet("order_rating", None)]

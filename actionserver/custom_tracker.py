@@ -6,7 +6,7 @@ import os
 import pickle
 from datetime import datetime, timezone
 # Import custom module made for firebase credentials
-from actionserver.db_firebase.db_cred import *
+# from actionserver.db_firebase.db_cred import *
 
 from time import sleep
 from typing import (
@@ -39,17 +39,18 @@ from rasa.utils.common import class_from_module_path, raise_warning, arguments_o
 from rasa.utils.endpoints import EndpointConfig
 import sqlalchemy as sa
 
+from actionserver.db.dbConfig import db
 # Loading Firebase credentials
 
-import firebase_admin
-from firebase_admin import credentials
-from  db_firebase.db_cred import *
+# import firebase_admin
+# from firebase_admin import credentials
+# from  db.db_cred import *
 
 
-cred = credentials.Certificate(SA)
-firebase_admin.initialize_app(cred)
-db = firebase_admin.firestore()
-COLLECTION = "restauarant-bot-tracker"
+# cred = credentials.Certificate(SA)
+# firebase_admin.initialize_app(cred)
+# db = firebase_admin.firestore()
+COLLECTION = "restaurant-bot-tracker"
 
 
 
@@ -60,6 +61,7 @@ class FirebaseTrackerStore(TrackerStore):
         self, domain: Domain, event_broker: Optional[EventBroker] = None
     ) -> None:
         self.store = {}
+        logger.debug("using custom tracker")
         super().__init__(domain, event_broker)
 
     def save(self, tracker: DialogueStateTracker) -> None:
