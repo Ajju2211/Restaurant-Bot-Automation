@@ -4,7 +4,6 @@ actions:
   - utter_ask_username
   - utter_ask_mailid
   - utter_ask_phone_number
-  - utter_ask_dish_name
   - utter_ask_proceed
   - utter_goodbye
   - utter_iamabot
@@ -18,8 +17,9 @@ actions:
   - utter_query_type
   - utter_ask_faq_choice
   - utter_ask_faq_text
-  - utter_ask_dish_category
   - action_greet_back
+  - utter_ask_give_rating
+  - utter_ask_order_rating
 
 entities:
   - username
@@ -47,6 +47,8 @@ forms:
   - complain_form
   - feedback_form
   - faq_form
+  - order_rating_form
+  
 intents:
   - greet
   - goodbye
@@ -103,9 +105,6 @@ responses:
           \x20name: {username} \n\
           \x20Contact no.: {phone_number} \n\
           \x20email: {mailid} "
-  utter_ask_dish_name:
-    -
-      text: "What food item would you like to eat?"
   utter_ask_faq_choice:
     -
       buttons:
@@ -152,14 +151,20 @@ responses:
     -
       buttons:
         -
-          payload: "/inform{\"proceed\":\"Add to Cart\"}"
+          payload: "/inform{\"proceed\":\"add to cart\"}"
           title: "Add to Cart"
         -
-          payload: "/inform{\"proceed\":\"Buy Now\"}"
+          payload: "/inform{\"proceed\":\"buy now\"}"
           title: "Buy Now"
         -
-          payload: "/inform{\"proceed\":\"No\"}"
+          payload: "/inform{\"proceed\":\"change dish\"}"
           title: "Select Other Food item"
+        -
+          payload: "/inform{\"proceed\":\"switch category\"}"
+          title: "Switch category"
+        -
+          payload: "/inform{\"proceed\":\"change quantity\"}"
+          title: "Change quantity"
       text: "Please select above options"
   utter_ask_quantity:
     -
@@ -193,6 +198,38 @@ responses:
   utter_goodbye:
     -
       text: Bye
+  
+  utter_ask_give_rating:
+    -
+      text: "Would you like to rate us?"
+      buttons:
+        - 
+          payload: "/inform{\"confirm\":\"YES\"}"
+          title: "Yes"
+        - 
+          payload: "/inform{\"confirm\":\"NO\"}"
+          title: "No"     
+          
+  utter_ask_order_rating:
+    -
+      text: "Please rate your experience out of 5 ?"
+      buttons:
+        -
+          payload: "/rating{\"rating\":\"1\"}"
+          title: 1
+        -
+          payload: "/rating{\"rating\": \"2\"}"
+          title: 2
+        -
+          payload: "/rating{\"rating\":\"3\"}"
+          title: 3
+        -
+          payload: "/rating{\"rating\":\"4\"}"
+          title: 4
+        -
+          payload: "/rating{\"rating\":\"5\"}"
+          title: 5            
+
   utter_greet:
     -
       buttons:
@@ -226,15 +263,7 @@ responses:
           payload: /greetback
           title: Back
       text: "What kind of query is it?"
-  utter_ask_dish_category:
-    - text: "Please select a category"
-      custom:
-          payload: dropDown 
-          data:
-          - label: starters
-            value: "/inform{'dish_category':'starters'}"
-          - label: meals
-            value: "/inform{'dish_category':'meals'}"
+
           
 session_config:
   carry_over_slots_to_new_session: true
@@ -273,3 +302,7 @@ slots:
   username:
     initial_value: John
     type: unfeaturized
+  give_rating:
+    type: unfeaturized
+  order_rating:
+    type: unfeaturized    

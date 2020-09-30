@@ -89,7 +89,7 @@
 language: en
 pipeline:
   - name: WhitespaceTokenizer
-  - name: RegexFeaturizer
+  - name: components.RegexEntityExtractor
   - name: LexicalSyntacticFeaturizer
   - name: CountVectorsFeaturizer
   - name: CountVectorsFeaturizer

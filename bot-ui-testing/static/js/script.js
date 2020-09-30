@@ -29,7 +29,7 @@ $(document).ready(function() {
 
     //global variables
     action_name = "utter_greet";
-    user_id = "azhar123";
+    user_id = "azhar";
 
     //if you want the bot to start the conversation
     action_trigger();
@@ -355,7 +355,8 @@ function renderPdfAttachment(data) {
 function renderDropDwon(data) {
     var options = "";
     for (i = 0; i < data.length; i++) {
-        options += '<option value="' + data[i].value + '">' + data[i].label + '</option>'
+        // options += '<option value="' + data[i].value + '">' + data[i].label + '</option>'
+        options += `<option value='${data[i].value}'>${data[i].label}</option>`;
     }
     var select = '<div class="dropDownMsg"><select class="browser-default dropDownSelect"> <option value="" disabled selected>Choose your option</option>' + options + '</select></div>'
     $(".chats").append(select);

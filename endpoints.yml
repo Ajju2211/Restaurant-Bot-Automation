@@ -12,6 +12,10 @@
 
 # Enable localhost url while working on changes for actions
 
+tracker_store:
+  store_type: custom_tracker.FirebaseTrackerStore
+  # url: localhost
+
 action_endpoint:
   url: "http://localhost:5055/webhook"
   # url: "https://restaurant-bot-action-server.herokuapp.com/webhook"
