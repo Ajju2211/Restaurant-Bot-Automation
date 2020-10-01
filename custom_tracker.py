@@ -1,3 +1,4 @@
+import traceback
 import contextlib
 import itertools
 import json
@@ -41,9 +42,8 @@ import sqlalchemy as sa
 from rasa.core.tracker_store import TrackerStore
 
 logger = logging.getLogger(__name__)
-COLLECTION = "restauarant-bot-tracker"
 
-import traceback
+
 
 class FirebaseTrackerStore(TrackerStore):
     """Stores conversation history in memory"""
@@ -54,33 +54,49 @@ class FirebaseTrackerStore(TrackerStore):
     def __init__(
         self,
         domain: Domain,
-        host: Optional[Text] = "timepass",
+        collection: Optional[Text] = "tracker",
+        host: Optional[Text] = "localhost",
         event_broker: Optional[EventBroker] = None
     ):
         self.store = {}
+        self.COLLECTION = collection
         super().__init__(domain, event_broker)
 
     def save(self, tracker: DialogueStateTracker) -> None:
-        """Updates and saves the current conversation state"""
-        if self.event_broker:
-            self.stream_events(tracker)
-        serialised = self.serialiseTracker(tracker)
+        """Updates and saves the current conversation state
 
-        # added print
-        print(f"{self.event_broker} EventBroker ")
+        Args:
+            tracker: DialogueStateTracker from TrackerStore Class 
 
-        # self.store[tracker.sender_id] = serialised
-        # store to Firestore
-        ref = db.collection(COLLECTION).document(tracker.sender_id)
-        ref.set(serialised)
+        Returns:
+            None
 
-        # added print bellow
-        print(f"Store: {self.store}, Serialize {serialised}")
+        Stores data in Firebase and creates tracker            
+        """
+
+        try:
+            if self.event_broker:
+                self.stream_events(tracker)
+            serialised = self.serialiseTracker(tracker)
+
+            ref = db.collection(self.COLLECTION).document(tracker.sender_id)
+            ref.set(serialised)
+
+        except Exception as e:
+            traceback.print_exc()
 
     def checkSenderId(self, sender_id):
-        """Checks if sender Id exists in database (firebase)"""
-        
-        check =  db.collection(COLLECTION).document(sender_id).get().exists
+        """
+        Checks if sender Id exists in database (firebase)
+
+        Args:
+            sender_id : takes the sender_id as input 
+
+        Returns: 
+            Boolean (if the id exists or not) 
+        """
+
+        check = db.collection(self.COLLECTION).document(sender_id).get().exists
         return check
 
     def retrieve(self, sender_id: Text) -> Optional[DialogueStateTracker]:
@@ -91,62 +107,70 @@ class FirebaseTrackerStore(TrackerStore):
         Returns:
             DialogueStateTracker
         """
-        
+
         if self.checkSenderId(sender_id):
             logger.debug(f"Recreating tracker for id '{sender_id}'")
 
-            # added code bellow
-            val = self.deserialiseTracker(sender_id)
-
-            # added print
-            print(val)
-
-            return val
+            deserialised_tracker = self.deserialiseTracker(sender_id)
+            return deserialised_tracker
         else:
             logger.debug(f"Creating a new tracker for id '{sender_id}'.")
             return None
 
     def keys(self) -> Iterable[Text]:
-        """Returns sender_ids of the Tracker Store in memory"""
-        
-        # added print
-        print(f"Store Keys {self.store.keys()}")
-        return self.store.keys()
+        """
+        Returns: 
+            sender_ids of the Tracker Store in Firebase
+        """
+
+        docs = db.collection(self.COLLECTION).stream()
+        keys = []
+        for doc in docs:
+            keys.append(doc.id)
+        return keys
+
     def serialiseTracker(self, tracker:DialogueStateTracker):
-        """User defined serialisation"""
-        dialogue = tracker.as_dialogue().as_dict()
-        print(f'dialoggue: {dialogue}')
-        dialogue = json.dumps(dialogue)
-        dialogue = json.loads(dialogue)
-        return dialogue
+        """
+        User defined serialisation
+        
+        Args:
+            tracker : takes tracker object as input
+        Returns:
+            dialogue    
+        """
+        try:
+            dialogue = tracker.as_dialogue().as_dict()
+            dialogue = json.dumps(dialogue)
+            dialogue = json.loads(dialogue)
+            return dialogue
+        except Exception as e:
+            traceback.print_exc()
+            return None
 
     def deserialiseTracker(self, sender_id):
-        """User defined deserialisation"""
-        # dialogue = pickle.loads(_json)
-        # try:
-        #     ref = db.collection(COLLECTION).document(sender_id)
-        #     dialogue = ref.get().to_dict()
-        #     tracker = self.init_tracker(sender_id)
-        #     tracker.recreate_from_dialogue(dialogue)
-        #     return tracker
-        # except Exception as e:
-        #     logger.error('Sender Id is not found')
-        #     return None
-        # tracker = self.init_tracker(sender_id)
-        # if not tracker:
-        #     return None
-
+        """User defined deserialisation
+        Args:
+            sender_id : Takes sender_id as input
+        
+        Returns:
+            returns tracker
+        """
+        
+        tracker = self.init_tracker(sender_id)
         try:
-            ref = db.collection(COLLECTION).document(sender_id)
+            if not tracker:
+                return None
+            ref = db.collection(self.COLLECTION).document(sender_id)
             dialogue = ref.get().to_dict()
-            # serialiseTracker(dialogue)
-            dialogue = Dialogue.from_parameters(json.loads(json.dumps(dialogue)))
-            
+            # serialiseTracker(dialogue) no need to pass
+            dialogue = Dialogue.from_parameters(
+                json.loads(json.dumps(dialogue)))
         except Exception as e:
             traceback.print_exc()
         tracker.recreate_from_dialogue(dialogue)
 
         return tracker
+
 
 
 
