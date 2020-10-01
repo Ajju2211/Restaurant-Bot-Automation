@@ -13,7 +13,8 @@
 # Enable localhost url while working on changes for actions
 
 tracker_store:
-  store_type: custom_tracker.FirebaseTrackerStore
+  type: custom_tracker.FirebaseTrackerStore
+  host: localhost
   # url: localhost
 
 action_endpoint:
