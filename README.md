@@ -16,7 +16,8 @@ $ python -m nltk.downloader stopwords
 $ pip3 install  pandas==1.1.0
 $ pip3 install  nltk==3.5
 $ pip3 install fuzzywuzzy==0.18.0
-$ pip3 install firebase-admin
+$ pip3 install firebase-admin==4.4.0
+$ pip3 install secrets==1.0.2
 $ pip3 install python-levenshtein==0.12.0  *** for linux and other docker, os ***
 ```
 ```powershell
