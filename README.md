@@ -4,7 +4,7 @@
 
 ![Push action server to heroku](https://github.com/naaniz/Restaurant-Bot-Automation/workflows/Push%20action%20server%20to%20heroku/badge.svg)
 
-#### MODULES LIST (append here!)
+#### MODULES LIST (append here)
 
 ```sh
 $ pip3 install  rasa==1.10.8
@@ -40,6 +40,7 @@ $ rasa train -c spacy_config.yml
 ```
 
 #### How to run 
+*You need to run both Action server & Rasa server*
 - ##### To run action server
 ```sh
 $ rasa run actions --actions actionserver.actions
@@ -51,6 +52,10 @@ $ rasa shell --debug
 - ##### To run rasa in normal shell
 ```sh
 $ rasa shell
+```
+- ##### To run rasa in UI of Index.html in bot-ui folder
+```sh
+$ rasa run -m models --enable-api --cors "*" --debug
 ```
 
 

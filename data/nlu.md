@@ -7,7 +7,6 @@
 - good evening
 - hey there
 
-
 ## intent:order_food
 
 - I want to place an order.
@@ -23,15 +22,14 @@
 
 ## intent: inform
 
-- [chair](product_name)
-- [stool](product_name)
-- [divan](product_name)
-- [washstand](product_name)
-- [bookcase](product_name)
-- [dinningset](product_name)
-- [wardrop](product_name)
-- [sofa](product_name)
-- [bed](product_name)
+- [Noodles](dish_name)
+- [Burger](dish_name)
+- [Pizza](dish_name)
+- [Chicken](dish_name)
+- [Sandwich](dish_name)
+- [Poha](dish_name)
+- [Samosa](dish_name)
+- [Ice Cream](dish_name)
 - My name is [Aditya Aggarwal](username)
 - My name is [Pratik Banka](username)
 - My name is [Gaurav Garg](username)
@@ -89,8 +87,6 @@
 - [23232](transaction_id)
 - [aZghg21@1hj](any_text)
 - [azhar@jhj](any_text)
-<!-- - [starters](dish_category)
-- [meals](dish_category) -->
 
 ## regex:customer_id
 - \b[A-Z]{2}-\d{3}\b
@@ -152,20 +148,22 @@
 
 ## intent:complain
 
-- product not delivered at time
-- quality not good
-- different colour
-- deliverd wrong product
-- broken product
-- different product
-- bad packing
-- bad mainenance 
-- scratch on product
+- lots of fruits and vegetables
+- too many snacks
+- too many sweets
+- too much junk food
+- a lot of carbs
+- too much fatty food
+- very bad taste
+- bad taste
+- taste not good
+- very spicy
+- unhygenic packing
 - dirty packing
 - [very slow delivery]{"entity": "any_thing", "role": "complaint_input"}
 - [the app does not respond at all]{"entity": "any_thing", "role": "complaint_input"}
 - my discount coupon did not apply
-- [Product Quality](complain_type)
+- [Food Quality](complain_type)
 - [Delivery](complain_type)
 - [Naaniz App](complain_type)
 - [Other](complain_type)
@@ -233,14 +231,3 @@
 -I want to report an query
 -I want to report queries
 -query
-
-## intent:greetback
-- back
-- Back
-- Go back
-- previous
-- I want to go to home menu
-- go to home
-- go to home menu
-- back to home
-- home menu

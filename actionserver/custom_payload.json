@@ -12,61 +12,34 @@
                 {
                     "dish": "Dosa",
                     "price": 30,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+                    "image": "url_image"
                 },
                 {
                     "dish": "Noodles",
                     "price": 30,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+                    "image": "url_image"
                 },
                 {
                     "dish": "wada",
                     "price": 20,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+                    "image": "url_image"
                 },
                 {
                     "dish": "Poori",
                     "price": 45,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+                    "image": "url_image"
                 }
             ],
             "meals": [
                 {
-                    "dish": "Noodles",
-                    "price": 30,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
-                },
-                {
-                    "dish": "wada",
-                    "price": 20,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
-                },
-                {
-                    "dish": "Poori",
-                    "price": 45,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
-                },
-                {
                     "dish": "Dal Rice",
                     "price": 50,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+                    "image": "url_image"
                 },
                 {
                     "dish": "Chicken Dum Biryani",
                     "price": 150,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
-                }
-            ],
-            "tiffins": [
-                {
-                    "dish": "Dosa",
-                    "price": 50,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
-                },
-                {
-                    "dish": "Wada",
-                    "price": 150,
-                    "image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+                    "image": "url_image"
                 }
             ]
         }
