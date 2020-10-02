@@ -18,6 +18,8 @@ actions:
   - utter_ask_faq_choice
   - utter_ask_faq_text
   - action_greet_back
+  - utter_ask_give_rating
+  - utter_ask_order_rating
 
 entities:
   - username
@@ -45,6 +47,8 @@ forms:
   - complain_form
   - feedback_form
   - faq_form
+  - order_rating_form
+  
 intents:
   - greet
   - goodbye
@@ -194,6 +198,38 @@ responses:
   utter_goodbye:
     -
       text: Bye
+  
+  utter_ask_give_rating:
+    -
+      text: "Would you like to rate us?"
+      buttons:
+        - 
+          payload: "/inform{\"confirm\":\"YES\"}"
+          title: "Yes"
+        - 
+          payload: "/inform{\"confirm\":\"NO\"}"
+          title: "No"     
+          
+  utter_ask_order_rating:
+    -
+      text: "Please rate your experience out of 5 ?"
+      buttons:
+        -
+          payload: "/rating{\"rating\":\"1\"}"
+          title: 1
+        -
+          payload: "/rating{\"rating\": \"2\"}"
+          title: 2
+        -
+          payload: "/rating{\"rating\":\"3\"}"
+          title: 3
+        -
+          payload: "/rating{\"rating\":\"4\"}"
+          title: 4
+        -
+          payload: "/rating{\"rating\":\"5\"}"
+          title: 5            
+
   utter_greet:
     -
       buttons:
@@ -266,3 +302,7 @@ slots:
   username:
     initial_value: John
     type: unfeaturized
+  give_rating:
+    type: unfeaturized
+  order_rating:
+    type: unfeaturized    
