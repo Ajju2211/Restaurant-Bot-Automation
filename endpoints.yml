@@ -15,6 +15,7 @@
 tracker_store:
   type: custom_tracker.FirebaseTrackerStore
   host: localhost
+  collection: restaurant-bot-tracker
   # url: localhost
 
 action_endpoint:
