@@ -20,6 +20,7 @@ actions:
   - action_greet_back
   - utter_ask_give_rating
   - utter_ask_order_rating
+  - action_cartdisplay
 
 entities:
   - username
