@@ -31,12 +31,14 @@ with open(r'.\actionserver\custom_payload.json') as f:
     #   "entities": []
     #  }), FollowupAction(name="utter_greet")]
 
+
 def greet_back(dispatcher):
     dispatcher.utter_message("Going back!!!")
     return [UserUttered(text="/greet", parse_data={
         "intent": {"confidence": 1.0, "name": "greet"},
         "entities": []
     }), FollowupAction(name="utter_greet")]
+
 
 class CartDisplay(FormAction):
 
@@ -64,11 +66,12 @@ class CartDisplay(FormAction):
                 # "quantity",
                 # "proceed"
             ]
-     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
+
+    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         # return {"dish_category": self.from_intent("inform"),"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
         # return {"dish_category": [self.from_intent("inform"),self.from_text()], "dish_name": self.from_text(), "quantity": self.from_entity("quantity"), "proceed": self.from_intent("inform")}
         return {
-            
+
             "dish_name": [
                 self.from_entity("dish_name"),
                 self.from_text()
@@ -76,6 +79,7 @@ class CartDisplay(FormAction):
             "quantity": [self.from_entity("quantity"), self.from_text()],
             "proceed": [self.from_entity("proceed"), self.from_text()]
         }
+
     def showCart(self, dispatcher, tracker):
         data = []
         for x in dish_list:
@@ -93,6 +97,7 @@ class CartDisplay(FormAction):
         message = {"payload": "cartCarousels", "data": data}
 
         dispatcher.utter_message(text="Your Order", json_message=message)
+
     def submit(
         self,
         dispatcher: CollectingDispatcher,
@@ -120,11 +125,10 @@ class CartDisplay(FormAction):
                 prize = util.dish_info(x['dish'], x['category'])['price']
                 total = float(prize)*int(x['quantity'])
                 # amount += total
-                 dispatcher.utter_message("{} : {} : {}".format(x['dish'],x["quantity"],total))
-                 amount += total
+                dispatcher.utter_message("{} : {} : {}".format(
+                    x['dish'], x["quantity"], total))
+                amount += total
             self.showCart(dispatcher, tracker)
             dispatcher.utter_message("Total Amount : {}".format(amount))
             dispatcher.utter_message("Thanks for ordering")
             return [AllSlotsReset()]
-
-
