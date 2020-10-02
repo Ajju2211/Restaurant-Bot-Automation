@@ -1,0 +1,53 @@
+{
+    "cart": [
+        {
+            "dish_category": "meals",
+            "dish_name": "noodles",
+            "dish_price": 30,
+            "dish_quantity": 2,
+            "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+        },
+        {
+            "dish_category": "meals",
+            "dish_name": "poori",
+            "dish_price": 45,
+            "dish_quantity": 2,
+            "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+        },
+        {
+            "dish_category": "tiffins",
+            "dish_name": "dosa",
+            "dish_price": 50,
+            "dish_quantity": 4,
+            "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+        },
+        {
+            "dish_category": "meals",
+            "dish_name": "noodles",
+            "dish_price": 30,
+            "dish_quantity": 2,
+            "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+        },
+        {
+            "dish_category": "meals",
+            "dish_name": "poori",
+            "dish_price": 45,
+            "dish_quantity": 2,
+            "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+        },
+        {
+            "dish_category": "tiffins",
+            "dish_name": "dosa",
+            "dish_price": 50,
+            "dish_quantity": 4,
+            "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+        },
+        {
+            "dish_category": "tiffins",
+            "dish_name": "wada",
+            "dish_price": 150,
+            "dish_quantity": 1,
+            "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+        }
+    ]
+}

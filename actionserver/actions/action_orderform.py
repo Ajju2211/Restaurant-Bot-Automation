@@ -396,10 +396,29 @@ class OrderForm(FormAction):
             total = 0
             price = 0
 
+            
             for x in dish_list:
                 prize = util.dish_info(x['dish'], x['category'])['price']
+                image = util.dish_info(x['dish'],x['category'])['image']
                 total = float(prize)*int(x['quantity'])
                 amount += total
+                
+                order_data = {
+                    "dish_category" : x['category'],
+                    "dish_name" : x['dish'],
+                    "dish_price" : prize,
+                    "dish_quantity" : x['quantity'],
+                    "dish_image" : image
+                }
+
+                with open(r'.\actionserver\order_cart.json','r') as f:
+                    cart = json.load(f)
+                    cart['cart'].append(order_data)
+
+                
+                with open(r'.\actionserver\order_cart.json','w') as f:
+                    json.dump(cart, f, indent=4)
+                    
                 # dispatcher.utter_message("{} : {} : {}".format(x['dish'],x["quantity"],total))
                 # amount += total
             self.showCart(dispatcher, tracker)
