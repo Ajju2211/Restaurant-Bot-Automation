@@ -16,6 +16,7 @@ from actionserver.controllers.constants.orderForm import *
 import logging
 from actionserver.utils.utilities import INVALID_VALUE
 
+
 dish_list = []
 quant_list = []  # takes quantity from user
 

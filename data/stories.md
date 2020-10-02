@@ -3,7 +3,7 @@
 ## order food path
 *greet
     -utter_greet
-*order_food
+*order_product
     -action_show_menu
 	-order_form
 	-form{"name":"order_form"}

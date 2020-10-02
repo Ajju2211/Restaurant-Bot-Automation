@@ -23,14 +23,15 @@
 
 ## intent: inform
 
-- [Noodles](dish_name)
-- [Burger](dish_name)
-- [Pizza](dish_name)
-- [Chicken](dish_name)
-- [Sandwich](dish_name)
-- [Poha](dish_name)
-- [Samosa](dish_name)
-- [Ice Cream](dish_name)
+- [chair](product_name)
+- [stool](product_name)
+- [divan](product_name)
+- [washstand](product_name)
+- [bookcase](product_name)
+- [dinningset](product_name)
+- [wardrop](product_name)
+- [sofa](product_name)
+- [bed](product_name)
 - My name is [Aditya Aggarwal](username)
 - My name is [Pratik Banka](username)
 - My name is [Gaurav Garg](username)
@@ -151,22 +152,20 @@
 
 ## intent:complain
 
-- lots of fruits and vegetables
-- too many snacks
-- too many sweets
-- too much junk food
-- a lot of carbs
-- too much fatty food
-- very bad taste
-- bad taste
-- taste not good
-- very spicy
-- unhygenic packing
+- product not delivered at time
+- quality not good
+- different colour
+- deliverd wrong product
+- broken product
+- different product
+- bad packing
+- bad mainenance 
+- scratch on product
 - dirty packing
 - [very slow delivery]{"entity": "any_thing", "role": "complaint_input"}
 - [the app does not respond at all]{"entity": "any_thing", "role": "complaint_input"}
 - my discount coupon did not apply
-- [Food Quality](complain_type)
+- [Product Quality](complain_type)
 - [Delivery](complain_type)
 - [Naaniz App](complain_type)
 - [Other](complain_type)
