@@ -11,9 +11,13 @@ $ pip3 install  rasa==1.10.8
 $ pip3 install rasa[spacy]
 $ python -m spacy download en_core_web_md
 $ python -m spacy link en_core_web_md en
+$ python -m nltk.downloader punkt 
+$ python -m nltk.downloader stopwords
 $ pip3 install  pandas==1.1.0
 $ pip3 install  nltk==3.5
 $ pip3 install fuzzywuzzy==0.18.0
+$ pip3 install firebase-admin==4.4.0
+$ pip3 install secrets==1.0.2
 $ pip3 install python-levenshtein==0.12.0  *** for linux and other docker, os ***
 ```
 ```powershell
@@ -40,6 +44,7 @@ $ rasa train -c spacy_config.yml
 ```
 
 #### How to run 
+*You need to run both Action server & Rasa server*
 - ##### To run action server
 ```sh
 $ rasa run actions --actions actionserver.actions
@@ -51,6 +56,10 @@ $ rasa shell --debug
 - ##### To run rasa in normal shell
 ```sh
 $ rasa shell
+```
+- ##### To run rasa in UI of Index.html in bot-ui folder
+```sh
+$ rasa run -m models --enable-api --cors "*" --debug
 ```
 
 

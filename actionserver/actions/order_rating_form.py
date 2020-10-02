@@ -114,6 +114,8 @@ class OrderRatingForm(FormAction):
             return {"give_rating": "NO", "order_rating": "NO"}
         elif val.lower() in YES:
             return {"give_rating": "YES", "order_rating": None, REQUESTED_SLOT: "order_rating"}
+        else:
+            return {"give_rating": None, "order_rating": None, REQUESTED_SLOT: "give_rating"}
 
     def validate_order_rating(self,
                         value: Text,
@@ -163,8 +165,10 @@ class OrderRatingForm(FormAction):
 
             dispatcher.utter_message(
                 text='Thank you your review has been submitted')
-            return {"give_rating": None, "order_rating": None}
+            # return {"give_rating": None, "order_rating": None}
+            return [SlotSet("give_rating", None), SlotSet("order_rating", None)]
         else:
             dispatcher.utter_message(
                 text='Thankyou for ordering from us Your order will be ready shortly')
-            return {"give_rating": None, "order_rating": None}
+            # return {"give_rating": None, "order_rating": None}
+            return [SlotSet("give_rating", None), SlotSet("order_rating", None)]

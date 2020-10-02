@@ -29,7 +29,7 @@ $(document).ready(function() {
 
     //global variables
     action_name = "utter_greet";
-    user_id = "azhar123";
+    user_id = "azhar";
 
     //if you want the bot to start the conversation
     action_trigger();
