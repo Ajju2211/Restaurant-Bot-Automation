@@ -22,7 +22,7 @@ quant_list = []  # takes quantity from user
 logger = logging.getLogger(__name__)
 
 
-with open(r'.\actionserver\custom_payload.json') as f:
+with open(r'.\actionserver\order_cart.json') as f:
     restaurant_menu = json.load(f)
 
 # Code snippet for global back
@@ -31,72 +31,6 @@ with open(r'.\actionserver\custom_payload.json') as f:
     #   "entities": []
     #  }), FollowupAction(name="utter_greet")]
 
-
-def greet_back(dispatcher):
-    dispatcher.utter_message("Going back!!!")
-    return [UserUttered(text="/greet", parse_data={
-        "intent": {"confidence": 1.0, "name": "greet"},
-        "entities": []
-    }), FollowupAction(name="utter_greet")]
-
-
-class CartDisplay(FormAction):
-
-    def name(self):
-        return "order_form"
-
-    @staticmethod
-    def required_slots(tracker):
-        if tracker.get_slot("quantity"):
-            return [
-                "proceed"
-            ]
-        elif tracker.get_slot("dish_name"):
-            return [
-                "quantity"
-            ]
-        elif tracker.get_slot("dish_category"):
-            return [
-                "dish_name"
-            ]
-        else:
-            return [
-                "dish_category",
-                # "dish_name",
-                # "quantity",
-                # "proceed"
-            ]
-
-    def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
-        # return {"dish_category": self.from_intent("inform"),"dish_name": self.from_entity("any_thing"),"quantity": self.from_entity("quantity"),"proceed": self.from_intent("inform")}
-        # return {"dish_category": [self.from_intent("inform"),self.from_text()], "dish_name": self.from_text(), "quantity": self.from_entity("quantity"), "proceed": self.from_intent("inform")}
-        return {
-
-            "dish_name": [
-                self.from_entity("dish_name"),
-                self.from_text()
-            ],
-            "quantity": [self.from_entity("quantity"), self.from_text()],
-            "proceed": [self.from_entity("proceed"), self.from_text()]
-        }
-
-    def showCart(self, dispatcher, tracker):
-        data = []
-        for x in dish_list:
-            image = util.dish_info(x['dish'], x['category'])['image']
-            price = util.dish_info(x['dish'], x['category'])['price']
-            cart = {
-                "title": x['dish'],
-                "image": image,
-                "quantity": x['quantity'],
-                "price": price
-            }
-
-            data.append(cart)
-
-        message = {"payload": "cartCarousels", "data": data}
-
-        dispatcher.utter_message(text="Your Order", json_message=message)
 
     def submit(
         self,
@@ -122,8 +56,27 @@ class CartDisplay(FormAction):
             price = 0
 
             for x in dish_list:
-                prize = util.dish_info(x['dish'], x['category'])['price']
+                 prize = util.dish_info(x['dish'], x['category'])['price']
+                image = util.dish_info(x['dish'],x['category'])['image']
                 total = float(prize)*int(x['quantity'])
+                amount += total
+                
+                order_data = {
+                    "dish_category" : x['category'],
+                    "dish_name" : x['dish'],
+                    "dish_price" : prize,
+                    "dish_quantity" : x['quantity'],
+                    "dish_image" : image
+                }
+
+                with open(r'.\actionserver\order_cart.json','r') as f:
+                    cart = json.load(f)
+                    cart['cart'].append(order_data)
+
+                
+                with open(r'.\actionserver\order_cart.json','w') as f:
+                    json.dump(cart, f, indent=4)
+                    
                 # amount += total
                 dispatcher.utter_message("{} : {} : {}".format(
                     x['dish'], x["quantity"], total))
