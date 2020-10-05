@@ -16,14 +16,11 @@ from actionserver.controllers.constants.orderForm import *
 import logging
 from actionserver.utils.utilities import INVALID_VALUE
 
-dish_list = []
-quant_list = []  # takes quantity from user
 
 logger = logging.getLogger(__name__)
 
 
-with open(r'.\actionserver\order_cart.json') as f:
-    restaurant_menu = json.load(f)
+
 
 # Code snippet for global back
 # return [Restarted(), UserUttered(text="/get_started", parse_data={
@@ -36,23 +33,25 @@ class CartDisplay(Action):
     def name(self) -> Text:
         return "action_cartdisplay"
 
-    def cartdisplay(self, dispatcher, tracker):
+    def run(self, dispatcher, tracker):
         data = []
-        for x in dish_list:
-            image = util.dish_info(x['dish'], x['category'])['image']
-            price = util.dish_info(x['dish'], x['category'])['price']
+        with open(r'.\actionserver\order_cart.json') as f:
+            cart = json.load(f)["cart"]
+        total = 0
+        for x in cart:
             cart = {
-                "title": x['dish'],
-                "image": image,
-                "quantity": x['quantity'],
-                "price": price
+                "title": x['dish_name'],
+                "image": x['dish_image'],
+                "quantity": x['dish_quantity'],
+                "price": x['dish_price']
             }
+            total += x['dish_price']*x['dish_quantity']
 
             data.append(cart)
 
         message = {"payload": "cartCarousels", "data": data}
 
-        dispatcher.utter_message(text="Your Order", json_message=message)
+        dispatcher.utter_message(text= f'Your Order total is {total}', json_message=message)
 
         
     #     self,
