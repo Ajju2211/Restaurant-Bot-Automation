@@ -35,13 +35,6 @@ class CartDisplay(Action):
 
     def name(self) -> Text:
         return "action_cartdisplay"
-    def required_slots(tracker):
-        return [
-            "dish_catergory",
-            "disg_name",
-            "quantity",
-            "confirm"
-        ]
 
     def cartdisplay(self, dispatcher, tracker):
         data = []
