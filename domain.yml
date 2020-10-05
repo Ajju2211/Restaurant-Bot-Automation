@@ -69,6 +69,8 @@ intents:
   - question
   - navigations
   - greetback
+  - cart_display
+
 responses:
   utter_ask_complain_text:
     -
@@ -243,7 +245,10 @@ responses:
         -
           payload: /faq_init
           title: FAQ
-      text: "How can we help you today?"
+        -
+          payload: /cart_display
+          title: Cart
+      text: "How can we help you today?
   utter_iamabot:
     -
       text: "I am a bot, powered by Rasa."

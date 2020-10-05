@@ -48,6 +48,27 @@
             "dish_price": 150,
             "dish_quantity": 1,
             "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+        },
+        {
+            "dish_category": "starters",
+            "dish_name": "dosa",
+            "dish_price": 30,
+            "dish_quantity": 2,
+            "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+        },
+        {
+            "dish_category": "starters",
+            "dish_name": "noodles",
+            "dish_price": 30,
+            "dish_quantity": 1,
+            "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
+        },
+        {
+            "dish_category": "starters",
+            "dish_name": "wada",
+            "dish_price": 20,
+            "dish_quantity": 1,
+            "dish_image": "https://res.cloudinary.com/demo/image/upload/w_1000,h_1000,c_limit/cashew_chicken.jpg"
         }
     ]
 }

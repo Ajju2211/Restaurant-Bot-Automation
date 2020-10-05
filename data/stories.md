@@ -11,8 +11,8 @@
 	-order_rating_form
 	-form{"name":"order_rating_form"}
 	-form{"name":null}
-
-
+*cart_display
+	- action_cartdisplay
     
 ## complaint path
 *greet
@@ -53,8 +53,13 @@
     -utter_query_type
 *greetback
 	- action_greet_back
-	
 
+## cart display path
+*greet
+	-utter_greet
+*cart_display
+	-action_cartdisplay
+	
 
 
 

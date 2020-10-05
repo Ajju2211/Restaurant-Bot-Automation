@@ -245,3 +245,13 @@
 - go to home menu
 - back to home
 - home menu
+
+## intent:cart_display
+- cart
+- show cart
+- display cart
+- I want to seecart
+- cart display
+- go to cart
+- I want to go to cart
+- I want to see cart
