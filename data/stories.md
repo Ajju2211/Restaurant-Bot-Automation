@@ -11,8 +11,7 @@
 	-order_rating_form
 	-form{"name":"order_rating_form"}
 	-form{"name":null}
-*cart_display
-	- action_cartdisplay
+
     
 ## complaint path
 *greet
@@ -27,17 +26,17 @@
 	
 ## feedback path
 *greet
-	-utter_greet
+   -utter_greet
 *query_init
     -utter_query_type	
 *feedback_init
-	-feedback_form
-	-form{"name":"feedback_form"}
-	-form{"name":null}	
+    -feedback_form
+    -form{"name":"feedback_form"}
+    -form{"name":null}	
 
 ## faq path
 *greet
-	-utter_greet
+    -utter_greet
 *faq_init
     -faq_form
 	-form{"name":"faq_form"}
@@ -48,17 +47,17 @@
 
 ## feedback path with back in queries
 *greet
-	-utter_greet
+    -utter_greet
 *query_init
     -utter_query_type
 *greetback
-	- action_greet_back
+    -action_greet_back
 
 ## cart display path
 *greet
-	-utter_greet
+    -utter_greet
 *cart_display
-	-action_cartdisplay
+    -action_cartdisplay
 	
 
 
