@@ -6,7 +6,6 @@ actions:
   - utter_ask_phone_number
   - utter_ask_proceed
   - utter_goodbye
-  - utter_iamabot
   - utter_not_serving
   - action_default_fallback
   - utter_ask_complain_text
@@ -49,7 +48,7 @@ forms:
   - feedback_form
   - faq_form
   - order_rating_form
-  
+
 intents:
   - greet
   - goodbye
@@ -73,204 +72,144 @@ intents:
 
 responses:
   utter_ask_complain_text:
-    -
-      text: "Please Describe your complain."
+    - text: "Please Describe your complain."
       buttons:
-        -
-          payload: "/navigations{\"navigation\": \"back2\"}"
+        - payload: '/navigations{"navigation": "back2"}'
           title: Back
   utter_ask_complain_type:
-    -
-      buttons:
-        -
-          payload: "/complain{\"complain_type\": \"Food Quality\"}"
+    - buttons:
+        - payload: '/complain{"complain_type": "Food Quality"}'
           title: "Food Quality"
-        -
-          payload: "/complain{\"complain_type\": \"Delivery\"}"
+        - payload: '/complain{"complain_type": "Delivery"}'
           title: Delivery
-        -
-          payload: "/complain{\"complain_type\":\"Naaniz App\"}"
+        - payload: '/complain{"complain_type":"Naaniz App"}'
           title: "Naaniz App"
-        -
-          payload: "/complain{\"complain_type\":\"Other\"}"
+        - payload: '/complain{"complain_type":"Other"}'
           title: Other
-        -
-          payload: "/complain{\"complain_type\":\"back1\"}"
+        - payload: '/complain{"complain_type":"back1"}'
           title: Back
       text: "What is complain regarding ?"
   utter_ask_confirm:
-    -
-      buttons:
-        -
-          payload: "/affirm{\"confirm\":\"back3\"}"
+    - buttons:
+        - payload: '/affirm{"confirm":"back3"}'
           title: Back
       text: "Please confirm your details:\n\
-          \x20name: {username} \n\
-          \x20Contact no.: {phone_number} \n\
-          \x20email: {mailid} "
+        \x20name: {username} \n\
+        \x20Contact no.: {phone_number} \n\
+        \x20email: {mailid} "
   utter_ask_faq_choice:
-    -
-      buttons:
-        -
-          payload: "/faq_choice{\"faq_choice\": \"1\"}"
+    - buttons:
+        - payload: '/faq_choice{"faq_choice": "1"}'
           title: "Choose from our set of FAQs"
-        -
-          payload: "/faq_choice{\"faq_choice\": \"2\" }"
+        - payload: '/faq_choice{"faq_choice": "2" }'
           title: "Type your own question."
-        -
-          payload: "/faq_choice{\"faq_choice\": \"back2\"}"
+        - payload: '/faq_choice{"faq_choice": "back2"}'
           title: Back
       text: "How should we get your FAQ?"
 
   utter_ask_faq_text:
-    -
-      buttons:
-        -
-          payload: "/navigations{\"navigation\": \"back3\"}"
+    - buttons:
+        - payload: '/navigations{"navigation": "back3"}'
           title: Back
       text: "Please enter your question."
   utter_ask_feedback_text:
-    -
-      text: "Please enter your feedback."
+    - text: "Please enter your feedback."
       buttons:
-        - 
-          payload: "/navigations{\"navigation\":\"back2\"}"
+        - payload: '/navigations{"navigation":"back2"}'
           title: Back
   utter_ask_mailid:
-    -
-      buttons:
-        -
-          payload: "/inform{\"mailid\":\"back1\"}"
+    - buttons:
+        - payload: '/inform{"mailid":"back1"}'
           title: Back
       text: "Please enter your mail id."
   utter_ask_phone_number:
-    -
-      buttons:
-        -
-          payload: "/inform{\"phone_number\":\"back2\"}"
+    - buttons:
+        - payload: '/inform{"phone_number":"back2"}'
           title: Back
       text: "Please enter your phone number."
   utter_ask_proceed:
-    -
-      buttons:
-        -
-          payload: "/inform{\"proceed\":\"add to cart\"}"
+    - buttons:
+        - payload: '/inform{"proceed":"add to cart"}'
           title: "Add to Cart"
-        -
-          payload: "/inform{\"proceed\":\"buy now\"}"
+        - payload: '/inform{"proceed":"buy now"}'
           title: "Buy Now"
-        -
-          payload: "/inform{\"proceed\":\"change dish\"}"
+        - payload: '/inform{"proceed":"change dish"}'
           title: "Select Other Food item"
-        -
-          payload: "/inform{\"proceed\":\"switch category\"}"
+        - payload: '/inform{"proceed":"switch category"}'
           title: "Switch category"
-        -
-          payload: "/inform{\"proceed\":\"change quantity\"}"
+        - payload: '/inform{"proceed":"change quantity"}'
           title: "Change quantity"
       text: "Please select above options"
   utter_ask_quantity:
-    -
-      text: "Please enter the quantity"
+    - text: "Please enter the quantity"
   utter_ask_rating:
-    -
-      buttons:
-        -
-          payload: "/rating{\"rating\":\"1\"}"
+    - buttons:
+        - payload: '/rating{"rating":"1"}'
           title: 1
-        -
-          payload: "/rating{\"rating\": \"2\"}"
+        - payload: '/rating{"rating": "2"}'
           title: 2
-        -
-          payload: "/rating{\"rating\":\"3\"}"
+        - payload: '/rating{"rating":"3"}'
           title: 3
-        -
-          payload: "/rating{\"rating\":\"4\"}"
+        - payload: '/rating{"rating":"4"}'
           title: 4
-        -
-          payload: "/rating{\"rating\":\"5\"}"
+        - payload: '/rating{"rating":"5"}'
           title: 5
-        -
-          payload: "/rating{\"rating\":\"back1\"}"
+        - payload: '/rating{"rating":"back1"}'
           title: Back
       text: "Please rate your experience out of 5 ?"
 
   utter_ask_username:
-    -
-      text: "What is your name?"
+    - text: "What is your name?"
   utter_goodbye:
-    -
-      text: Bye
-  
+    - text: Bye
+
   utter_ask_give_rating:
-    -
-      text: "Would you like to rate us?"
+    - text: "Would you like to rate us?"
       buttons:
-        - 
-          payload: "/inform{\"confirm\":\"YES\"}"
+        - payload: '/inform{"confirm":"YES"}'
           title: "Yes"
-        - 
-          payload: "/inform{\"confirm\":\"NO\"}"
-          title: "No"     
-          
+        - payload: '/inform{"confirm":"NO"}'
+          title: "No"
+
   utter_ask_order_rating:
-    -
-      text: "Please rate your experience out of 5 ?"
+    - text: "Please rate your experience out of 5 ?"
       buttons:
-        -
-          payload: "/rating{\"rating\":\"1\"}"
+        - payload: '/rating{"rating":"1"}'
           title: 1
-        -
-          payload: "/rating{\"rating\": \"2\"}"
+        - payload: '/rating{"rating": "2"}'
           title: 2
-        -
-          payload: "/rating{\"rating\":\"3\"}"
+        - payload: '/rating{"rating":"3"}'
           title: 3
-        -
-          payload: "/rating{\"rating\":\"4\"}"
+        - payload: '/rating{"rating":"4"}'
           title: 4
-        -
-          payload: "/rating{\"rating\":\"5\"}"
-          title: 5            
+        - payload: '/rating{"rating":"5"}'
+          title: 5
 
   utter_greet:
-    -
+    - text: "Welcome to Restauarant!"
       buttons:
-        -
-          payload: /order_food
-          title: "Order Food"
-        -
-          payload: /query_init
+        - payload: /order_food
+          title: Order Food
+        - payload: /query_init
           title: Query
-        -
-          payload: /faq_init
+        - payload: /faq_init
           title: FAQ
-        -
-          payload: /cart_display
+        - payload: /cart_display
           title: Cart
-      text: "How can we help you today?
-  utter_iamabot:
-    -
-      text: "I am a bot, powered by Rasa."
+
   utter_not_serving:
-    -
-      text: "Currently we are not serving this dish. Would you like to have something else?"
+    - text: "Currently we are not serving this dish. Would you like to have something else?"
   utter_query_type:
-    -
-      buttons:
-        -
-          payload: /feedback_init
+    - buttons:
+        - payload: /feedback_init
           title: Feedback
-        -
-          payload: /complaint_init
+        - payload: /complaint_init
           title: Complaint
 
-        - 
-          payload: /greetback
+        - payload: /greetback
           title: Back
       text: "What kind of query is it?"
 
-          
 session_config:
   carry_over_slots_to_new_session: true
   session_expiration_time: 180
@@ -284,7 +223,7 @@ slots:
   dish_name:
     type: unfeaturized
   dish_category:
-    type: unfeaturized  
+    type: unfeaturized
   faq_choice:
     type: unfeaturized
 
@@ -311,4 +250,4 @@ slots:
   give_rating:
     type: unfeaturized
   order_rating:
-    type: unfeaturized    
+    type: unfeaturized

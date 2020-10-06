@@ -28,12 +28,14 @@ logger = logging.getLogger(__name__)
     #   "entities": []
     #  }), FollowupAction(name="utter_greet")]
 
-class CartDisplay(Action):
+class ActionCartDisplay(Action):
 
     def name(self) -> Text:
         return "action_cartdisplay"
 
-    def run(self, dispatcher, tracker):
+    def run(
+        self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
         data = []
         with open(r'.\actionserver\order_cart.json') as f:
             cart = json.load(f)["cart"]

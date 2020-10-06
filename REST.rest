@@ -1,0 +1,36 @@
+POST http://localhost:5005/webhooks/rest/webhook HTTP/1.1
+content-type: application/json
+
+{
+    "sender1":"azhar",
+    "message":"2",
+    "event":"slot",
+    "name":"username",
+    "value":"ajju"
+}
+
+# POST http://localhost:5005/conversations/azhar/execute  HTTP/1.1
+# content-type: application/json
+
+# { "name": "order_form", "policy": "MappingPolicy", "confidence": "0.98" }
+
+# POST http://localhost:5005/conversations/azhar/tracker/events HTTP/1.1
+# content-type: application/json
+
+# {
+
+#     "event": "slot",
+#     "name": "username",
+#     "value": {
+#         "name":"user-ajju",
+#         "data":[
+#             {
+#                 "id":1
+#             },
+#             {
+#                 "id":2
+#             }
+#         ]
+#     }
+
+# }
