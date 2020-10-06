@@ -37,7 +37,7 @@ class ActionCartDisplay(Action):
         self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
         data = []
-        with open(r'.\actionserver\order_cart.json') as f:
+        with open(r'./actionserver/order_cart.json') as f:
             cart = json.load(f)["cart"]
         total = 0
         for x in cart:

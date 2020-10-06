@@ -22,7 +22,7 @@ quant_list = []  # takes quantity from user
 logger = logging.getLogger(__name__)
 
 
-with open(r'.\actionserver\custom_payload.json') as f:
+with open(r'./actionserver/custom_payload.json') as f:
     restaurant_menu = json.load(f)
 
 # Code snippet for global back
@@ -411,12 +411,12 @@ class OrderForm(FormAction):
                     "dish_image" : image
                 }
 
-                with open(r'.\actionserver\order_cart.json','r') as f:
+                with open(r'./actionserver/order_cart.json','r') as f:
                     cart = json.load(f)
                     cart['cart'].append(order_data)
 
                 
-                with open(r'.\actionserver\order_cart.json','w') as f:
+                with open(r'./actionserver/order_cart.json','w') as f:
                     json.dump(cart, f, indent=4)
                     
                 # dispatcher.utter_message("{} : {} : {}".format(x['dish'],x["quantity"],total))

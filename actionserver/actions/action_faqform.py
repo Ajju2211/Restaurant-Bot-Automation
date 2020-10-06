@@ -23,7 +23,7 @@ quant_list = []  # takes quantity from user
 logger = logging.getLogger(__name__)
 
 
-with open(r'.\actionserver\custom_payload.json') as f:
+with open(r'./actionserver/custom_payload.json') as f:
     restaurant_menu = json.load(f)
 
 

@@ -196,7 +196,6 @@ responses:
           title: FAQ
         - payload: /cart_display
           title: Cart
-
   utter_not_serving:
     - text: "Currently we are not serving this dish. Would you like to have something else?"
   utter_query_type:
