@@ -248,7 +248,7 @@ responses:
         -
           payload: /cart_display
           title: Cart
-      text: "How can we help you today?
+      text: "How can we help you today?"
   utter_iamabot:
     -
       text: "I am a bot, powered by Rasa."

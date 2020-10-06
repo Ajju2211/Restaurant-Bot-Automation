@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 class CartDisplay(Action):
 
     def name(self) -> Text:
-        return "action_cartdisplay"
+        return "action_CartDisplay"
 
     def run(self, dispatcher, tracker):
         data = []
