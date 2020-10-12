@@ -1,0 +1,35 @@
+version: '3'
+services:
+  rasa:
+    container_name: rasa-server
+    image: rasa/rasa:1.10.14
+    ports:
+      - 5005:5005
+    volumes:
+      - ./:/app
+    command:
+      - run
+      - -m 
+      - models
+      - --cors
+      - "*"
+      - --enable-api
+      - --debug
+    depends_on:
+      # - action-server
+      - web
+      # - mysql
+    
+  web:
+    build: .
+    ports:
+      - "5055:5055"
+
+        
+  # action-server:
+  #   container_name: rasa-action-server
+  #   image: rasa/rasa-sdk:1.10.2
+  #   volumes:
+  #     - ./actionserver:/app/actionserver
+  #   ports:
+  #     - "5055:5055"  
