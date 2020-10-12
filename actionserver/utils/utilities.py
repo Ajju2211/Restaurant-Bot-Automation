@@ -19,7 +19,7 @@ def saveDictAsJsonFile(dictData,filePath):
 
         
 def dish_info(dish_name, category):
-    with open(r'.\actionserver\custom_payload.json') as f:
+    with open(r'./actionserver/custom_payload.json') as f:
         restaurant_menu =   json.load(f)
     
     menu = restaurant_menu['restaurant']['menu']

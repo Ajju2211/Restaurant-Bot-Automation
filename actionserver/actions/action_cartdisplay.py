@@ -28,14 +28,16 @@ logger = logging.getLogger(__name__)
     #   "entities": []
     #  }), FollowupAction(name="utter_greet")]
 
-class CartDisplay(Action):
+class ActionCartDisplay(Action):
 
     def name(self) -> Text:
-        return "action_cartdisplay"
+        return "action_cartDisplay"
 
-    def run(self, dispatcher, tracker):
+    def run(
+        self, dispatcher, tracker: Tracker, domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
         data = []
-        with open(r'.\actionserver\order_cart.json') as f:
+        with open(r'./actionserver/order_cart.json') as f:
             cart = json.load(f)["cart"]
         total = 0
         for x in cart:
@@ -52,49 +54,6 @@ class CartDisplay(Action):
         message = {"payload": "cartCarousels", "data": data}
 
         dispatcher.utter_message(text= f'Your Order total is {total}', json_message=message)
-
+        return []
         
-    #     self,
-    #     dispatcher: CollectingDispatcher,
-    #     tracker: Tracker,
-    #     domain: Dict[Text, Any],
-    # ) -> List[Dict]:
-    #     if tracker.get_slot("dish_category") == INVALID_VALUE:
-    #         li = [
-    #             SlotSet("dish_category", None),
-    #             SlotSet("dish_name", None),
-    #             SlotSet("quantity", None),
-    #             SlotSet("proceed", None)
-    #         ]
-    #         li.extend(greet_back(dispatcher))
-    #         return li
 
-    #     else:
-
-    #         amount = 0
-    #         dish_cat = tracker.get_slot("dish_category")
-    #         total = 0
-    #         price = 0
-
-    #         for x in dish_list:
-    #             prize = util.dish_info(x['dish'], x['category'])['price']
-    #             image = util.dish_info(x['dish'],x['category'])['image']
-    #             total = float(prize)*int(x['quantity'])
-    #             amount += total
-                
-    #             order_data = {
-    #                 "dish_category" : x['category'],
-    #                 "dish_name" : x['dish'],
-    #                 "dish_price" : prize,
-    #                 "dish_quantity" : x['quantity'],
-    #                 "dish_image" : image
-    #             }
-
-    #             # amount += total
-    #             dispatcher.utter_message("{} : {} : {}".format(
-    #                 x['dish'], x["quantity"], total))
-    #             amount += total
-    #         self.showCart(dispatcher, tracker)
-    #         dispatcher.utter_message("Total Amount : {}".format(amount))
-    #         #dispatcher.utter_message("Thanks for ordering")
-    #         return [AllSlotsReset()]
