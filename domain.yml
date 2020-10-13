@@ -20,6 +20,7 @@ actions:
   - utter_ask_give_rating
   - utter_ask_order_rating
   - action_cartDisplay
+  - action_check_auth
 
 entities:
   - username
@@ -48,6 +49,7 @@ forms:
   - feedback_form
   - faq_form
   - order_rating_form
+  - user_info_form
 
 intents:
   - greet
@@ -208,6 +210,48 @@ responses:
         - payload: /greetback
           title: Back
       text: "What kind of query is it?"
+      
+  utter_ask_mailid:
+    -
+      buttons:
+        -
+          payload: "/inform{\"mailid\":\"back1\"}"
+          title: Back
+      text: "Please enter your mail id."
+
+  utter_ask_phone_number:
+    -
+      buttons:
+        -
+          payload: "/inform{\"phone_number\":\"back2\"}"
+          title: Back
+      text: "Please enter your phone number."
+
+  utter_ask_pincode:
+    -
+      text : "Please enter your pincode/zipcode"
+      buttons:
+        -
+          payload: "/inform{\"pincode\":\"back\"}"      
+          text: Back
+
+
+  utter_ask_locality:
+    -
+      text : "Please enter your locality"
+      buttons:
+        -
+          payload: "/inform{\"locality\":\"back\"}"      
+          text: Back          
+
+  utter_ask_state:
+    -
+      text : "Please enter your state"
+      buttons:
+        -
+          payload: "/inform{\"state\":\"back\"}"      
+          text: Back          
+      
 
 session_config:
   carry_over_slots_to_new_session: true
@@ -250,3 +294,13 @@ slots:
     type: unfeaturized
   order_rating:
     type: unfeaturized
+  state: 
+    type: unfeaturized 
+
+  locality:
+    type: unfeaturized  
+  
+  pincode:
+    type: unfeaturized
+    
+    
